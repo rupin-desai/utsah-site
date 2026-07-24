@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(min-width: 431px)" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Terms &amp; Conditions — Utsah Events</title>
+  <meta name="description" content="Utsah Events terms and conditions for our event planning services.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    .legal-page {
+      min-height: 100vh;
+      padding: 140px 0 80px;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 0%, rgba(153,0,0,0.12) 0%, transparent 70%),
+        #0a0a0a;
+    }
+    .legal-page__inner {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 0 32px;
+    }
+    .legal-page__label {
+      position: relative;
+      display: inline-flex;
+      font-family: var(--body);
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: #ff3333;
+      margin-bottom: 16px;
+      padding: 6px 16px;
+      border-radius: 100px;
+
+      /* Translucent frosted surface */
+      background: rgba(255,255,255,0.05);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Deep smooth shadow + inset edge illumination */
+      box-shadow:
+        0 4px 16px rgba(0,0,0,0.2),
+        inset 0 1.5px 0 rgba(255,255,255,0.25);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .legal-page__label::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .legal-page h1 {
+      font-family: var(--heading);
+      font-size: clamp(2.2rem, 5vw, 3.5rem);
+      font-weight: 400;
+      color: #fff;
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+    .legal-page__date {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 56px;
+    }
+    .legal-page__body {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.65);
+    }
+    .legal-page__body h2 {
+      font-family: var(--heading);
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.9);
+      margin: 48px 0 16px;
+    }
+    .legal-page__body p {
+      margin-bottom: 16px;
+    }
+    .legal-page__body a {
+      color: var(--maroon);
+      text-decoration: none;
+    }
+    .legal-page__body a:hover {
+      text-decoration: underline;
+    }
+    .legal-placeholder {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 80px 0;
+      gap: 16px;
+    }
+    .legal-placeholder__icon {
+      width: 56px;
+      height: 56px;
+      opacity: 0.2;
+    }
+    .legal-placeholder p {
+      font-family: var(--body);
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.35);
+      max-width: 360px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="index.html" class="nav__logo">
+      <span class="nav__logo-u">U</span>tsah Events
+    </a>
+    <button class="nav__toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+    <div class="nav__menu" id="navMenu">
+      <a href="index.html" class="nav__link">Home</a>
+      <a href="about.html" class="nav__link">About</a>
+      <a href="events.html" class="nav__link">Events</a>
+      <a href="team.html" class="nav__link">Team</a>
+      <a href="socials.html" class="nav__link">Socials</a>
+      <a href="contact.html" class="nav__link nav__link--cta">Contact</a>
+    </div>
+  </nav>
+
+  <section class="legal-page">
+    <div class="legal-page__inner">
+      <p class="legal-page__label">Legal</p>
+      <h1>Terms &amp; Conditions</h1>
+      <p class="legal-page__date">Last updated: July 2026</p>
+
+      <div class="legal-page__body">
+        <p>These Terms &amp; Conditions govern the booking and provision of event planning, coordination, and management services by Utsah Events ("Utsah", "we", "us") to any client ("you") engaging our services for a wedding, corporate event, or other celebration. By confirming a booking with us, you agree to these terms.</p>
+
+        <h2>1. Our Services</h2>
+        <p>Utsah Events provides end-to-end event planning and coordination, including but not limited to venue selection, décor, vendor management, entertainment, logistics, and on-ground execution for weddings, corporate events, birthdays, baby showers, and other celebrations. The exact scope of services for your event will be confirmed in a written proposal or quotation before booking.</p>
+
+        <h2>2. Bookings &amp; Payments</h2>
+        <p>A booking is confirmed only once an agreed advance/token amount has been paid. The remaining balance is payable as per the schedule outlined in your proposal, typically with milestone payments leading up to the event date and final settlement on or before the event. Prices quoted are specific to the scope, date, and guest count discussed, and may be revised if these change.</p>
+
+        <h2>3. Cancellations &amp; Rescheduling</h2>
+        <p>We understand plans can change. Cancellation or rescheduling requests must be made in writing. Advance payments already made to secure vendors, venues, or bookings on your behalf are generally non-refundable, as these amounts are often committed to third parties ahead of your event. Any refundable portion, if applicable, will depend on how far in advance the request is made and the cancellation terms of the vendors involved. We will always work with you in good faith to minimise loss wherever possible.</p>
+
+        <h2>4. Client Responsibilities</h2>
+        <p>To help us deliver your event successfully, you agree to provide accurate and timely information (guest counts, preferences, timelines, budgets), respond promptly to approvals, and inform us of any changes as early as possible. Delays in providing information may affect our ability to execute certain elements of the event as planned.</p>
+
+        <h2>5. Vendors &amp; Third Parties</h2>
+        <p>We work with a trusted network of venues, caterers, decorators, entertainers, and other vendors. While we manage these relationships on your behalf, certain vendors may have their own terms and conditions which will be shared with you where relevant. Utsah Events is not liable for delays or shortcomings that are solely the fault of an independent third-party vendor, though we will always act promptly to resolve issues on your behalf.</p>
+
+        <h2>6. Liability</h2>
+        <p>Utsah Events takes every reasonable precaution to ensure your event runs smoothly. However, we are not liable for circumstances beyond our reasonable control, including but not limited to weather, venue restrictions, government regulations, or acts of third parties. Our liability for any claim relating to our services is limited to the amount paid to us for that specific event.</p>
+
+        <h2>7. Force Majeure</h2>
+        <p>Neither party will be held responsible for delay or failure to perform obligations due to events beyond reasonable control, including natural disasters, government action, public health emergencies, or other unforeseeable circumstances. In such cases, we will work with you to reschedule or adjust plans wherever possible.</p>
+
+        <h2>8. Photography, Video &amp; Promotional Use</h2>
+        <p>With your consent, photographs and videos from your event may be used by Utsah Events for portfolio, marketing, and social media purposes. If you would prefer that images from your event not be used publicly, please let us know in writing before your event date and we will honour that request.</p>
+
+        <h2>9. Changes to These Terms</h2>
+        <p>We may update these Terms &amp; Conditions from time to time to reflect changes in our services or applicable law. The version in effect at the time of your booking will govern that engagement.</p>
+
+        <h2>10. Governing Law</h2>
+        <p>These terms are governed by the laws of India, and any disputes will be subject to the jurisdiction of the courts in Surat, Gujarat.</p>
+
+        <h2>Contact Us</h2>
+        <p>If you have any questions about these Terms &amp; Conditions, please reach out to us at <a href="mailto:sales@utsahevents.com">sales@utsahevents.com</a> or <a href="tel:+918200395197">+91 82003 95197</a>.</p>
+      </div>
+    </div>
+  </section>
+
+    <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script src="script.js?v=5"></script>
+  <script>
+    const nav = document.getElementById('nav');
+    const navToggle = document.getElementById('navToggle');
+    const navMenu = document.getElementById('navMenu');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('nav--scrolled', window.scrollY > 50);
+    });
+    navToggle.addEventListener('click', () => {
+      const open = navMenu.classList.toggle('nav__menu--open');
+      navToggle.setAttribute('aria-expanded', open);
+    });
+  </script>
+</body>
+</html>

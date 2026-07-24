@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Memories — Utsah Events</title>
+  <meta name="description" content="Browse our portfolio of weddings and celebrations. Each event is a unique story crafted by Utsah Events.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <nav class="nav scrolled" id="nav">
+    <a href="index.html" class="nav__logo">Utsah<span>Events</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="memories.html" class="active">Memories</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="index.html#contact" class="nav__cta">Get in Touch</a></li>
+    </ul>
+    <button class="nav__burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html#about">About Us</a></li>
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="memories.html">Memories</a></li>
+      <li><a href="index.html#team">Team</a></li>
+      <li><a href="index.html#contact">Get in Touch</a></li>
+    </ul>
+  </div>
+
+  <header class="page-hero">
+    <p class="section-tag">Portfolio</p>
+    <h1 class="section-title">Our Memories<span class="gold">.</span></h1>
+    <p class="page-hero__sub">Every event tells a story. Here are some of our favourite chapters.</p>
+  </header>
+
+  <section class="memories-grid">
+    <div class="container">
+      <div class="memories__list">
+
+        <div class="memory-card">
+          <div class="memory-card__img">
+            <img src="assets/memories/yesha-mitesh/1.jpeg" alt="Yesha & Mitesh" loading="lazy">
+          </div>
+          <div class="memory-card__info">
+            <h3>Yesha & Mitesh</h3>
+            <p>November 2022 &middot; Wedding</p>
+          </div>
+          <div class="memory-card__gallery">
+            <img src="assets/memories/yesha-mitesh/2.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/yesha-mitesh/3.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/yesha-mitesh/4.jpeg" alt="" loading="lazy">
+          </div>
+        </div>
+
+        <div class="memory-card">
+          <div class="memory-card__img">
+            <img src="assets/memories/shubha-kunal/1.jpeg" alt="Shubha & Kunal" loading="lazy">
+          </div>
+          <div class="memory-card__info">
+            <h3>Shubha & Kunal</h3>
+            <p>January 2023 &middot; Wedding</p>
+          </div>
+          <div class="memory-card__gallery">
+            <img src="assets/memories/shubha-kunal/2.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/shubha-kunal/3.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/shubha-kunal/4.jpeg" alt="" loading="lazy">
+          </div>
+        </div>
+
+        <div class="memory-card">
+          <div class="memory-card__img">
+            <img src="assets/memories/monil-purnima/1.jpeg" alt="Monil & Purnima" loading="lazy">
+          </div>
+          <div class="memory-card__info">
+            <h3>Monil & Purnima</h3>
+            <p>March 2023 &middot; Wedding</p>
+          </div>
+          <div class="memory-card__gallery">
+            <img src="assets/memories/monil-purnima/2.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/monil-purnima/3.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/monil-purnima/4.jpeg" alt="" loading="lazy">
+          </div>
+        </div>
+
+        <div class="memory-card">
+          <div class="memory-card__img">
+            <img src="assets/memories/lavesh-pooja/1.jpeg" alt="Lavesh & Pooja" loading="lazy">
+          </div>
+          <div class="memory-card__info">
+            <h3>Lavesh & Pooja</h3>
+            <p>February 2023 &middot; Wedding</p>
+          </div>
+          <div class="memory-card__gallery">
+            <img src="assets/memories/lavesh-pooja/2.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/lavesh-pooja/3.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/lavesh-pooja/4.jpeg" alt="" loading="lazy">
+          </div>
+        </div>
+
+        <div class="memory-card">
+          <div class="memory-card__img">
+            <img src="assets/memories/dillion-komal/1.jpeg" alt="Dillion & Komal" loading="lazy">
+          </div>
+          <div class="memory-card__info">
+            <h3>Dillion & Komal</h3>
+            <p>January 2023 &middot; Wedding</p>
+          </div>
+          <div class="memory-card__gallery">
+            <img src="assets/memories/dillion-komal/2.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/dillion-komal/3.jpeg" alt="" loading="lazy">
+            <img src="assets/memories/dillion-komal/4.jpeg" alt="" loading="lazy">
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-banner">
+    <div class="container">
+      <h2>Want your celebration here<span class="gold">?</span></h2>
+      <p>Let's create your magical memory together.</p>
+      <a href="index.html#contact" class="btn btn--gold">Get in Touch</a>
+    </div>
+  </section>
+
+      <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script src="script.js?v=5"></script>
+</body>
+</html>

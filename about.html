@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(min-width: 431px)" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>About Us — Utsah Events | Bardoli, Gujarat</title>
+  <meta name="description" content="Learn about Utsah Events — our story, our team, and our passion for creating magical celebrations in Bardoli, Gujarat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700;800;900&family=DM+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    /* ===== ABOUT PAGE SPECIFIC ===== */
+    .about-page { position: relative; z-index: 2; }
+
+    /* Logo — maroon on this page */
+    .nav__logo-img {
+      filter: sepia(1) hue-rotate(-45deg) saturate(6) brightness(0.55) !important;
+    }
+    .nav__logo { cursor: pointer; }
+    @media (min-width: 431px) {
+      #nav { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1) !important; }
+      #dropdownBtn { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1); }
+    }
+    @media (max-width: 430px) {
+      .nav { pointer-events: all !important; }
+      .nav__logo { pointer-events: all !important; display: block; }
+    }
+
+    /* HERO */
+    .about-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 100px 40px 60px;
+    }
+    .about-hero__label {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 8px;
+    }
+    .about-hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 0;
+    }
+    /* Desktop only — matches the Times New Roman treatment on the home
+       hero. Scoped above the tablet breakpoint so phone/tablet keep
+       their existing Cinzel untouched. */
+    @media (min-width: 1025px) {
+      .about-hero__title { font-family: 'Times New Roman', Times, serif; }
+    }
+    .about-hero__title span { color: var(--maroon); }
+    .about-hero__sub {
+      font-family: var(--body);
+      font-size: clamp(1.1rem, 2vw, 1.35rem);
+      color: #ffffff;
+      max-width: 560px;
+      line-height: 1.8;
+      font-weight: 700;
+      margin-top: 12px;
+    }
+    .about-hero__scroll {
+      margin-top: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #FFD700;
+      font-size: 0.7rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .about-hero__scroll-star {
+      font-size: 1.1rem;
+      line-height: 1;
+      color: #c9a84c;
+      text-shadow: 0 0 8px rgba(201,168,76,0.8), 0 0 20px rgba(201,168,76,0.4);
+      animation: scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* STORY SECTION */
+    .story {
+      padding: 48px 40px;
+      max-width: 700px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 36px;
+      text-align: center;
+    }
+    .story__images {
+      position: relative;
+      width: 100%;
+      max-width: 1000px;
+      height: 420px;
+      border-radius: 0;
+      overflow: hidden;
+      transition: all 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 10;
+    }
+    .story__images.expanded {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw !important;
+      max-width: 100vw !important;
+      height: 100vh !important;
+      z-index: 9999;
+      border-radius: 0;
+    }
+    .story__slide {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.2s ease;
+      border-radius: 20px;
+    }
+    .story__slide.active { opacity: 1; }
+    .story__content { }
+    .story__label {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--maroon);
+      margin-bottom: 20px;
+    }
+    .story__title {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.15;
+      margin-bottom: 28px;
+    }
+    .story__text {
+      font-family: var(--body);
+      font-size: 1.1rem;
+      line-height: 1.9;
+      color: #ffffff;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+
+    /* VALUES — single cycling card */
+    .values {
+      padding: 32px 24px;
+      max-width: 400px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .value-single {
+      border-radius: 20px;
+      padding: 28px 24px 44px;
+      text-align: left;
+      position: relative;
+      height: 200px;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted */
+      background: linear-gradient(160deg, rgba(120,15,15,0.3) 0%, rgba(20,5,5,0.25) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 12px 32px rgba(0,0,0,0.25),
+        inset 0 4px 12px rgba(255,255,255,0.15);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+      overflow: hidden;
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .value-single::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .value-slide {
+      position: absolute;
+      top: 28px;
+      left: 24px;
+      right: 24px;
+      opacity: 0;
+      transition: opacity 0.7s ease;
+      pointer-events: none;
+    }
+    .value-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .value-card__icon {
+      font-size: 1.4rem;
+      margin-bottom: 10px;
+      color: #FFD700;
+      text-shadow: 0 0 10px rgba(255,215,0,0.8), 0 0 22px rgba(255,215,0,0.5);
+      display: block;
+    }
+    .value-card__title {
+      font-family: var(--heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .value-card__text {
+      font-family: var(--body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.7;
+    }
+    .value-dots {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .value-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: background 0.4s;
+    }
+    .value-dot.active { background: var(--maroon); }
+
+    /* TEAM SECTION */
+    .team-section {
+      padding: 48px 40px;
+      max-width: 900px;
+      margin: 0 auto;
+      text-align: center;
+    }
+    .team-section__label {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 12px;
+    }
+    .team-section__title {
+      font-family: var(--heading);
+      font-size: clamp(3rem, 7vw, 6rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 60px;
+    }
+    .team-section__highlight { color: var(--maroon); }
+    .team-title-line {
+      display: block;
+      transition: transform 0.9s cubic-bezier(0.16,1,0.3,1);
+    }
+    .team-title-line--left { transform: translateX(-70px); }
+    .team-title-line--right { transform: translateX(70px); }
+    .team-section__title.visible .team-title-line--left,
+    .team-section__title.visible .team-title-line--right {
+      transform: translateX(0);
+    }
+    .team-section__title:hover .team-title-line--left { transform: translateX(-10px); }
+    .team-section__title:hover .team-title-line--right { transform: translateX(10px); }
+    .team-grid {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    /* Minimal card — photo + name + role only */
+    .team-card {
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      background: none;
+      border: none;
+      transition: transform 0.3s;
+    }
+    .team-card:hover { transform: translateY(-6px); }
+    .team-card__photo {
+      width: 160px;
+      height: 160px;
+      object-fit: cover;
+      object-position: center center;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 16px;
+      border: 2px solid rgba(255,255,255,0.15);
+      transition: border-color 0.3s;
+    }
+    .team-card:hover .team-card__photo { border-color: var(--maroon); }
+    .team-card__photo--initial {
+      background: linear-gradient(135deg, var(--maroon), #cc2200);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--heading);
+      font-size: 3rem;
+      font-weight: 700;
+      color: #ffffff;
+    }
+    .team-card .team-card__name {
+      font-family: var(--heading);
+      font-size: 1.6rem;
+      font-weight: 900;
+      color: #ffffff;
+      margin-bottom: 6px;
+      letter-spacing: -0.5px;
+    }
+    .team-card__role {
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 800;
+      font-style: normal;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FFD700;
+    }
+    .team-card__hint { display: none; }
+    .team-hint-single {
+      font-family: var(--body);
+      font-size: 0.68rem;
+      font-weight: 800;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Popup overlay */
+    .team-popup-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.3s, visibility 0.3s;
+    }
+    .team-popup-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+    .team-popup {
+      border-radius: 24px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 90%;
+      min-height: 460px;
+      text-align: center;
+      color: #ffffff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transform: translateY(20px) scale(0.97);
+      transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+
+      /* Translucent frosted surface — maroon-tinted, matches hamburger menu glass */
+      background: linear-gradient(160deg, rgba(120,15,15,1) 0%, rgba(20,5,5,1) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 4px 12px rgba(255,255,255,0.2);
+    }
+    /* Photo fills the entire card as a soft, blurred backdrop */
+    .team-popup__photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: brightness(0.6) saturate(110%);
+      transform: scale(1.01);
+      border-radius: 0;
+      margin: 0;
+      border: none;
+      z-index: 0;
+    }
+    /* Light scrim over the photo so text stays legible, without going opaque black */
+    .team-popup::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(20,5,5,1);
+      pointer-events: none;
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .team-popup::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: 1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .team-popup-overlay.open .team-popup {
+      transform: translateY(0) scale(1);
+    }
+    .team-popup__close {
+      position: absolute;
+      top: 16px; right: 16px;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.45);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
+      border: none;
+      border-radius: 50%;
+      color: #ffffff;
+      font-size: 1.2rem;
+      cursor: pointer;
+      line-height: 1;
+      z-index: 3;
+      transition: background 0.2s;
+    }
+    .team-popup__close:hover { background: rgba(0,0,0,0.7); color: #fff; }
+    .team-popup__name {
+      position: relative;
+      z-index: 2;
+      font-family: var(--heading);
+      font-size: 2rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+    .team-popup__role {
+      position: relative;
+      z-index: 2;
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 600;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 24px;
+    }
+    .team-popup__divider {
+      position: relative;
+      z-index: 2;
+      width: 50px;
+      height: 1px;
+      background: rgba(255,255,255,0.3);
+      margin: 0 auto 24px;
+    }
+    .team-popup__bio {
+      position: relative;
+      z-index: 2;
+      font-family: var(--body);
+      font-size: 1rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.85;
+    }
+
+    /* CTA */
+    .about-cta {
+      position: relative;
+      max-width: 760px;
+      margin: 40px auto 100px;
+      border-radius: 20px;
+      padding: 36px 32px;
+      text-align: center;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted */
+      background: linear-gradient(160deg, rgba(120,15,15,0.399) 0%, rgba(20,5,5,0.399) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.35),
+        inset 0 4px 12px rgba(255,255,255,0.15);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .about-cta::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .about-cta__title {
+      font-family: var(--body);
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+      line-height: 1.4;
+    }
+    .about-cta__sub {
+      font-family: var(--body);
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+    .about-cta__btn {
+      display: inline-block;
+      padding: 12px 36px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,0,0,0.2);
+      color: var(--maroon);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .about-cta__btn:hover {
+      transform: translateY(-2px);
+      opacity: 0.9;
+    }
+
+    /* Scroll reveal — visible by default, animated when JS class present */
+    .reveal { opacity: 1; transform: none; }
+    .js .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      will-change: opacity, transform;
+      transition: opacity 0.75s cubic-bezier(0.16,1,0.3,1),
+                  transform 0.75s cubic-bezier(0.16,1,0.3,1);
+    }
+    .js .reveal.visible {
+      opacity: 1;
+      transform: none;
+      will-change: auto;
+    }
+    /* Stagger helpers */
+    .reveal[data-delay="1"] { transition-delay: 0.08s; }
+    .reveal[data-delay="2"] { transition-delay: 0.16s; }
+    .reveal[data-delay="3"] { transition-delay: 0.24s; }
+    .reveal[data-delay="4"] { transition-delay: 0.32s; }
+
+    /* Desktop: show all 3 value cards as a grid, no cycling */
+    @media (min-width: 431px) {
+      .values {
+        max-width: 1000px;
+        padding: 40px 40px;
+      }
+      .value-single {
+        height: auto;
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        background: none;
+        backdrop-filter: none;
+        -webkit-backdrop-filter: none;
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        position: static;
+        overflow: visible;
+      }
+      .value-slide {
+        position: relative;
+        opacity: 1 !important;
+        pointer-events: auto;
+        border-radius: 8px;
+        color: #ffffff;
+
+        /* Translucent frosted surface — maroon-tinted */
+        background: linear-gradient(160deg, rgba(120,15,15,0.499) 0%, rgba(20,5,5,0.499) 100%);
+
+        /* Creates a distinct, physical glass edge */
+        border: 1px solid rgba(255, 255, 255, 0.2);
+
+        /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+        box-shadow:
+          0 20px 40px rgba(0, 0, 0, 0.12),
+          inset 0 4px 12px rgba(255, 255, 255, 0.2);
+
+        /* Standard glassmorphism fallback + layer initialization */
+        backdrop-filter: blur(4px) saturate(140%);
+        -webkit-backdrop-filter: blur(4px) saturate(140%);
+
+        padding: 28px 24px;
+        transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1), box-shadow 0.4s;
+      }
+      /* Isolate and apply the liquid distortion map on its own layer */
+      .value-slide::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        z-index: -1;
+        pointer-events: none;
+
+        /* Triggers a modern rendering context to allow backdrop distortion */
+        backdrop-filter: url(#liquidGlass);
+      }
+      .value-slide:hover {
+        transform: translateY(-8px) scale(1.07);
+        z-index: 3;
+        box-shadow:
+          0 28px 55px rgba(0, 0, 0, 0.2),
+          inset 0 4px 12px rgba(255, 255, 255, 0.4);
+      }
+      .value-dots { display: none; }
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .story { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+      .story__images { height: 300px; }
+      .values__grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ===== PHONES (≤430px) — iPhone 14/15/16, Pixel, Galaxy S ===== */
+    @media (max-width: 430px) {
+      /* Hero — exactly full screen, stats start right after */
+      /* 100svh (small viewport), not 100vh (large viewport) — vh resolves
+         taller than what's actually visible while Safari's bars are
+         expanded, which was pushing the bottom-anchored star below the
+         visible fold until the user scrolled. */
+      .about-hero { height: 100svh; min-height: unset; padding: 100px 20px 0; }
+      .about-hero__label { font-size: 0.62rem; letter-spacing: 2px; margin-bottom: 6px; }
+      .about-hero__title { font-size: clamp(1.7rem, 7vw, 2.1rem); }
+      .about-hero__sub { font-size: 0.85rem; margin-top: 12px; max-width: 100%; line-height: 1.6; }
+      /* Scroll cue — star + "Scroll" label pinned to the bottom of the hero.
+         100svh anchors it to the small-viewport bottom so it stays visible
+         while the browser bars are expanded. */
+      .about-hero { position: relative; }
+      .about-hero__scroll {
+        margin-top: 0;
+        position: absolute;
+        /* Bottom-anchored (not top: calc(100svh - Xpx)) so the star sits a
+           fixed distance from the hero's true bottom edge regardless of
+           its own height — the old top-offset was sized for star+label and
+           left a dead gap once the label was removed below. */
+        bottom: max(24px, env(safe-area-inset-bottom));
+        /* centered via left/right + align-items, not translateX — the reveal
+           animation overwrites transform when it finishes */
+        left: 0;
+        right: 0;
+        transition: opacity 0.35s ease;
+      }
+      /* "Scroll" label removed on mobile — star only, matching desktop */
+
+      /* Story */
+      .story { padding: 40px 20px; gap: 24px; }
+      .story__images { height: 240px; border-radius: 16px; }
+      .story__title { font-size: clamp(1.6rem, 6vw, 2.2rem); margin-bottom: 16px; }
+      .story__text { font-size: 0.95rem; line-height: 1.75; }
+
+      /* Values — maroon card sized to fit the section. The old rules here
+         targeted a dead .value-card class from a previous markup version
+         that no longer matches anything; the real card (.value-single) was
+         quietly rendering at full desktop size on mobile as a result. */
+      .values { padding: 20px 20px 8px; }
+      .value-single { height: 160px; padding: 18px 18px 32px; border-radius: 16px; }
+      .value-slide { top: 18px; left: 18px; right: 18px; }
+      .value-card__icon { font-size: 1.1rem; margin-bottom: 6px; }
+      .value-card__title { font-size: 1.1rem; margin-bottom: 4px; }
+      .value-card__text { font-size: 0.76rem; line-height: 1.5; }
+      .value-dots { bottom: 12px; }
+
+      /* Team section — compact so label, title, cards and hint fit the section.
+         overflow: hidden clips the title's translateX reveal animation, which
+         otherwise widens the layout viewport and shifts the whole page off-center. */
+      .team-section { padding: 28px 20px; overflow: hidden; }
+      .team-section__label { font-size: 0.6rem; letter-spacing: 4px; margin-bottom: 8px; }
+      .team-section__title { font-size: clamp(1.7rem, 7vw, 2.1rem); margin-bottom: 24px; }
+      .team-grid { gap: 16px; }
+      .team-card { width: 130px; }
+      .team-card__photo { width: 96px; height: 96px; margin: 0 auto 10px; }
+      .team-card__photo--initial { font-size: 1.9rem; }
+      .team-card .team-card__name { font-size: 1.05rem; margin-bottom: 4px; }
+      .team-card__role { font-size: 0.6rem; letter-spacing: 1.5px; }
+      .team-hint-single { font-size: 0.6rem; margin-top: 14px; }
+
+      /* Popup — liquid glass at 49.99% so the photo backdrop shows through */
+      .team-popup { padding: 60px 24px 36px; width: calc(100vw - 32px); min-height: 400px; background: linear-gradient(160deg, rgba(120,15,15,0.4999) 0%, rgba(20,5,5,0.4999) 100%); }
+      .team-popup::before { background: rgba(20,5,5,0.4999); }
+      .team-popup__close { top: 12px; left: 50%; right: auto; transform: translateX(-50%); background: none; backdrop-filter: none; -webkit-backdrop-filter: none; }
+      .team-popup__name { font-size: 1.6rem; }
+
+      /* CTA — removed on mobile */
+      .about-cta { display: none; }
+
+      /* Footer below main (z2) so the team popup overlay paints above it;
+         still above the video scrim (z1, earlier in DOM) */
+      .footer-min { z-index: 1; }
+      .about-cta__title { font-size: 0.9rem; letter-spacing: -0.2px; margin-bottom: 28px; }
+      .about-cta__sub { font-size: 0.78rem; margin-bottom: 18px; }
+      .about-cta__btn { padding: 10px 24px; font-size: 0.7rem; letter-spacing: 2px; }
+    }
+
+    /* ===== SMALLEST PHONES (≤375px) — iPhone SE, Galaxy A-series ===== */
+    @media (max-width: 375px) {
+      .about-hero { padding: 90px 16px 40px; }
+      .story { padding: 32px 16px; }
+      .values { padding: 28px 16px; }
+      .value-card { padding: 22px 16px; }
+      .team-section { padding: 28px 16px; }
+      .team-card { width: 120px; }
+      .team-card__photo { width: 90px; height: 90px; }
+      .team-card__photo--initial { font-size: 1.7rem; }
+      .about-cta { margin: 16px 12px 48px; padding: 28px 16px; }
+    }
+  </style>
+  <link rel="preload" href="assets/hero-video-optimized.mp4?v=5" as="video" type="video/mp4">
+  <script src="transitions.js" defer></script>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <!-- FULLSCREEN BACKGROUND VIDEO -->
+  <div class="bg-video-wrap">
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="assets/hero-video-optimized.mp4?v=5" type="video/mp4">
+  </video>
+  </div>
+  <div class="bg-video-overlay"></div>
+
+  <!-- RING CURSOR -->
+  <div class="ring-cursor" id="ringCursor" aria-hidden="true">
+    <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="gold2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+      </defs>
+      <circle cx="38" cy="40" r="28" fill="none" stroke="url(#gold1)" stroke-width="2.5"/>
+      <circle cx="62" cy="40" r="28" fill="none" stroke="url(#gold2)" stroke-width="2.5"/>
+      <path d="M 55 14 A 28 28 0 0 1 55 66" fill="none" stroke="url(#gold2)" stroke-width="2.5"/>
+      <rect class="ring-cursor__diamond" x="30" y="16" width="10" height="10" rx="1" fill="none" stroke="#c0c0c0" stroke-width="1.5" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" aria-label="Main navigation"></nav>
+
+  <!-- HAMBURGER -->
+  <div class="nav__right nav__right--visible" id="navRight">
+    <div id="navBackdrop" class="nav__backdrop"></div>
+    <div class="nav__dropdown" id="navDropdown">
+      <button class="nav__dropdown-btn" id="dropdownBtn" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__dropdown-menu" id="dropdownMenu">
+        <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close menu">&#x2715;</button>
+        <a href="index.html"><img loading="lazy" decoding="async" src="assets/utsah-logo.png" alt="Utsah Events" class="menu-logo"></a>
+        <div class="menu-divider"></div>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="events.html">Events</a>
+        <a href="socials.html">Socials</a>
+        <a href="team.html">Our Team</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- PAGE CONTENT -->
+  <main class="about-page">
+
+    <!-- HERO -->
+    <section class="about-hero">
+      <p class="about-hero__label reveal" data-delay="1">Utsah Events · Bardoli, Gujarat</p>
+      <h1 class="about-hero__title reveal" data-delay="2">The Founders<br><span>Behind It</span></h1>
+      <p class="about-hero__sub reveal" data-delay="3">Three people, one shared vision — to make every celebration in Gujarat feel extraordinary, personal, and unforgettable.</p>
+      <div class="about-hero__scroll">
+        <div class="about-hero__scroll-star">✦</div>
+      </div>
+    </section>
+
+    <!-- STORY -->
+
+    <!-- VALUES -->
+    <section class="values">
+      <div class="value-single reveal" id="valueSingle">
+        <div class="value-slide active">
+          <div class="value-card__icon">✦</div>
+          <h3 class="value-card__title">Precision</h3>
+          <p class="value-card__text">Every detail is planned, every moment is timed. We leave nothing to chance.</p>
+        </div>
+        <div class="value-slide">
+          <div class="value-card__icon">&#x2665;&#xFE0E;</div>
+          <h3 class="value-card__title">Passion</h3>
+          <p class="value-card__text">We treat your event as if it were our own — with energy, love, and full dedication.</p>
+        </div>
+        <div class="value-slide">
+          <div class="value-card__icon">◈</div>
+          <h3 class="value-card__title">Personalisation</h3>
+          <p class="value-card__text">No two events are the same. Every celebration is crafted around your story.</p>
+        </div>
+        <div class="value-dots">
+          <span class="value-dot active"></span>
+          <span class="value-dot"></span>
+          <span class="value-dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="team-section" id="team">
+      <p class="team-section__label reveal">The Founders</p>
+      <h2 class="team-section__title reveal">
+        <span class="team-title-line team-title-line--left">The Faces Behind</span>
+        <span class="team-title-line team-title-line--right team-section__highlight">Utsah</span>
+      </h2>
+      <div class="team-grid">
+        <div class="team-card reveal" data-name="Utsav Desai" data-role="Founder & Lead Planner" data-photo="assets/team/utsav-new.jpg" data-photo-position="center 5%" data-bio="The visionary behind Utsah Events. Utsav brings creative direction and meticulous planning to every celebration he touches. His passion for perfection and deep roots in Gujarati culture make every event feel authentically special.">
+          <img loading="lazy" decoding="async" src="assets/team/utsav-new.jpg" alt="Utsav Desai" class="team-card__photo" style="object-position: center 5%;">
+          <h3 class="team-card__name">Utsav Desai</h3>
+          <p class="team-card__role">Founder & Lead Planner</p>
+        </div>
+        <div class="team-card reveal" data-name="Dhwani Shah Desai" data-role="Co-Founder & Creative Director" data-photo="assets/team/dhwani.jpg" data-photo-position="center 20%" data-bio="Dhwani's eye for design and deep understanding of culture ensures every event feels personal, beautiful, and unforgettable. She leads all creative direction — from florals to aesthetics — with elegance and precision.">
+          <img loading="lazy" decoding="async" src="assets/team/dhwani.jpg" alt="Dhwani Shah Desai" class="team-card__photo" style="object-position: center 20%;">
+          <h3 class="team-card__name">Dhwani Shah Desai</h3>
+          <p class="team-card__role">Co-Founder & Creative Director</p>
+        </div>
+        <div class="team-card reveal" data-name="Harsh Desai" data-role="Co-Founder & Operations Manager" data-bio="Harsh keeps every event running on schedule behind the scenes — coordinating vendors, timelines, and on-ground logistics so the rest of the team can focus on the celebration itself.">
+          <div class="team-card__photo team-card__photo--initial">H</div>
+          <h3 class="team-card__name">Harsh Desai</h3>
+          <p class="team-card__role">Co-Founder & Operations Manager</p>
+        </div>
+      </div>
+      <p class="team-hint-single">Tap to read more</p>
+    </section>
+
+    <!-- TEAM POPUP -->
+    <div class="team-popup-overlay" id="teamPopup">
+      <div class="team-popup">
+        <button class="team-popup__close" id="popupClose">×</button>
+        <img loading="lazy" decoding="async" src="" alt="" class="team-popup__photo" id="popupPhoto">
+        <h3 class="team-popup__name" id="popupName"></h3>
+        <p class="team-popup__role" id="popupRole"></p>
+        <div class="team-popup__divider"></div>
+        <p class="team-popup__bio" id="popupBio"></p>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="about-cta reveal">
+      <h2 class="about-cta__title">Every Great Celebration<br>Starts With A Conversation.</h2>
+      <a href="contact.html" class="about-cta__btn">Start Planning</a>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+    <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script>
+    // Team popup
+    const popup = document.getElementById('teamPopup');
+    const popupClose = document.getElementById('popupClose');
+    let popupOpenScrollY = 0;
+    document.querySelectorAll('.team-card').forEach(card => {
+      card.addEventListener('click', () => {
+        const popupPhoto = document.getElementById('popupPhoto');
+        if (card.dataset.photo) {
+          popupPhoto.src = card.dataset.photo;
+          popupPhoto.alt = card.dataset.name;
+          popupPhoto.style.objectPosition = card.dataset.photoPosition || 'center top';
+          popupPhoto.style.display = '';
+        } else {
+          popupPhoto.removeAttribute('src');
+          popupPhoto.alt = '';
+          popupPhoto.style.display = 'none';
+        }
+        document.getElementById('popupName').textContent = card.dataset.name;
+        document.getElementById('popupRole').textContent = card.dataset.role;
+        document.getElementById('popupBio').textContent = card.dataset.bio;
+        popupOpenScrollY = window.scrollY;
+        popup.classList.add('open');
+      });
+    });
+    popupClose.addEventListener('click', () => popup.classList.remove('open'));
+    popup.addEventListener('click', (e) => { if (e.target === popup) popup.classList.remove('open'); });
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') popup.classList.remove('open'); });
+    // Close the popup when the page scrolls; the 10px threshold ignores
+    // residual momentum-scroll events right after tapping a card open.
+    window.addEventListener('scroll', () => {
+      if (popup.classList.contains('open') && Math.abs(window.scrollY - popupOpenScrollY) > 10) {
+        popup.classList.remove('open');
+      }
+    }, { passive: true });
+
+    // Hero scroll cue — hide once the page scrolls, reappear back at the hero
+    (function() {
+      const cue = document.querySelector('.about-hero__scroll');
+      if (!cue) return;
+      const onScroll = () => {
+        cue.style.opacity = window.scrollY > 40 ? '0' : '';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+    // Image pop-out on scroll
+    (function() {
+      const imgWrap = document.getElementById('storySlideshow');
+      const story = imgWrap ? imgWrap.closest('.story') : null;
+      if (!imgWrap || !story) return;
+      window.addEventListener('scroll', () => {
+        const rect = story.getBoundingClientRect();
+        const inView = rect.top < window.innerHeight * 0.3 && rect.bottom > window.innerHeight * 0.3;
+        imgWrap.classList.toggle('expanded', inView);
+      }, { passive: true });
+    })();
+
+    // Values cycling card — auto-cycles, swipeable, dots tappable
+    (function() {
+      const single = document.getElementById('valueSingle');
+      const slides = document.querySelectorAll('.value-slide');
+      const dots = document.querySelectorAll('.value-dot');
+      let idx = 0, timer;
+      function show(n) {
+        slides[idx].classList.remove('active');
+        dots[idx].classList.remove('active');
+        idx = (n + slides.length) % slides.length;
+        slides[idx].classList.add('active');
+        dots[idx].classList.add('active');
+      }
+      function start() { timer = setInterval(() => show(idx + 1), 2800); }
+      function restart() { clearInterval(timer); start(); }
+      let startX = 0;
+      single.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+      single.addEventListener('touchend', e => {
+        const dx = e.changedTouches[0].clientX - startX;
+        if (Math.abs(dx) > 40) { show(idx + (dx < 0 ? 1 : -1)); restart(); }
+      }, { passive: true });
+      dots.forEach((dot, i) => dot.addEventListener('click', () => { show(i); restart(); }));
+      start();
+    })();
+
+    // Scroll reveal — add .js so CSS animations activate
+    document.documentElement.classList.add('js');
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    reveals.forEach(el => observer.observe(el));
+
+    // Story slideshow
+    (function() {
+      const slides = document.querySelectorAll('#storySlideshow .story__slide');
+      let idx = 0;
+      setInterval(() => {
+        slides[idx].classList.remove('active');
+        idx = (idx + 1) % slides.length;
+        slides[idx].classList.add('active');
+      }, 3500);
+    })();
+
+    // Menu controls (hamburger click + close + backdrop)
+    (function() {
+      const dropBtn = document.getElementById('dropdownBtn');
+      const dropMenu = document.getElementById('dropdownMenu');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const backdrop = document.getElementById('navBackdrop');
+      function open() { if (!dropMenu) return; dropMenu.classList.add('open'); if (dropBtn) { dropBtn.classList.add('active'); dropBtn.setAttribute('aria-expanded','true'); } }
+      function close() { if (!dropMenu) return; dropMenu.classList.remove('open'); if (dropBtn) { dropBtn.classList.remove('active'); dropBtn.setAttribute('aria-expanded','false'); } }
+      if (dropBtn) dropBtn.addEventListener('click', e => { e.stopPropagation(); dropMenu.classList.contains('open') ? close() : open(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      if (backdrop) backdrop.addEventListener('click', close);
+      if (dropMenu) dropMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('scroll', () => { if (window.scrollY > 20) close(); }, { passive: true });
+    })();
+
+  </script>
+<script src="cursor.js"></script>
+
+</body>
+</html>

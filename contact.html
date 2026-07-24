@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(min-width: 431px)" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Contact Us — Utsah Events | Bardoli, Gujarat</title>
+  <meta name="description" content="Get in touch with Utsah Events. Let's plan your perfect wedding or celebration in Bardoli, Gujarat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    /* Logo — maroon */
+    .nav__logo-img {
+      filter: sepia(1) hue-rotate(-45deg) saturate(6) brightness(0.55) !important;
+    }
+    .nav__logo { cursor: pointer; }
+    @media (min-width: 431px) {
+      #nav { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1) !important; }
+      #dropdownBtn { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1); }
+    }
+    @media (max-width: 430px) {
+      .nav { pointer-events: all !important; }
+      .nav__logo { pointer-events: all !important; display: block; }
+    }
+
+    .contact-page { position: relative; z-index: 2; }
+
+    /* HERO */
+    .contact-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 130px 24px 40px;
+    }
+    .contact-hero__label {
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 16px;
+    }
+    .contact-hero__title {
+      font-family: var(--heading);
+      font-size: clamp(3rem, 12vw, 5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 16px;
+    }
+    /* Desktop only — matches the Times New Roman treatment on the home
+       hero. Scoped above the tablet breakpoint so phone/tablet keep
+       their existing font untouched. */
+    @media (min-width: 1025px) {
+      .contact-hero__title { font-family: 'Times New Roman', Times, serif; }
+    }
+    .contact-hero__title span { color: var(--maroon); }
+    .contact-hero__sub {
+      font-family: var(--body);
+      font-size: 0.95rem;
+      color: #ffffff;
+      font-weight: 600;
+      max-width: 300px;
+      line-height: 1.7;
+    }
+    .contact-hero__scroll {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #FFD700;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .contact-hero__scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, #c9a84c, transparent);
+    }
+    /* Phones — compact hero type matching the about/events heroes, with the
+       glowing scroll cue pinned to the bottom of the section. Placed after
+       the base hero rules so these equal-specificity overrides win. */
+    @media (max-width: 430px) {
+      .contact-hero { position: relative; min-height: 100svh; padding: 24px 20px; }
+      .contact-hero__label { font-size: 0.62rem; letter-spacing: 2px; margin-bottom: 6px; }
+      .contact-hero__title { font-size: clamp(1.7rem, 7vw, 2.1rem); margin-bottom: 10px; }
+      .contact-hero__sub { font-size: 0.8rem; line-height: 1.6; }
+      .contact-hero__scroll {
+        margin-top: 0;
+        position: absolute;
+        /* Bottom-anchored so the star sits a fixed distance from the hero's
+           true bottom edge — the old top-offset was sized for star+label
+           and left a dead gap once the label was removed below. */
+        bottom: max(24px, env(safe-area-inset-bottom));
+        left: 0;
+        right: 0;
+        font-size: 0.6rem;
+        letter-spacing: 0.2em;
+        color: #c9a84c;
+        text-shadow: 0 0 10px rgba(201,168,76,0.9), 0 0 24px rgba(201,168,76,0.5);
+        transition: opacity 0.35s ease;
+      }
+      /* Star instead of a line — the ::before glyph replaces the div's
+         width/height/background box; the div itself just carries the glow. */
+      .contact-hero__scroll-line {
+        width: auto;
+        height: auto;
+        background: none;
+        font-size: 1.1rem;
+        line-height: 1;
+        color: #c9a84c;
+        text-shadow:
+          0 0 10px rgba(201,168,76,1),
+          0 0 24px rgba(201,168,76,0.7),
+          0 0 44px rgba(201,168,76,0.4);
+        animation: contactLinePulse 2s ease infinite;
+      }
+      .contact-hero__scroll-line::before { content: '✦'; }
+      .contact-hero__scroll span { display: none; } /* "Scroll" label removed — star only */
+      @keyframes contactLinePulse {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.15); }
+      }
+    }
+
+    /* CONTACT BODY */
+    .contact-body {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 36px 20px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    /* Desktop — two column layout */
+    @media (min-width: 431px) {
+      .contact-body {
+        max-width: 1000px;
+        padding: 60px 40px 80px;
+        display: grid;
+        grid-template-columns: 1fr 1.4fr;
+        gap: 24px;
+        align-items: stretch;
+      }
+      .contact-form-card {
+        border-radius: 20px;
+        padding: 32px 32px;
+      }
+    }
+
+    /* INFO — no card box, just floating text */
+    .contact-info-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 100%;
+      padding: 4px 4px;
+      color: #ffffff;
+    }
+    .contact-info-card__headline {
+      font-family: var(--heading);
+      font-size: clamp(1.3rem, 2.6vw, 1.7rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.25;
+      margin-bottom: 10px;
+    }
+    .contact-info-card__sub {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-bottom: 28px;
+    }
+
+    /* INFO GRID — 2x2, mirrors location / social / email / contact blocks */
+    .contact-info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+    .contact-info-block__title {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 10px;
+    }
+    .contact-info-block__text,
+    .contact-info-block a {
+      display: block;
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.6;
+      text-decoration: none;
+    }
+    .contact-info-block a:hover { color: #FFD700; }
+
+    /* Phones — form first, info card below it; everything centered and
+       stacked one block at a time instead of the 2-column grid. */
+    @media (max-width: 430px) {
+      .contact-body { gap: 28px; padding-bottom: 16px; }
+      /* Split the info card so its two halves take independent flex order:
+         headline/sub above the form, the location/social/email/contact
+         grid below it. display:contents drops the card's own box and
+         promotes its two children to be direct flex items of
+         .contact-body, so each can carry its own `order`. */
+      .contact-info-card { display: contents; }
+      .contact-info-card__top { order: 1; }
+      .contact-form-card { order: 2; }
+      .contact-info-grid { order: 3; }
+
+      .contact-info-card__headline,
+      .contact-info-card__sub { text-align: center; }
+      .contact-info-grid {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 28px;
+      }
+      .contact-info-block { text-align: center; }
+      .contact-info-block:nth-child(2) { display: none; } /* Social Media */
+      /* The global 44px tap-target min-height (line ~2807) pads these
+         block-level links with invisible space below their text (block
+         content top-aligns, so the extra height lands underneath) —
+         unlike the Location block's plain <span>, which has no such
+         inflation. That made the gap after Email/Contact look bigger
+         than the gap after Location even though the grid gap is equal.
+         Removing the min-height here lets every block's box hug its
+         visible text, so the 28px grid gap reads as equal everywhere. */
+      .contact-info-block a { min-height: 0; }
+    }
+
+    /* FORM CARD */
+    .contact-form-card {
+      position: relative;
+      border-radius: 16px;
+      padding: 24px 20px;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted, matches other CTA cards */
+      background: linear-gradient(160deg, rgba(120,15,15,0.4) 0%, rgba(20,5,5,0.45) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 20px 50px rgba(0, 0, 0, 0.3),
+        inset 0 1px 2px rgba(255, 255, 255, 0.15),
+        inset 0 4px 12px rgba(255, 255, 255, 0.2);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .contact-form-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .contact-form-card__heading {
+      font-family: var(--heading);
+      font-size: clamp(1.3rem, 2.6vw, 1.6rem);
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .contact-form-card__label {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.6;
+      margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 14px;
+    }
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 14px;
+    }
+    .form-group__title {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 800;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 4px;
+    }
+    .form-group input,
+    .form-group textarea {
+      background: rgba(0,0,0,0.22);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50px;
+      padding: 14px 20px;
+      font-family: var(--body);
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+      outline: none;
+      width: 100%;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder { color: rgba(255,255,255,0.4); }
+    .form-group input:focus,
+    .form-group textarea:focus { border-color: #FFD700; }
+    .form-group textarea { resize: none; height: 100px; border-radius: 24px; }
+
+    /* EVENT TYPE — chip selector */
+    .event-type-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 8px;
+    }
+    .event-type-chip {
+      padding: 9px 18px;
+      border-radius: 50px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: transparent;
+      color: rgba(255,255,255,0.8);
+      font-family: var(--body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s, color 0.2s;
+    }
+    .event-type-chip.active {
+      background: var(--maroon);
+      border-color: var(--maroon);
+      color: #ffffff;
+    }
+
+    /* Dropdown replacement for the chips — mobile only, see media query below */
+    .event-type-select {
+      display: none;
+      width: 100%;
+      background: rgba(0,0,0,0.22) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='none' stroke='%23ffffff' stroke-width='2'%3E%3Cpath d='M5 8l5 5 5-5'/%3E%3C/svg%3E") no-repeat right 18px center;
+      background-size: 14px;
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 50px;
+      padding: 12px 44px 12px 18px;
+      font-family: var(--body);
+      font-size: 16px;
+      font-weight: 500;
+      color: #ffffff;
+      outline: none;
+      box-sizing: border-box;
+      -webkit-appearance: none;
+      appearance: none;
+      transition: border-color 0.2s;
+    }
+    .event-type-select:focus { border-color: #FFD700; }
+    .event-type-select option { background: #1a0505; color: #ffffff; }
+
+    /* OFFERS CHECKBOX */
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 4px 0 20px;
+      cursor: pointer;
+    }
+    .form-checkbox input {
+      width: 16px;
+      height: 16px;
+      accent-color: var(--maroon);
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .form-checkbox span {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+    }
+
+    .form-submit {
+      display: block;
+      width: 100%;
+      padding: 15px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,0,0,0.2);
+      color: var(--maroon);
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      border-radius: 100px;
+      cursor: pointer;
+      transition: transform 0.2s, opacity 0.2s;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .form-submit:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    /* Phones — form card smaller relative to the section: tighter padding,
+       type scale, and spacing throughout. Input font-size stays 16px to
+       stop iOS Safari auto-zooming on focus. Placed after the base form
+       rules above so these equal-specificity overrides win the cascade. */
+    @media (max-width: 430px) {
+      .contact-form-card { padding: 20px 16px; border-radius: 14px; text-align: center; }
+      .contact-form-card__heading { font-size: 1.15rem; margin-bottom: 6px; }
+      .contact-form-card__label { font-size: 0.78rem; margin-bottom: 16px; }
+      .form-row { gap: 10px; margin-bottom: 10px; }
+      .form-group { gap: 5px; margin-bottom: 10px; align-items: center; }
+      .form-group__title { font-size: 0.6rem; }
+      .form-group input,
+      .form-group textarea { padding: 12px 16px; text-align: center; }
+      .form-group textarea { height: 76px; }
+      .form-checkbox { margin: 2px 0 14px; gap: 8px; justify-content: center; }
+      .form-checkbox span { font-size: 0.74rem; }
+      .form-submit { padding: 13px; font-size: 0.72rem; letter-spacing: 2px; }
+
+      /* Chips → single dropdown select on mobile */
+      .event-type-chips { display: none; justify-content: center; }
+      .event-type-select { display: block; text-align: center; text-align-last: center; }
+    }
+
+    .form-success {
+      display: none;
+      text-align: center;
+      padding: 24px 0;
+    }
+    .form-success__icon { font-size: 2rem; margin-bottom: 12px; color: #c9a84c; }
+    .form-success__title {
+      font-family: var(--heading);
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+    .form-success__text {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.85);
+    }
+    /* Send modal */
+    #sendChoiceModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 99999;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      align-items: flex-end;
+      justify-content: center;
+      padding-bottom: max(24px, env(safe-area-inset-bottom));
+    }
+    .send-modal-inner {
+      position: relative;
+      border-radius: 24px 24px 20px 20px;
+      padding: 28px 24px 24px;
+      width: calc(100% - 32px);
+      max-width: 420px;
+      text-align: center;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted */
+      background: linear-gradient(160deg, rgba(120,15,15,0.35) 0%, rgba(20,5,5,0.3) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 -8px 40px rgba(0,0,0,0.4),
+        inset 0 4px 12px rgba(255,255,255,0.15);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .send-modal-inner::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .send-modal-label {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 8px;
+    }
+    .send-modal-title {
+      font-family: var(--heading);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 20px;
+    }
+    .send-modal-btns { display: flex; flex-direction: column; gap: 10px; }
+    .send-modal-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px;
+      border: none;
+      border-radius: 12px;
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .send-modal-btn--wa { background: #25d366; color: #fff; }
+    .send-modal-btn--email { background: var(--maroon); color: #fff; }
+    .send-modal-btn--cancel { background: none; color: rgba(255,255,255,0.65); font-size: 0.8rem; padding: 10px; }
+  </style>
+  <link rel="preload" href="assets/hero-video-optimized.mp4?v=5" as="video" type="video/mp4">
+  <script src="transitions.js" defer></script>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <!-- BACKGROUND VIDEO -->
+  <div class="bg-video-wrap">
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="assets/hero-video-optimized.mp4?v=5" type="video/mp4">
+  </video>
+  </div>
+  <div class="bg-video-overlay"></div>
+
+  <!-- RING CURSOR -->
+  <div class="ring-cursor" id="ringCursor" aria-hidden="true">
+    <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="gold2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+      </defs>
+      <circle cx="38" cy="40" r="28" fill="none" stroke="url(#gold1)" stroke-width="2.5"/>
+      <circle cx="62" cy="40" r="28" fill="none" stroke="url(#gold2)" stroke-width="2.5"/>
+      <path d="M 55 14 A 28 28 0 0 1 55 66" fill="none" stroke="url(#gold2)" stroke-width="2.5"/>
+      <rect class="ring-cursor__diamond" x="30" y="16" width="10" height="10" rx="1" fill="none" stroke="#c0c0c0" stroke-width="1.5" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" aria-label="Main navigation"></nav>
+
+  <!-- HAMBURGER -->
+  <div class="nav__right nav__right--visible" id="navRight">
+    <div id="navBackdrop" class="nav__backdrop"></div>
+    <div class="nav__dropdown" id="navDropdown">
+      <button class="nav__dropdown-btn" id="dropdownBtn" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__dropdown-menu" id="dropdownMenu">
+        <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close menu">&#x2715;</button>
+        <a href="index.html"><img src="assets/utsah-logo.png" alt="Utsah Events" class="menu-logo"></a>
+        <div class="menu-divider"></div>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="events.html">Events</a>
+        <a href="socials.html">Socials</a>
+        <a href="team.html">Our Team</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="contact-page">
+
+    <!-- HERO -->
+    <section class="contact-hero">
+      <p class="contact-hero__label">Get In Touch</p>
+      <h1 class="contact-hero__title"><span>Let's</span> Talk</h1>
+      <p class="contact-hero__sub">Tell us about your event and we'll get back to you within 24 hours.</p>
+      <div class="contact-hero__scroll">
+        <div class="contact-hero__scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- BODY -->
+    <div class="contact-body">
+
+      <!-- INFO -->
+      <div class="contact-info-card">
+        <div class="contact-info-card__top">
+          <p class="contact-info-card__headline">Have an event in mind?<br>We'd love to help.</p>
+          <p class="contact-info-card__sub">Discover celebrations you won't find anywhere else — thoughtfully planned, personally delivered.</p>
+        </div>
+        <div class="contact-info-grid">
+          <div class="contact-info-block">
+            <p class="contact-info-block__title">Location</p>
+            <span class="contact-info-block__text">111, Parle Point, Lal Bahadur Shastri Rd,<br>Bardoli, Gujarat 394601</span>
+          </div>
+          <div class="contact-info-block">
+            <p class="contact-info-block__title">Social Media</p>
+            <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener">YouTube</a>
+            <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener">WhatsApp</a>
+          </div>
+          <div class="contact-info-block">
+            <p class="contact-info-block__title">Email</p>
+            <a href="mailto:sales@utsahevents.com">sales@utsahevents.com</a>
+          </div>
+          <div class="contact-info-block">
+            <p class="contact-info-block__title">Contact</p>
+            <a href="tel:+918200395197">+91 82003 95197</a>
+            <a href="tel:+912622356457">+91 2622 356457</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <div class="contact-form-card">
+        <p class="contact-form-card__heading">Tell Us What You Need</p>
+        <p class="contact-form-card__label">Our team is ready to assist you with every detail, big or small.</p>
+        <form id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <input type="text" id="firstName" placeholder="First Name" required>
+            </div>
+            <div class="form-group">
+              <input type="text" id="lastName" placeholder="Last Name">
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <input type="tel" id="phone" placeholder="Phone Number">
+            </div>
+            <div class="form-group">
+              <input type="email" id="email" placeholder="Email Address">
+            </div>
+          </div>
+          <div class="form-group">
+            <p class="form-group__title">Type of Inquiry</p>
+            <div class="event-type-chips" id="eventTypeChips">
+              <button type="button" class="event-type-chip" data-value="Wedding">Wedding</button>
+              <button type="button" class="event-type-chip" data-value="Corporate Event">Corporate</button>
+              <button type="button" class="event-type-chip" data-value="Live Event">Live Event</button>
+              <button type="button" class="event-type-chip" data-value="Birthday">Birthday</button>
+              <button type="button" class="event-type-chip" data-value="Baby Shower">Baby Shower</button>
+              <button type="button" class="event-type-chip" data-value="Other">Other</button>
+            </div>
+            <select class="event-type-select" id="eventTypeSelect">
+              <option value="" disabled selected>Select event type</option>
+              <option value="Wedding">Wedding</option>
+              <option value="Corporate Event">Corporate</option>
+              <option value="Live Event">Live Event</option>
+              <option value="Birthday">Birthday</option>
+              <option value="Baby Shower">Baby Shower</option>
+              <option value="Other">Other</option>
+            </select>
+            <input type="hidden" id="eventType" value="">
+          </div>
+          <div class="form-group">
+            <textarea id="message" placeholder="Tell us about your event — date, venue, guest count..."></textarea>
+          </div>
+          <label class="form-checkbox">
+            <input type="checkbox" id="offersOptIn">
+            <span>I'd like to receive exclusive offers and updates</span>
+          </label>
+          <button type="submit" class="form-submit">Submit</button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <div class="form-success__icon">✦</div>
+          <h3 class="form-success__title">Message Sent.</h3>
+          <p class="form-success__text">Thank you for reaching out. We'll be in touch within 24 hours.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- SEND MODAL -->
+  <div id="sendChoiceModal">
+    <div class="send-modal-inner">
+      <p class="send-modal-label">Send via</p>
+      <h3 class="send-modal-title">How would you like<br>to reach us?</h3>
+      <div class="send-modal-btns">
+        <button id="sendViaWA" class="send-modal-btn send-modal-btn--wa">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+          WhatsApp
+        </button>
+        <button id="sendViaEmail" class="send-modal-btn send-modal-btn--email">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><polyline points="2,4 12,13 22,4"/></svg>
+          Email
+        </button>
+        <button id="modalClose" class="send-modal-btn send-modal-btn--cancel">✕</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+    <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script>
+    // Event type chip selector (desktop)
+    document.querySelectorAll('.event-type-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        document.querySelectorAll('.event-type-chip').forEach(c => c.classList.remove('active'));
+        chip.classList.add('active');
+        document.getElementById('eventType').value = chip.dataset.value;
+        document.getElementById('eventTypeSelect').value = chip.dataset.value;
+      });
+    });
+
+    // Event type dropdown (mobile)
+    document.getElementById('eventTypeSelect').addEventListener('change', function() {
+      document.getElementById('eventType').value = this.value;
+      document.querySelectorAll('.event-type-chip').forEach(c => {
+        c.classList.toggle('active', c.dataset.value === this.value);
+      });
+    });
+
+    // Form submit
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const firstName = document.getElementById('firstName').value.trim();
+      const lastName  = document.getElementById('lastName').value.trim();
+      const phone     = document.getElementById('phone').value.trim();
+      const email     = document.getElementById('email').value.trim();
+      const eventType = document.getElementById('eventType').value;
+      const message   = document.getElementById('message').value.trim();
+      const offersOptIn = document.getElementById('offersOptIn').checked;
+      const text = `Hi Utsah Events! 👋\n\nName: ${firstName} ${lastName}\nPhone: ${phone}${email ? `\nEmail: ${email}` : ''}\nEvent: ${eventType}\n\nMessage: ${message}${offersOptIn ? '\n\n(Would like to receive exclusive offers and updates)' : ''}`;
+      const waUrl    = `https://api.whatsapp.com/send/?phone=918200395197&text=${encodeURIComponent(text)}`;
+      const emailUrl = `mailto:sales@utsahevents.com?subject=Event Enquiry — ${eventType}&body=${encodeURIComponent(text)}`;
+      document.getElementById('sendChoiceModal').style.display = 'flex';
+      document.getElementById('sendViaWA').onclick = () => { window.open(waUrl, '_blank'); closeModal(); };
+      document.getElementById('sendViaEmail').onclick = () => { window.open(emailUrl); closeModal(); };
+      function closeModal() {
+        document.getElementById('sendChoiceModal').style.display = 'none';
+        document.getElementById('contactForm').style.display = 'none';
+        document.getElementById('formSuccess').style.display = 'block';
+      }
+      document.getElementById('modalClose').onclick = () => {
+        document.getElementById('sendChoiceModal').style.display = 'none';
+      };
+    });
+
+    // Menu controls
+    (function() {
+      const dropBtn = document.getElementById('dropdownBtn');
+      const dropMenu = document.getElementById('dropdownMenu');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const backdrop = document.getElementById('navBackdrop');
+      function open() { if (!dropMenu) return; dropMenu.classList.add('open'); if (dropBtn) { dropBtn.classList.add('active'); dropBtn.setAttribute('aria-expanded','true'); } }
+      function close() { if (!dropMenu) return; dropMenu.classList.remove('open'); if (dropBtn) { dropBtn.classList.remove('active'); dropBtn.setAttribute('aria-expanded','false'); } }
+      if (dropBtn) dropBtn.addEventListener('click', e => { e.stopPropagation(); dropMenu.classList.contains('open') ? close() : open(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      if (backdrop) backdrop.addEventListener('click', close);
+      if (dropMenu) dropMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('scroll', () => { if (window.scrollY > 20) close(); }, { passive: true });
+    })();
+
+    // Hero scroll cue — hide once the page scrolls, reappear back at the hero
+    (function() {
+      const cue = document.querySelector('.contact-hero__scroll');
+      if (!cue) return;
+      const onScroll = () => {
+        cue.style.opacity = window.scrollY > 40 ? '0' : '';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+  </script>
+<script src="cursor.js"></script>
+
+</body>
+</html>

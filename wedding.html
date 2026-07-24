@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en" class="js">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Wedding — Utsah Events</title>
+  <meta name="description" content="Utsah Events designs and manages weddings in Bardoli, Gujarat — from intimate ceremonies to grand celebrations, crafted with passion and precision.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    .gallery-page { padding: 140px 0 80px; }
+    .gallery-page__back {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-size: 0.85rem; font-weight: 600; color: var(--maroon);
+      margin-bottom: 32px; transition: gap 0.3s;
+    }
+    .gallery-page__back:hover { gap: 14px; }
+    .gallery-page__title {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 700; line-height: 1.12; margin-bottom: 16px;
+    }
+    .gallery-page__count {
+      font-size: 0.9rem; color: var(--text-dim); margin-bottom: 48px;
+    }
+    .gallery__grid {
+      display: columns;
+      columns: 3;
+      column-gap: 12px;
+    }
+    .gallery__item {
+      break-inside: avoid;
+      margin-bottom: 12px;
+      border-radius: 12px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .gallery__item img {
+      width: 100%; display: block;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .gallery__item:hover img { transform: scale(1.04); }
+
+    /* Lightbox */
+    .lightbox {
+      position: fixed; inset: 0; z-index: 10000;
+      background: rgba(0,0,0,0.95);
+      display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .lightbox.open { display: flex; opacity: 1; }
+    .lightbox img {
+      max-width: 90vw; max-height: 90vh;
+      object-fit: contain; border-radius: 8px;
+    }
+    .lightbox__close, .lightbox__nav {
+      position: relative;
+      display: flex; align-items: center; justify-content: center;
+      border-radius: 50%;
+      color: #fff;
+      cursor: pointer;
+      width: 48px; height: 48px;
+      min-width: 44px; min-height: 44px;
+
+      /* Translucent frosted surface */
+      background: rgba(255,255,255,0.06);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 8px 24px rgba(0,0,0,0.3),
+        inset 0 1.5px 0 rgba(255,255,255,0.25);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+
+      transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1), background 0.25s, color 0.2s;
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .lightbox__close::after, .lightbox__nav::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .lightbox__close {
+      position: absolute; top: 24px; right: 24px;
+      font-size: 1.3rem;
+    }
+    .lightbox__nav {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      font-size: 1.5rem;
+    }
+    .lightbox__close:hover, .lightbox__nav:hover {
+      background: rgba(255,255,255,0.12);
+      color: var(--maroon);
+      transform: scale(1.08);
+    }
+    .lightbox__nav:hover { transform: translateY(-50%) scale(1.08); }
+    .lightbox__prev { left: 20px; }
+    .lightbox__next { right: 20px; }
+
+    @media (max-width: 900px) {
+      .gallery__grid { columns: 2; }
+    }
+    @media (max-width: 500px) {
+      .gallery__grid { columns: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+  <!-- BACKGROUND PARTICLES -->
+  <canvas id="particles" class="bg-canvas" aria-hidden="true"></canvas>
+
+  <!-- RING CURSOR -->
+  <div class="ring-cursor" id="ringCursor" aria-hidden="true">
+    <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="gold2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+      </defs>
+      <circle cx="36" cy="46" r="24" fill="none" stroke="url(#gold1)" stroke-width="4"/>
+      <circle cx="64" cy="46" r="24" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <path d="M 52.5 27 A 24 24 0 0 1 52.5 65" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <rect class="ring-cursor__diamond" x="30" y="16" width="10" height="10" rx="1" fill="none" stroke="#c0c0c0" stroke-width="1.5" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <nav class="nav scrolled" id="nav">
+    <a href="index.html" class="nav__logo">UTSAH <span>EVENTS</span></a>
+    <ul class="nav__links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="wedding.html">Wedding</a></li>
+      <li><a href="corporate.html">Corporate</a></li>
+      <li><a href="live.html">Live</a></li>
+      <li><a href="index.html#contact" class="nav__cta">Get in Touch</a></li>
+    </ul>
+    <button class="nav__burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="wedding.html">Wedding</a></li>
+      <li><a href="corporate.html">Corporate</a></li>
+      <li><a href="live.html">Live</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+  </div>
+
+  <section class="gallery-page">
+    <div class="container">
+      <a href="index.html#services" class="gallery-page__back">← Back to Services</a>
+      <h1 class="gallery-page__title">Wedding<span class="accent">.</span></h1>
+      <p class="gallery-page__count">91 photos from our events</p>
+      <div class="gallery__grid">
+        <div class="gallery__item"><img src="assets/events/wedding/uw11.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w11.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw32.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w6.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw46.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw39.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw14.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw35.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw22.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw50.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w9.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w12.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w8.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw48.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w23.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w26.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw28.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw23.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww5.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/5.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w15.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww8.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww2.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw30.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw27.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w20.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww10.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw26.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw12.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw4.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw13.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw29.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/3.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw17.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw16.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw43.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w7.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w21.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w4.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw47.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w25.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w16.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/2.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw42.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww7.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww9.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w1.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw9.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw44.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww1.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw5.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw21.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw38.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw1.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw8.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw10.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww6.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw7.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w13.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw25.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w22.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw19.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww3.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w24.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw33.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw49.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w17.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w27.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw3.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw15.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw20.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/4.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw34.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw41.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw36.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w10.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/ww4.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw40.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw31.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw18.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w19.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw2.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w2.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw37.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w5.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w3.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w18.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw6.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw45.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/uw24.jpeg" alt="Wedding photo" loading="lazy"></div>
+        <div class="gallery__item"><img src="assets/events/wedding/w14.jpeg" alt="Wedding photo" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lbClose">×</button>
+    <button class="lightbox__nav lightbox__prev" id="lbPrev">‹</button>
+    <button class="lightbox__nav lightbox__next" id="lbNext">›</button>
+    <img id="lbImg" src="" alt="">
+  </div>
+
+      <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script>
+    // Mobile menu
+    const burger = document.getElementById('burger'), mm = document.getElementById('mobileMenu');
+    if (burger && mm) {
+      burger.addEventListener('click', () => {
+        burger.classList.toggle('active'); mm.classList.toggle('open');
+        document.body.style.overflow = mm.classList.contains('open') ? 'hidden' : '';
+      });
+      mm.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+        burger.classList.remove('active'); mm.classList.remove('open'); document.body.style.overflow = '';
+      }));
+    }
+
+    // Lightbox
+    const items = document.querySelectorAll('.gallery__item img');
+    const lb = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    let current = 0;
+    const srcs = Array.from(items).map(i => i.src);
+
+    items.forEach((img, i) => {
+      img.parentElement.addEventListener('click', () => {
+        current = i;
+        lbImg.src = srcs[current];
+        lb.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    document.getElementById('lbClose').addEventListener('click', () => {
+      lb.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+    document.getElementById('lbPrev').addEventListener('click', () => {
+      current = (current - 1 + srcs.length) % srcs.length;
+      lbImg.src = srcs[current];
+    });
+    document.getElementById('lbNext').addEventListener('click', () => {
+      current = (current + 1) % srcs.length;
+      lbImg.src = srcs[current];
+    });
+    lb.addEventListener('click', (e) => {
+      if (e.target === lb) { lb.classList.remove('open'); document.body.style.overflow = ''; }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (!lb.classList.contains('open')) return;
+      if (e.key === 'Escape') { lb.classList.remove('open'); document.body.style.overflow = ''; }
+      if (e.key === 'ArrowLeft') { current = (current - 1 + srcs.length) % srcs.length; lbImg.src = srcs[current]; }
+      if (e.key === 'ArrowRight') { current = (current + 1) % srcs.length; lbImg.src = srcs[current]; }
+    });
+  </script>
+  <script src="script.js?v=5"></script>
+</body>
+</html>

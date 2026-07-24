@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(min-width: 431px)" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Socials — Utsah Events | Bardoli, Gujarat</title>
+  <meta name="description" content="Follow Utsah Events on Instagram, YouTube and WhatsApp. See our latest celebrations and moments.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700;800;900&family=DM+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    .socials-page { position: relative; z-index: 2; }
+    .nav__logo { cursor: pointer; }
+    @media (min-width: 431px) {
+      #nav { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1) !important; }
+      #dropdownBtn { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1); }
+    }
+    @media (max-width: 430px) {
+      .nav { pointer-events: all !important; }
+      .nav__logo { pointer-events: all !important; display: block; }
+    }
+
+    /* HERO */
+    .socials-hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 140px 40px 80px;
+      margin-top: 0;
+    }
+    .socials-hero__label { margin-top: 0; }
+    .socials-hero__label {
+      font-family: var(--body);
+      font-size: 0.8rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
+    .socials-hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 20px;
+    }
+    /* Desktop only — matches the Times New Roman treatment on the home
+       hero. Scoped above the tablet breakpoint so phone/tablet keep
+       their existing Cinzel untouched. */
+    @media (min-width: 1025px) {
+      .socials-hero__title { font-family: 'Times New Roman', Times, serif; }
+    }
+    .socials-hero__title span { color: var(--maroon); }
+    .socials-hero__sub {
+      font-family: var(--body);
+      font-size: clamp(1rem, 1.8vw, 1.15rem);
+      color: #ffffff;
+      font-weight: 600;
+      max-width: 460px;
+      line-height: 1.8;
+    }
+    .socials-hero__divider {
+      width: 60px;
+      height: 2px;
+      background: #FFD700;
+      margin: 24px auto 0;
+      box-shadow: 0 0 8px rgba(255,215,0,0.9), 0 0 20px rgba(255,215,0,0.5);
+    }
+    /* Scroll cue — phones only, see media query below */
+    .socials-hero__scroll { display: none; }
+
+    /* SOCIAL LINKS ROW */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+    .social-link-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 32px;
+      border-radius: 100px;
+      text-decoration: none;
+      font-family: var(--body);
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      transition: transform 0.2s, opacity 0.2s;
+      color: #ffffff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.3);
+    }
+    .social-link-card:hover { transform: translateY(-3px); opacity: 0.9; }
+    .social-link-card--instagram { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+.social-link-card--whatsapp { background: #25d366; }
+    .social-link-card--youtube { background: #FF0000; }
+    .social-link-card svg { width: 22px; height: 22px; flex-shrink: 0; }
+
+/* CTA BAR */
+    .socials-cta {
+      width: 100%;
+      max-width: 760px;
+      margin: 56px auto 0;
+      padding: 0;
+    }
+    .socials-cta__card {
+      position: relative;
+      border-radius: 20px;
+      padding: 36px 32px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 24px;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted */
+      background: linear-gradient(160deg, rgba(120,15,15,0.3) 0%, rgba(20,5,5,0.25) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.5),
+        inset 0 4px 12px rgba(255,255,255,0.2);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .socials-cta__card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .socials-cta__title {
+      font-family: var(--body);
+      font-size: clamp(0.95rem, 1.6vw, 1.15rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      line-height: 1.4;
+      text-align: center;
+      margin: 0;
+    }
+    .socials-cta__sub { display: none; }
+    .socials-cta__btn {
+      display: inline-block;
+      padding: 11px 28px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,0,0,0.2);
+      color: var(--maroon);
+      font-family: var(--body);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      border-radius: 100px;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: transform 0.2s, opacity 0.2s;
+      flex-shrink: 0;
+    }
+    .socials-cta__btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    @media (max-width: 768px) {
+      .insta-grid { grid-template-columns: repeat(2, 1fr); }
+      .insta-item--tall { grid-row: span 1; aspect-ratio: 1; }
+      .insta-item--wide { grid-column: span 2; }
+      .social-links { gap: 12px; }
+      .social-link-card { padding: 14px 20px; font-size: 0.8rem; }
+      .youtube-section { padding: 20px 20px 60px; }
+      .socials-cta { margin-top: 40px; }
+    }
+
+    /* ===== PHONES (≤430px) — iPhone 14/15/16, Pixel, Galaxy S ===== */
+    @media (max-width: 430px) {
+      /* Hero — compact type matching the about/events/contact heroes */
+      .socials-hero { padding: 100px 20px 48px; min-height: 100svh; position: relative; }
+      .socials-hero__label { font-size: 0.62rem; letter-spacing: 2px; margin-bottom: 8px; }
+      .socials-hero__title { font-size: clamp(1.7rem, 7vw, 2.1rem); line-height: 1.05; margin-bottom: 0; }
+      .socials-hero__sub { font-size: 0.8rem; line-height: 1.6; max-width: 100%; margin-top: 10px; }
+      .socials-hero__divider { margin-top: 16px; }
+
+      /* Scroll cue — glowing, pulsing star + label pinned to the hero bottom */
+      .socials-hero__scroll {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        position: absolute;
+        bottom: max(24px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        font-family: var(--body);
+        font-size: 0.6rem;
+        font-weight: 900;
+        letter-spacing: 0.2em;
+        text-transform: uppercase;
+        color: #c9a84c;
+        text-shadow: 0 0 10px rgba(201,168,76,0.9), 0 0 24px rgba(201,168,76,0.5);
+        transition: opacity 0.35s ease;
+      }
+      .socials-hero__scroll-star {
+        font-size: 1.1rem;
+        line-height: 1;
+        text-shadow: 0 0 10px rgba(201,168,76,1), 0 0 24px rgba(201,168,76,0.7), 0 0 44px rgba(201,168,76,0.4);
+        animation: socialsStarPulse 2s ease infinite;
+      }
+      @keyframes socialsStarPulse {
+        0%, 100% { opacity: 0.5; transform: scale(1); }
+        50% { opacity: 1; transform: scale(1.15); }
+      }
+      .socials-hero__scroll span { display: none; } /* "Scroll" label removed — star only */
+
+      /* Instagram section */
+      .insta-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .insta-item--wide { grid-column: span 2; }
+      .insta-item--tall { grid-row: span 1; aspect-ratio: 1; }
+
+      /* Instagram profile card */
+      .ig-profile { padding: 20px 16px; border-radius: 16px; flex-direction: column; align-items: center; text-align: center; }
+      .ig-profile__avatar { width: 64px; height: 64px; font-size: 1.6rem; }
+      .ig-profile__stats { justify-content: center; }
+
+      /* Social links — icon-only circles, three across (Instagram/YouTube/WhatsApp) */
+      .social-links { flex-direction: row; gap: 16px; margin-top: 24px; }
+      .social-link-card {
+        width: 52px;
+        height: 52px;
+        padding: 0;
+        border-radius: 50%;
+        justify-content: center;
+      }
+      .social-link-card span { display: none; }
+      .social-link-card--youtube { display: flex; }
+
+      /* YouTube */
+      .youtube-section { padding: 36px 20px 48px; }
+      .youtube-section__title { font-size: clamp(1.6rem, 6vw, 2.8rem); }
+      .yt-embed { border-radius: 14px; }
+
+      /* CTA */
+      .socials-cta { margin-top: 36px; }
+      .socials-cta__card {
+        padding: 32px 20px;
+        border-radius: 16px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .socials-cta__title { font-size: clamp(1.4rem, 5vw, 2rem); }
+      .socials-cta__btn { width: 100%; text-align: center; }
+    }
+
+    /* ===== SMALLEST PHONES (≤375px) — iPhone SE, Galaxy A-series ===== */
+    @media (max-width: 375px) {
+      .socials-hero { padding: 90px 16px 40px; }
+      .socials-hero__title { font-size: clamp(1.8rem, 9vw, 2.2rem); }
+      .youtube-section { padding: 24px 16px 40px; }
+      .socials-cta { margin-top: 28px; }
+      .socials-cta__card { padding: 24px 16px; }
+    }
+  </style>
+  <link rel="preload" href="assets/hero-video-optimized.mp4?v=5" as="video" type="video/mp4">
+  <script src="transitions.js" defer></script>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <!-- BACKGROUND VIDEO -->
+  <div class="bg-video-wrap">
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="assets/hero-video-optimized.mp4?v=5" type="video/mp4">
+  </video>
+  </div>
+  <div class="bg-video-overlay"></div>
+
+  <!-- RING CURSOR -->
+  <div class="ring-cursor" id="ringCursor" aria-hidden="true">
+    <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="gold2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+      </defs>
+      <circle cx="36" cy="46" r="24" fill="none" stroke="url(#gold1)" stroke-width="4"/>
+      <circle cx="64" cy="46" r="24" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <path d="M 52.5 27 A 24 24 0 0 1 52.5 65" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <rect x="30" y="16" width="10" height="10" rx="1" fill="none" stroke="#c0c0c0" stroke-width="1.5" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav"></nav>
+
+  <!-- HAMBURGER -->
+  <div class="nav__right nav__right--visible" id="navRight">
+    <div id="navBackdrop" class="nav__backdrop"></div>
+    <div class="nav__dropdown" id="navDropdown">
+      <button class="nav__dropdown-btn" id="dropdownBtn" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__dropdown-menu" id="dropdownMenu">
+        <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close menu">&#x2715;</button>
+        <a href="index.html"><img loading="lazy" decoding="async" src="assets/utsah-logo.png" alt="Utsah Events" class="menu-logo"></a>
+        <div class="menu-divider"></div>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="events.html">Events</a>
+        <a href="socials.html">Socials</a>
+        <a href="team.html">Our Team</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="socials-page">
+
+    <!-- HERO -->
+    <section class="socials-hero">
+      <p class="socials-hero__label">Utsah Events · Follow Along</p>
+      <h1 class="socials-hero__title">We're <span>Social</span></h1>
+      <p class="socials-hero__sub">Follow our journey — every celebration, every memory, every moment we create.</p>
+      <div class="socials-hero__divider"></div>
+      <div class="social-links">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" class="social-link-card social-link-card--instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1"></circle></svg>
+        <span>Follow Us</span>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" class="social-link-card social-link-card--youtube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+        <span>Watch Us</span>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" class="social-link-card social-link-card--whatsapp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
+        <span>Chat With Us</span>
+      </a>
+      </div>
+      <div class="socials-hero__scroll">
+        <div class="socials-hero__scroll-star">✦</div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+      <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script>
+    // Menu controls
+    (function() {
+      const dropBtn = document.getElementById('dropdownBtn');
+      const dropMenu = document.getElementById('dropdownMenu');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const backdrop = document.getElementById('navBackdrop');
+      function open() { if (!dropMenu) return; dropMenu.classList.add('open'); if (dropBtn) { dropBtn.classList.add('active'); dropBtn.setAttribute('aria-expanded','true'); } }
+      function close() { if (!dropMenu) return; dropMenu.classList.remove('open'); if (dropBtn) { dropBtn.classList.remove('active'); dropBtn.setAttribute('aria-expanded','false'); } }
+      if (dropBtn) dropBtn.addEventListener('click', e => { e.stopPropagation(); dropMenu.classList.contains('open') ? close() : open(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      if (backdrop) backdrop.addEventListener('click', close);
+      if (dropMenu) dropMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('scroll', () => { if (window.scrollY > 20) close(); }, { passive: true });
+    })();
+
+    // Hero scroll cue — hide once the page scrolls, reappear back at the hero
+    (function() {
+      const cue = document.querySelector('.socials-hero__scroll');
+      if (!cue) return;
+      const onScroll = () => {
+        cue.style.opacity = window.scrollY > 40 ? '0' : '';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
+    })();
+
+  </script>
+<script src="cursor.js"></script>
+
+</body>
+</html>

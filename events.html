@@ -1,0 +1,1214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <script>document.documentElement.classList.add('js');</script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" media="(min-width: 431px)" content="#0a0a0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Events — Utsah Events | Bardoli, Gujarat</title>
+  <meta name="description" content="Explore Utsah Events — weddings, corporate events, and live celebrations crafted with passion in Bardoli, Gujarat.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600&family=Cinzel:wght@400;500;600;700;800;900&family=DM+Sans:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css?v=85">
+  <style>
+    .events-page { position: relative; z-index: 2; }
+    .nav__logo { cursor: pointer; }
+    /* Maroon logo */
+    .nav__logo-img { filter: sepia(1) hue-rotate(-45deg) saturate(6) brightness(0.55) !important; }
+    @media (min-width: 431px) {
+      #nav { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1) !important; }
+      #dropdownBtn { transition: opacity 0.45s cubic-bezier(0.16,1,0.3,1); }
+    }
+    @media (max-width: 430px) {
+      .nav { pointer-events: all !important; }
+      .nav__logo { pointer-events: all !important; display: block; }
+    }
+
+    /* HERO — full screen, text only */
+    .events-hero {
+      height: 100vh;
+      min-height: unset;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 24px 100px;
+      position: relative;
+    }
+    .events-hero__bottom {
+      position: absolute;
+      bottom: 32px;
+      left: 0; right: 0;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* SECTION 2 — cycling card */
+    .events-categories {
+      padding: 24px 20px 32px;
+    }
+    .cat-single {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .events-hero__label {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 20px;
+    }
+    .events-hero__title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.4rem, 6.5vw, 5.5rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+      margin-bottom: 24px;
+    }
+    /* Desktop only — matches the Times New Roman treatment on the home
+       hero. Scoped above the tablet breakpoint so phone/tablet keep
+       their existing Cinzel untouched. */
+    @media (min-width: 1025px) {
+      .events-hero__title { font-family: 'Times New Roman', Times, serif; }
+    }
+    .events-hero__title span { color: var(--maroon); }
+    .events-hero__sub {
+      font-family: var(--body);
+      font-size: clamp(1rem, 1.8vw, 1.2rem);
+      color: #ffffff;
+      font-weight: 600;
+      max-width: 500px;
+      line-height: 1.8;
+      margin-bottom: 0;
+    }
+    .events-hero__scroll {
+      margin-top: 40px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: #FFD700;
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+    .events-hero__scroll-line {
+      width: auto;
+      height: auto;
+      background: none;
+      box-shadow: none;
+      font-size: 1.1rem;
+      line-height: 1;
+      color: #c9a84c;
+      text-shadow: 0 0 10px rgba(201,168,76,1), 0 0 24px rgba(201,168,76,0.7), 0 0 44px rgba(201,168,76,0.4);
+      animation: scrollPulse 2s ease infinite;
+    }
+    .events-hero__scroll-line::before { content: '✦'; }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.4; transform: scaleY(1); }
+      50% { opacity: 1; transform: scaleY(1.15); }
+    }
+
+    /* FILTER PILLS */
+    .events-filters {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 16px;
+    }
+    .filter-btn {
+      font-family: var(--body);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      padding: 10px 24px;
+      border-radius: 100px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: linear-gradient(160deg, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0.05) 100%);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.2);
+      color: #ffffff;
+      cursor: pointer;
+      transition: all 0.25s;
+      backdrop-filter: blur(10px) saturate(1.3);
+    }
+    .filter-btn:hover,
+    .filter-btn.active {
+      background: #990000;
+      border-color: #990000;
+      color: #ffffff;
+    }
+
+    /* SINGLE CYCLING CARD */
+    .events-categories { display: none; }
+    .cat-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s ease;
+    }
+    .cat-slide.active { opacity: 1; }
+    .cat-slide__img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .cat-slide__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.82) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px 20px 44px;
+    }
+    .cat-slide__tag {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FFD700;
+      margin-bottom: 4px;
+    }
+    .cat-slide__name {
+      font-family: var(--heading);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.05;
+      margin-bottom: 6px;
+    }
+    .cat-slide__desc {
+      font-family: var(--body);
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: #ffffff;
+      line-height: 1.5;
+    }
+    .cat-dots {
+      position: absolute;
+      bottom: 14px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 6px;
+    }
+    .cat-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.3);
+      transition: background 0.3s;
+    }
+    .cat-dot.active { background: var(--maroon); }
+
+    /* CATEGORY CARDS (old — hidden on mobile) */
+    .events-categories__label,
+    .events-categories__title,
+    .category-grid { display: none; }
+
+    /* FILTER PILLS */
+    .events-categories__label {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 6px;
+      text-transform: uppercase;
+      color: #c9a84c;
+      margin-bottom: 12px;
+      text-align: center;
+      text-shadow: 0 0 12px rgba(201,168,76,0.9), 0 0 28px rgba(201,168,76,0.5), 0 0 50px rgba(201,168,76,0.3);
+    }
+    .events-categories__title {
+      font-family: var(--heading);
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      font-weight: 700;
+      color: #ffffff;
+      text-align: center;
+      margin-bottom: 60px;
+      line-height: 1.0;
+    }
+    .events-categories__title span { color: var(--maroon); }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .category-card {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      cursor: pointer;
+    }
+    .category-card--wide {
+      grid-column: unset;
+      aspect-ratio: 4/5;
+    }
+    .category-card__img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.7s cubic-bezier(0.16,1,0.3,1);
+    }
+    .category-card:hover .category-card__img { transform: scale(1.06); }
+    .category-card__overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 28px 24px;
+      transition: background 0.3s;
+    }
+    .category-card:hover .category-card__overlay {
+      background: linear-gradient(to top, rgba(153,0,0,0.65) 0%, transparent 65%);
+    }
+    .category-card__tag {
+      font-family: var(--body);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 6px;
+    }
+    .category-card__name {
+      font-family: var(--heading);
+      font-size: clamp(1.6rem, 2.5vw, 2.4rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.05;
+      margin-bottom: 0;
+    }
+    .category-card__desc { display: none; }
+    .category-card__arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.8);
+      margin-top: 10px;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity 0.3s, transform 0.3s;
+    }
+    .category-card:hover .category-card__arrow {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* GALLERY SECTION */
+    .events-gallery {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 40px 80px;
+      min-height: 100vh;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .events-gallery__header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 48px;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+    .events-gallery__title {
+      font-family: var(--heading);
+      font-size: clamp(2rem, 4vw, 4rem);
+      font-weight: 700;
+      color: #ffffff;
+      line-height: 1.0;
+    }
+    .events-gallery__title span { color: var(--maroon); }
+    /* Editorial asymmetric grid — inspired by film-photography portfolio layouts:
+       mixed tile sizes, negative-space cells, small caption typography. */
+    .gallery-editorial {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 0.85fr 1fr;
+      grid-template-rows: 1.4fr 1fr 1fr;
+      height: 58vh;
+      max-height: 620px;
+      gap: 14px;
+    }
+    .ge-item {
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      position: relative;
+    }
+    .ge-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.5s cubic-bezier(0.16,1,0.3,1);
+    }
+    .ge-item:hover img { transform: scale(1.05); }
+    .ge-item__overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0);
+      transition: background 0.3s;
+    }
+    .ge-item:hover .ge-item__overlay { background: rgba(153,0,0,0.2); }
+
+    .ge-hero { grid-column: 1; grid-row: 1 / 3; }
+    .ge-caption { grid-column: 2; grid-row: 1; }
+    .ge-corp1 { grid-column: 3; grid-row: 1; }
+    .ge-live-tall { grid-column: 4; grid-row: 1 / 3; }
+    .ge-wed2 { grid-column: 2; grid-row: 2; }
+    .ge-empty {
+      grid-column: 3; grid-row: 2;
+      display: flex;
+      align-items: flex-end;
+      padding: 4px 6px 12px;
+    }
+    .ge-empty p {
+      font-family: var(--body);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+    }
+    .ge-quote { grid-column: 1; grid-row: 3; }
+    .ge-corp2 { grid-column: 2; grid-row: 3; }
+    .ge-live2 { grid-column: 3; grid-row: 3; }
+
+    .ge-caption {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 4px 2px;
+    }
+    .ge-caption__eyebrow {
+      font-family: var(--body);
+      font-size: 0.72rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #FFD700;
+    }
+    .ge-caption__location {
+      font-family: var(--body);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: 10px;
+    }
+    .ge-caption__link {
+      display: inline-block;
+      font-family: var(--body);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-decoration: none;
+      border-top: 1px solid rgba(255,255,255,0.2);
+      padding-top: 10px;
+      cursor: pointer;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .ge-caption__link:hover { color: #FFD700; border-color: rgba(255,215,0,0.5); }
+
+    .ge-quote {
+      display: flex;
+      align-items: flex-end;
+      padding: 4px 18px 12px 2px;
+    }
+    .ge-quote p {
+      font-family: var(--body);
+      font-weight: 800;
+      font-size: 0.72rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      line-height: 1.8;
+      color: rgba(255,255,255,0.8);
+      margin: 0;
+    }
+    .ge-quote span {
+      display: block;
+      margin-top: 10px;
+      font-family: var(--body);
+      font-style: normal;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--maroon-light);
+    }
+
+    /* LIGHTBOX */
+    .lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.95);
+      z-index: 9999;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .lightbox.open { display: flex; }
+    .lightbox__img {
+      max-width: 90vw;
+      max-height: 90vh;
+      object-fit: contain;
+      border-radius: 12px;
+    }
+    .lightbox__close {
+      position: absolute;
+      top: 24px;
+      right: 28px;
+      font-size: 2rem;
+      color: rgba(255,255,255,0.7);
+      cursor: pointer;
+      background: none;
+      border: none;
+      line-height: 1;
+      transition: color 0.2s;
+    }
+    .lightbox__close:hover { color: #fff; }
+    .lightbox__prev,
+    .lightbox__next {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      color: #fff;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      font-size: 1.2rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.2s;
+    }
+    .lightbox__prev { left: 20px; }
+    .lightbox__next { right: 20px; }
+    .lightbox__prev:hover,
+    .lightbox__next:hover { background: rgba(153,0,0,0.6); }
+
+    /* STATS STRIP */
+    /* CTA */
+    .events-cta {
+      max-width: 900px;
+      margin: 0 auto 40px;
+      padding: 0 40px;
+    }
+    .events-cta__card {
+      position: relative;
+      border-radius: 20px;
+      padding: 36px 48px;
+      text-align: center;
+      color: #ffffff;
+
+      /* Translucent frosted surface — maroon-tinted */
+      background: linear-gradient(160deg, rgba(120,15,15,0.3) 0%, rgba(20,5,5,0.25) 100%);
+
+      /* Creates a distinct, physical glass edge */
+      border: 1px solid rgba(255,255,255,0.2);
+
+      /* Double box-shadow: outer shadow for depth, inset shadow for edge illumination */
+      box-shadow:
+        0 20px 60px rgba(0,0,0,0.35),
+        inset 0 4px 12px rgba(255,255,255,0.15);
+
+      /* Standard glassmorphism fallback + layer initialization */
+      backdrop-filter: blur(4px) saturate(140%);
+      -webkit-backdrop-filter: blur(4px) saturate(140%);
+    }
+    /* Isolate and apply the liquid distortion map on its own layer */
+    .events-cta__card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      z-index: -1;
+      pointer-events: none;
+      backdrop-filter: url(#liquidGlass);
+    }
+    .events-cta__title {
+      font-family: var(--body);
+      font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      line-height: 1.4;
+    }
+    .events-cta__sub {
+      font-family: var(--body);
+      font-size: 0.88rem;
+      color: #ffffff;
+      font-weight: 600;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+    }
+    .events-cta__btn {
+      display: inline-block;
+      padding: 14px 40px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.8) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 24px rgba(0,0,0,0.2);
+      color: var(--maroon);
+      font-family: var(--body);
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 2.5px;
+      text-transform: uppercase;
+      border-radius: 100px;
+      text-decoration: none;
+      transition: transform 0.2s, opacity 0.2s;
+    }
+    .events-cta__btn:hover { transform: translateY(-2px); opacity: 0.9; }
+
+    /* ── Smooth scroll ── */
+    html { scroll-behavior: smooth; }
+
+    /* ── Hero entrance ── */
+    .events-hero__label,
+    .events-hero__title,
+    .events-hero__sub {
+      opacity: 0;
+      transform: translateY(28px);
+      animation: heroFadeUp 0.9s cubic-bezier(0.16,1,0.3,1) forwards;
+    }
+    .events-hero__label { animation-delay: 0.1s; }
+    .events-hero__title  { animation-delay: 0.3s; }
+    .events-hero__sub    { animation-delay: 0.5s; }
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Scroll reveal ── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.16,1,0.3,1);
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .category-grid { grid-template-columns: 1fr; }
+      .category-card--wide { grid-column: span 1; aspect-ratio: 16/9; }
+      .events-gallery { min-height: 0; }
+      .gallery-editorial { grid-template-columns: 1fr 1fr; grid-template-rows: auto; height: auto; max-height: none; gap: 10px; }
+      .ge-hero, .ge-live-tall { grid-column: 1 / 3; grid-row: auto; aspect-ratio: 16/9; }
+      .ge-corp1, .ge-wed2, .ge-corp2, .ge-live2 { grid-column: auto; grid-row: auto; aspect-ratio: 1; }
+      .ge-caption, .ge-quote { grid-column: 1 / 3; grid-row: auto; padding: 12px 4px; }
+      .ge-empty { display: none; }
+    }
+    @media (max-width: 480px) {
+      .gallery-editorial { grid-template-columns: 1fr; }
+      .ge-hero, .ge-live-tall, .ge-corp1, .ge-wed2, .ge-corp2, .ge-live2 { grid-column: 1; aspect-ratio: 4/3; }
+      .ge-caption, .ge-quote { grid-column: 1; }
+      .events-categories, .events-gallery, .events-cta { padding: 40px 20px; }
+      .events-hero { padding: 120px 20px 60px; }
+      .events-cta__card { padding: 40px 24px; }
+    }
+
+    /* ===== iPHONE — minimal & compact ===== */
+    @media (max-width: 430px) {
+      .nav { pointer-events: all !important; }
+      .nav__logo { pointer-events: all !important; display: block; }
+
+      /* SECTION 1 — hero, text only, full screen. Symmetric padding keeps the
+         text block dead-centered; the scroll cue is pinned to the bottom so it
+         no longer drags the centered group upward. */
+      .events-hero {
+        height: 100svh;
+        padding: 24px 20px;
+        justify-content: center;
+      }
+      .events-hero__scroll {
+        position: absolute;
+        bottom: max(28px, env(safe-area-inset-bottom));
+        left: 50%;
+        transform: translateX(-50%);
+        margin-top: 0;
+        transition: opacity 0.35s ease;
+      }
+      /* Star instead of a line — phones only; desktop keeps the line. */
+      .events-hero__scroll-line {
+        width: auto;
+        height: auto;
+        background: none;
+        box-shadow: none;
+        font-size: 1.1rem;
+        line-height: 1;
+        color: #c9a84c;
+        text-shadow: 0 0 10px rgba(201,168,76,1), 0 0 24px rgba(201,168,76,0.7), 0 0 44px rgba(201,168,76,0.4);
+      }
+      .events-hero__scroll-line::before { content: '✦'; }
+      .events-hero__label { font-size: 0.62rem; letter-spacing: 2px; margin-bottom: 6px; }
+      .events-hero__title { font-size: clamp(1.7rem, 7vw, 2.1rem); line-height: 1.05; margin-bottom: 10px; }
+      .events-hero__sub { font-size: 0.8rem; line-height: 1.5; max-width: 290px; margin: 0 auto; }
+      .events-hero__bottom { bottom: max(24px, env(safe-area-inset-bottom)); }
+      .events-filters { flex-wrap: nowrap; gap: 6px; }
+      .filter-btn { font-size: 0.62rem; padding: 7px 13px; letter-spacing: 1px; white-space: nowrap; }
+
+      /* SECTION 2 — cycling card */
+      .events-categories { padding: 20px 16px 28px; }
+      .cat-single { border-radius: 16px; aspect-ratio: 3/2; }
+      .cat-slide__overlay { padding: 14px 16px 36px; }
+      .cat-slide__tag  { font-size: 0.6rem; margin-bottom: 3px; }
+      .cat-slide__name { font-size: 1.3rem; margin-bottom: 4px; }
+      .cat-slide__desc { font-size: 0.75rem; line-height: 1.4; }
+      .cat-dots { bottom: 10px; }
+
+      /* Gallery — one hero image, a View Full pill button, then the quote */
+      .events-gallery { padding: 24px 20px 40px; }
+      .events-gallery__header { margin-bottom: 16px; }
+      .events-gallery__title { font-size: clamp(1.6rem, 7vw, 2.4rem); }
+      .gallery-editorial { grid-template-columns: 1fr; gap: 8px; }
+      .ge-hero { grid-column: 1; grid-row: auto; aspect-ratio: 16/9; }
+      .ge-live-tall, .ge-corp1, .ge-wed2, .ge-empty, .ge-corp2, .ge-live2 { display: none; }
+      .ge-item img { height: 100%; }
+      .ge-caption, .ge-quote { grid-column: 1; grid-row: auto; }
+      .ge-caption { align-items: center; padding: 6px 0 0; }
+      .ge-caption__eyebrow, .ge-caption__location { display: none; }
+      .ge-caption__link {
+        font-size: 0; /* hides the "View Full Gallery →" text; ::after relabels it */
+        border-top: none;
+        border: none;
+        border-radius: 999px;
+        padding: 11px 30px;
+        margin: 2px auto 0;
+        background: #ffffff;
+        color: var(--maroon);
+      }
+      .ge-caption__link::after {
+        content: "View Full";
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+      }
+      .ge-quote { justify-content: center; text-align: center; padding: 10px 16px 0; }
+
+      /* CTA — removed on mobile */
+      .events-cta { display: none; }
+    }
+  </style>
+  <link rel="preload" href="assets/hero-video-optimized.mp4?v=5" as="video" type="video/mp4">
+  <script src="transitions.js" defer></script>
+</head>
+<body>
+
+  <!-- LIQUID GLASS DISTORTION FILTER -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="liquidGlass" x="-30%" y="-30%" width="160%" height="160%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="2" result="noise"/>
+      <feGaussianBlur in="noise" stdDeviation="5" result="blurredNoise"/>
+      <feDisplacementMap in="SourceGraphic" in2="blurredNoise" scale="32" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+
+  <!-- BACKGROUND VIDEO -->
+  <div class="bg-video-wrap">
+  <video class="bg-video" autoplay muted loop playsinline webkit-playsinline preload="auto">
+    <source src="assets/hero-video-optimized.mp4?v=5" type="video/mp4">
+  </video>
+  </div>
+  <div class="bg-video-overlay"></div>
+
+  <!-- RING CURSOR -->
+  <div class="ring-cursor" id="ringCursor" aria-hidden="true">
+    <svg viewBox="0 0 100 80" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="gold1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+        <linearGradient id="gold2" x1="100%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#c9a84c"/>
+          <stop offset="50%" stop-color="#b4903e"/>
+          <stop offset="100%" stop-color="#a07830"/>
+        </linearGradient>
+      </defs>
+      <circle cx="36" cy="46" r="24" fill="none" stroke="url(#gold1)" stroke-width="4"/>
+      <circle cx="64" cy="46" r="24" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <path d="M 52.5 27 A 24 24 0 0 1 52.5 65" fill="none" stroke="url(#gold2)" stroke-width="4"/>
+      <rect x="30" y="16" width="10" height="10" rx="1" fill="none" stroke="#c0c0c0" stroke-width="1.5" opacity="0.8"/>
+    </svg>
+  </div>
+
+  <!-- NAV -->
+  <nav class="nav" id="nav" aria-label="Main navigation"></nav>
+
+  <!-- HAMBURGER -->
+  <div class="nav__right nav__right--visible" id="navRight">
+    <div id="navBackdrop" class="nav__backdrop"></div>
+    <div class="nav__dropdown" id="navDropdown">
+      <button class="nav__dropdown-btn" id="dropdownBtn" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav__dropdown-menu" id="dropdownMenu">
+        <button class="menu-close-btn" id="menuCloseBtn" aria-label="Close menu">&#x2715;</button>
+        <a href="index.html"><img loading="lazy" decoding="async" src="assets/utsah-logo.png" alt="Utsah Events" class="menu-logo"></a>
+        <div class="menu-divider"></div>
+        <a href="about.html">About Us</a>
+        <a href="contact.html">Contact Us</a>
+        <a href="events.html">Events</a>
+        <a href="socials.html">Socials</a>
+        <a href="team.html">Our Team</a>
+      </div>
+    </div>
+  </div>
+
+  <main class="events-page">
+
+    <!-- SECTION 1: HERO -->
+    <section class="events-hero">
+      <p class="events-hero__label">Utsah Events · Bardoli, Gujarat</p>
+      <h1 class="events-hero__title">Every Moment<br><span>We Create</span></h1>
+      <p class="events-hero__sub">From grand weddings to intimate celebrations — we craft experiences that stay with you forever.</p>
+      <div class="events-hero__scroll">
+        <div class="events-hero__scroll-line"></div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: CYCLING CATEGORY CARD -->
+    <section class="events-categories reveal">
+      <div class="cat-single" id="catSingle">
+        <div class="cat-slide active">
+          <img decoding="async" src="assets/events/wedding/pw1.jpeg" alt="Weddings" class="cat-slide__img">
+          <div class="cat-slide__overlay">
+            <p class="cat-slide__tag">Category 01</p>
+            <h3 class="cat-slide__name">Weddings</h3>
+            <p class="cat-slide__desc">Every detail of your perfect day, crafted with love.</p>
+          </div>
+        </div>
+        <div class="cat-slide">
+          <img decoding="async" src="assets/events/corporate/pc1.jpeg" alt="Corporate" class="cat-slide__img">
+          <div class="cat-slide__overlay">
+            <p class="cat-slide__tag">Category 02</p>
+            <h3 class="cat-slide__name">Corporate Events</h3>
+            <p class="cat-slide__desc">Professional events that leave lasting impressions.</p>
+          </div>
+        </div>
+        <div class="cat-slide">
+          <img decoding="async" src="assets/events/live/pl1.jpeg" alt="Live Events" class="cat-slide__img">
+          <div class="cat-slide__overlay">
+            <p class="cat-slide__tag">Category 03</p>
+            <h3 class="cat-slide__name">Live Events</h3>
+            <p class="cat-slide__desc">Concerts and shows brought to life with energy.</p>
+          </div>
+        </div>
+        <div class="cat-dots">
+          <span class="cat-dot active"></span>
+          <span class="cat-dot"></span>
+          <span class="cat-dot"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section class="events-gallery reveal">
+      <div class="events-gallery__header">
+        <h2 class="events-gallery__title">Our <span>Gallery</span></h2>
+      </div>
+      <!-- Editorial mixed preview — visible on page -->
+      <div class="gallery-editorial" id="galleryGrid">
+        <div class="ge-item ge-hero" data-cat="wedding"><img decoding="async" src="assets/events/wedding/pw5.jpeg" alt="Wedding"><div class="ge-item__overlay"></div></div>
+
+        <div class="ge-caption">
+          <p class="ge-caption__eyebrow">Every Story We Tell</p>
+          <div>
+            <p class="ge-caption__location">Bardoli, Gujarat</p>
+            <a href="#" class="ge-caption__link" id="galleryViewAllLink">View Full Gallery →</a>
+          </div>
+        </div>
+
+        <div class="ge-item ge-corp1" data-cat="corporate"><img loading="lazy" decoding="async" src="assets/events/corporate/pc8.jpeg" alt="Corporate"><div class="ge-item__overlay"></div></div>
+        <div class="ge-item ge-live-tall" data-cat="live"><img loading="lazy" decoding="async" src="assets/events/live/pl3.jpeg" alt="Live"><div class="ge-item__overlay"></div></div>
+        <div class="ge-item ge-wed2" data-cat="wedding"><img loading="lazy" decoding="async" src="assets/events/wedding/pw12.jpeg" alt="Wedding"><div class="ge-item__overlay"></div></div>
+        <div class="ge-item ge-empty"><p>&hellip;becomes a moment worth reliving.</p></div>
+
+        <div class="ge-quote">
+          <p>“Every frame we capture becomes<br>a memory you keep forever.”<span>Utsah Events</span></p>
+        </div>
+
+        <div class="ge-item ge-corp2" data-cat="corporate"><img loading="lazy" decoding="async" src="assets/events/corporate/pc20.jpeg" alt="Corporate"><div class="ge-item__overlay"></div></div>
+        <div class="ge-item ge-live2" data-cat="live"><img loading="lazy" decoding="async" src="assets/events/live/pl10.jpeg" alt="Live"><div class="ge-item__overlay"></div></div>
+      </div>
+
+      <!-- Hidden data pool — used by overlay JS only -->
+      <div id="galleryDataPool" style="display:none;">
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw1.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw2.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw3.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw4.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw5.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw6.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw7.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw8.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw9.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw10.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw11.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw12.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw13.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw14.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw15.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw16.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw17.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw18.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw19.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw20.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw21.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw22.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw23.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw24.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw25.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw26.jpeg"></div>
+        <div data-cat="wedding"  data-src="assets/events/wedding/pw27.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc1.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc2.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc3.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc4.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc5.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc6.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc7.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc8.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc9.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc10.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc11.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc12.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc13.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc14.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc15.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc16.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc17.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc18.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc19.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc20.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc21.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc22.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc23.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc24.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc25.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc26.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc27.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc28.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc29.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc30.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc31.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc32.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc33.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc34.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc35.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc36.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc37.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc38.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc39.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc40.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc41.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc42.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc43.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc44.jpeg"></div>
+        <div data-cat="corporate" data-src="assets/events/corporate/pc45.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl1.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl2.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl3.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl4.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl5.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl6.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl7.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl8.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl9.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl10.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl11.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl12.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl13.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl14.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl15.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl16.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl17.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl18.jpeg"></div>
+        <div data-cat="live" data-src="assets/events/live/pl19.jpeg"></div>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <div class="events-cta reveal">
+      <div class="events-cta__card">
+        <h2 class="events-cta__title">Let's Create<br>Unforgettable Memories</h2>
+        <a href="contact.html" class="events-cta__btn">Plan Your Event</a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox__close" id="lbClose">×</button>
+    <button class="lightbox__prev" id="lbPrev">‹</button>
+    <img loading="lazy" decoding="async" src="" alt="" class="lightbox__img" id="lbImg">
+    <button class="lightbox__next" id="lbNext">›</button>
+  </div>
+
+  <!-- FULL-SCREEN GALLERY PAGE OVERLAY -->
+  <div id="galleryPage" style="display:none;position:fixed;inset:0;z-index:20000;background:#0a0a0a;overflow-y:auto;">
+    <div style="position:sticky;top:0;z-index:10;display:flex;align-items:center;justify-content:space-between;padding:20px 32px;background:rgba(10,10,10,0.95);backdrop-filter:blur(10px);border-bottom:1px solid rgba(255,255,255,0.08);">
+      <div>
+        <p style="font-family:'DM Sans',sans-serif;font-size:0.7rem;font-weight:800;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.4);margin-bottom:4px;">Gallery</p>
+        <h2 id="galleryPageTitle" style="font-family:'Cormorant Garamond',serif;font-size:1.8rem;font-weight:700;color:#fff;margin:0;"></h2>
+      </div>
+      <button id="galleryPageClose" style="width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,0.08);border:none;color:#fff;font-size:1.4rem;display:flex;align-items:center;justify-content:center;cursor:pointer;">✕</button>
+    </div>
+    <div id="galleryPageGrid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:4px;padding:4px;max-width:1200px;margin:0 auto;"></div>
+  </div>
+
+  <!-- FOOTER -->
+      <footer class="footer-min">
+    <nav class="footer-min__nav">
+      <a href="index.html">Home</a>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Events</a>
+      <span class="footer-min__nav-break" aria-hidden="true"></span>
+      <a href="team.html">Our Team</a>
+      <a href="socials.html">Socials</a>
+      <a href="contact.html">Contact Us</a>
+    </nav>
+
+    <div class="footer-min__social">
+      <a href="https://www.instagram.com/utsahevents/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+      </a>
+      <a href="https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" target="_blank" rel="noopener" aria-label="YouTube">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.5 12 3.5 12 3.5s-7.5 0-9.4.6A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.6 9.4.6 9.4.6s7.5 0 9.4-.6a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8ZM9.6 15.5V8.5L15.8 12Z"/></svg>
+      </a>
+      <a href="https://api.whatsapp.com/send/?phone=918200395197" target="_blank" rel="noopener" aria-label="WhatsApp">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347M12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0 0 12.05 0"/></svg>
+      </a>
+    </div>
+
+    <div class="footer-min__brand">
+      <a href="index.html" aria-label="Utsah Events home">
+        <img src="assets/utsah-logo.png" alt="Utsah Events" class="footer-min__logo">
+      </a>
+    </div>
+
+    <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
+  </footer>
+
+  <script>
+    // Cycling category card
+    (function() {
+      const slides = document.querySelectorAll('.cat-slide');
+      const dots   = document.querySelectorAll('.cat-dot');
+      const btns   = document.querySelectorAll('#categoryFilters .filter-btn');
+      // index 0 = "All Events" → show wedding (idx 0); others map 1→0, 2→1, 3→2
+      const map = [0, 0, 1, 2];
+      let current = 0;
+
+      function goTo(slideIdx) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = slideIdx;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      // Auto-cycle every 3s
+      let timer = setInterval(() => { goTo((current + 1) % slides.length); }, 3000);
+
+      btns.forEach((btn, i) => {
+        btn.addEventListener('click', () => {
+          btns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          clearInterval(timer);
+          goTo(map[i]);
+          timer = setInterval(() => { goTo((current + 1) % slides.length); }, 3000);
+        });
+      });
+    })();
+
+    // Menu controls
+    (function() {
+      const dropBtn = document.getElementById('dropdownBtn');
+      const dropMenu = document.getElementById('dropdownMenu');
+      const closeBtn = document.getElementById('menuCloseBtn');
+      const backdrop = document.getElementById('navBackdrop');
+      function open() { if (!dropMenu) return; dropMenu.classList.add('open'); if (dropBtn) { dropBtn.classList.add('active'); dropBtn.setAttribute('aria-expanded','true'); } }
+      function close() { if (!dropMenu) return; dropMenu.classList.remove('open'); if (dropBtn) { dropBtn.classList.remove('active'); dropBtn.setAttribute('aria-expanded','false'); } }
+      if (dropBtn) dropBtn.addEventListener('click', e => { e.stopPropagation(); dropMenu.classList.contains('open') ? close() : open(); });
+      if (closeBtn) closeBtn.addEventListener('click', close);
+      if (backdrop) backdrop.addEventListener('click', close);
+      if (dropMenu) dropMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+      window.addEventListener('scroll', () => { if (window.scrollY > 20) close(); }, { passive: true });
+    })();
+
+    // Lightbox elements (declared first so gallery functions can reference them)
+    const lightbox = document.getElementById('lightbox');
+    const lbImg = document.getElementById('lbImg');
+    const lbClose = document.getElementById('lbClose');
+    const lbPrev = document.getElementById('lbPrev');
+    const lbNext = document.getElementById('lbNext');
+    let currentIdx = 0;
+    let activeImages = [];
+
+    // Filter buttons → open full-screen gallery page
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const categoryCards = document.querySelectorAll('.category-card');
+    const galleryPage = document.getElementById('galleryPage');
+    const galleryPageGrid = document.getElementById('galleryPageGrid');
+    const galleryPageTitle = document.getElementById('galleryPageTitle');
+    const galleryPageClose = document.getElementById('galleryPageClose');
+    const dataPool = document.querySelectorAll('#galleryDataPool [data-cat]');
+
+    let gpImages = [];
+
+    function openGalleryLightbox(idx) {
+      activeImages = gpImages;
+      currentIdx = idx;
+      lbImg.src = activeImages[idx];
+      lightbox.classList.add('open');
+    }
+
+    function openGalleryPage(filter, label) {
+      filterBtns.forEach(b => b.classList.toggle('active', b.dataset.filter === filter));
+      const items = Array.from(dataPool).filter(i => filter === 'all' || i.dataset.cat === filter);
+      gpImages = items.map(i => i.dataset.src);
+
+      galleryPageTitle.textContent = label;
+      galleryPageGrid.innerHTML = '';
+      items.forEach((item, idx) => {
+        const img = document.createElement('img');
+        img.src = item.dataset.src;
+        img.loading = 'lazy';
+        img.style.cssText = 'width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:pointer;transition:transform 0.3s;';
+        img.addEventListener('mouseenter', () => img.style.transform = 'scale(1.03)');
+        img.addEventListener('mouseleave', () => img.style.transform = '');
+        img.addEventListener('click', () => openGalleryLightbox(idx));
+        galleryPageGrid.appendChild(img);
+      });
+
+      galleryPage.style.display = 'block';
+      galleryPage.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+    }
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        openGalleryPage(btn.dataset.filter, btn.dataset.label || btn.textContent);
+      });
+    });
+
+    // Editorial gallery preview — "View Full Gallery" link
+    [document.getElementById('galleryViewAllLink')].forEach(el => {
+      if (!el) return;
+      el.addEventListener('click', (e) => {
+        e.preventDefault();
+        openGalleryPage('all', 'All Events');
+      });
+    });
+
+    galleryPageClose.addEventListener('click', () => {
+      galleryPage.style.display = 'none';
+      document.body.style.overflow = '';
+    });
+
+    // Category card click → open gallery page
+    categoryCards.forEach(card => {
+      card.addEventListener('click', () => {
+        const cat = card.dataset.category;
+        const label = cat === 'wedding' ? 'Weddings' : cat === 'corporate' ? 'Corporate' : 'Live Events';
+        openGalleryPage(cat, label);
+      });
+    });
+
+    function closeLightbox() {
+      lightbox.classList.remove('open');
+      document.body.style.overflow = galleryPage.style.display === 'block' ? 'hidden' : '';
+    }
+
+    lbClose.addEventListener('click', closeLightbox);
+    lightbox.addEventListener('click', e => { if (e.target === lightbox) closeLightbox(); });
+
+    lbPrev.addEventListener('click', () => {
+      currentIdx = (currentIdx - 1 + activeImages.length) % activeImages.length;
+      lbImg.src = activeImages[currentIdx];
+    });
+    lbNext.addEventListener('click', () => {
+      currentIdx = (currentIdx + 1) % activeImages.length;
+      lbImg.src = activeImages[currentIdx];
+    });
+    document.addEventListener('keydown', e => {
+      if (!lightbox.classList.contains('open')) return;
+      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'ArrowLeft') lbPrev.click();
+      if (e.key === 'ArrowRight') lbNext.click();
+    });
+
+    // Hero scroll cue (star) — mobile only. Hides once the page scrolls past
+    // the hero, reappears when scrolled back near the top. Gated to the
+    // ≤430px breakpoint so the desktop pulsing-line cue is left untouched.
+    (function() {
+      const cue = document.querySelector('.events-hero__scroll');
+      if (!cue) return;
+      const mq = window.matchMedia('(max-width: 430px)');
+      const onScroll = () => {
+        if (!mq.matches) { cue.style.opacity = ''; return; }
+        cue.style.opacity = window.scrollY > 40 ? '0' : '';
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      mq.addEventListener('change', onScroll);
+      onScroll();
+    })();
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          revealObserver.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    reveals.forEach(el => revealObserver.observe(el));
+
+  </script>
+<script src="cursor.js"></script>
+
+</body>
+</html>
