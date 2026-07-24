@@ -1,3 +1,64 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# next.js
+.next/
+out/
+build/
+dist/
+next-env.d.ts
+
+# production / deployment
+.vercel/
 .cloudflared/
+
+# testing & coverage
+coverage/
+.nyc_output/
+
+# environment
+.env
+.env.*
+!.env.example
+
+# logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# caches
+.eslintcache
+.cache/
+*.tsbuildinfo
+
+# python (local preview servers)
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# editors & tooling
 .claude/
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
+
+# os
 .DS_Store
+Thumbs.db
+desktop.ini
+
+# scratch files
+*.tmp
+*.tmp.*
+tmp/
