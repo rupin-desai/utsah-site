@@ -613,7 +613,7 @@ revealEls.forEach(el => revealObs.observe(el));
   const photoB = document.getElementById('fsPhotoB');
 
   // Gallery set lives in /assets/gallery (g01–g27). The previous 91-image
-  // pw/pc/pl set was archived to /old-images at the repo root.
+  // pw/pc/pl set was archived to /legacy/old-images.
   const photos = [
     '/assets/gallery/g01.jpeg','/assets/gallery/g02.jpeg','/assets/gallery/g03.jpeg','/assets/gallery/g04.jpeg','/assets/gallery/g05.jpeg','/assets/gallery/g06.jpeg','/assets/gallery/g07.jpeg','/assets/gallery/g08.jpeg','/assets/gallery/g09.jpeg',
     '/assets/gallery/g10.jpeg','/assets/gallery/g11.jpeg','/assets/gallery/g12.jpeg','/assets/gallery/g13.jpeg','/assets/gallery/g14.jpeg','/assets/gallery/g15.jpeg','/assets/gallery/g16.jpeg','/assets/gallery/g17.jpeg','/assets/gallery/g18.jpeg',
@@ -1010,4 +1010,3 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
     document.getElementById('editSave').addEventListener('click', () => doSave(false));
   }
 })();
-
