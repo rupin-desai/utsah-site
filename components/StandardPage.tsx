@@ -1,7 +1,6 @@
 import type { ReactNode } from "react";
 import PageHero from "./PageHero";
 import SiteFooter from "./SiteFooter";
-import SiteHeader from "./SiteHeader";
 
 type StandardPageProps = { eyebrow: string; title: string; description?: string; image: string; children: ReactNode };
 
@@ -14,7 +13,6 @@ export default function StandardPage({
 }: StandardPageProps) {
   return (
     <main>
-      <SiteHeader />
       <PageHero
         eyebrow={eyebrow}
         title={title}
