@@ -17,9 +17,5 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return (
-    <html lang="en" className="js">
-      <body>{children}</body>
-    </html>
-  );
+  return <html lang="en" className="js"><body>{children}</body></html>;
 }
