@@ -612,17 +612,19 @@ revealEls.forEach(el => revealObs.observe(el));
   const photoA = document.getElementById('fsPhotoA');
   const photoB = document.getElementById('fsPhotoB');
 
+  // Gallery set lives in /assets/gallery (g01–g27). The previous 91-image
+  // pw/pc/pl set was archived to /old-images at the repo root.
   const photos = [
-    'assets/events/wedding/pw1.jpeg','assets/events/wedding/pw2.jpeg','assets/events/wedding/pw3.jpeg','assets/events/wedding/pw4.jpeg','assets/events/wedding/pw5.jpeg','assets/events/wedding/pw6.jpeg','assets/events/wedding/pw7.jpeg','assets/events/wedding/pw8.jpeg','assets/events/wedding/pw9.jpeg','assets/events/wedding/pw10.jpeg','assets/events/wedding/pw11.jpeg','assets/events/wedding/pw12.jpeg','assets/events/wedding/pw13.jpeg','assets/events/wedding/pw14.jpeg','assets/events/wedding/pw15.jpeg','assets/events/wedding/pw16.jpeg','assets/events/wedding/pw17.jpeg','assets/events/wedding/pw18.jpeg','assets/events/wedding/pw19.jpeg','assets/events/wedding/pw20.jpeg','assets/events/wedding/pw21.jpeg','assets/events/wedding/pw22.jpeg','assets/events/wedding/pw23.jpeg','assets/events/wedding/pw24.jpeg','assets/events/wedding/pw25.jpeg','assets/events/wedding/pw26.jpeg','assets/events/wedding/pw27.jpeg',
-    'assets/events/corporate/pc1.jpeg','assets/events/corporate/pc2.jpeg','assets/events/corporate/pc3.jpeg','assets/events/corporate/pc4.jpeg','assets/events/corporate/pc5.jpeg','assets/events/corporate/pc6.jpeg','assets/events/corporate/pc7.jpeg','assets/events/corporate/pc8.jpeg','assets/events/corporate/pc9.jpeg','assets/events/corporate/pc10.jpeg','assets/events/corporate/pc11.jpeg','assets/events/corporate/pc12.jpeg','assets/events/corporate/pc13.jpeg','assets/events/corporate/pc14.jpeg','assets/events/corporate/pc15.jpeg','assets/events/corporate/pc16.jpeg','assets/events/corporate/pc17.jpeg','assets/events/corporate/pc18.jpeg','assets/events/corporate/pc19.jpeg','assets/events/corporate/pc20.jpeg','assets/events/corporate/pc21.jpeg','assets/events/corporate/pc22.jpeg','assets/events/corporate/pc23.jpeg','assets/events/corporate/pc24.jpeg','assets/events/corporate/pc25.jpeg','assets/events/corporate/pc26.jpeg','assets/events/corporate/pc27.jpeg','assets/events/corporate/pc28.jpeg','assets/events/corporate/pc29.jpeg','assets/events/corporate/pc30.jpeg','assets/events/corporate/pc31.jpeg','assets/events/corporate/pc32.jpeg','assets/events/corporate/pc33.jpeg','assets/events/corporate/pc34.jpeg','assets/events/corporate/pc35.jpeg','assets/events/corporate/pc36.jpeg','assets/events/corporate/pc37.jpeg','assets/events/corporate/pc38.jpeg','assets/events/corporate/pc39.jpeg','assets/events/corporate/pc40.jpeg','assets/events/corporate/pc41.jpeg','assets/events/corporate/pc42.jpeg','assets/events/corporate/pc43.jpeg','assets/events/corporate/pc44.jpeg','assets/events/corporate/pc45.jpeg',
-    'assets/events/live/pl1.jpeg','assets/events/live/pl2.jpeg','assets/events/live/pl3.jpeg','assets/events/live/pl4.jpeg','assets/events/live/pl5.jpeg','assets/events/live/pl6.jpeg','assets/events/live/pl7.jpeg','assets/events/live/pl8.jpeg','assets/events/live/pl9.jpeg','assets/events/live/pl10.jpeg','assets/events/live/pl11.jpeg','assets/events/live/pl12.jpeg','assets/events/live/pl13.jpeg','assets/events/live/pl14.jpeg','assets/events/live/pl15.jpeg','assets/events/live/pl16.jpeg','assets/events/live/pl17.jpeg','assets/events/live/pl18.jpeg','assets/events/live/pl19.jpeg'
+    '/assets/gallery/g01.jpeg','/assets/gallery/g02.jpeg','/assets/gallery/g03.jpeg','/assets/gallery/g04.jpeg','/assets/gallery/g05.jpeg','/assets/gallery/g06.jpeg','/assets/gallery/g07.jpeg','/assets/gallery/g08.jpeg','/assets/gallery/g09.jpeg',
+    '/assets/gallery/g10.jpeg','/assets/gallery/g11.jpeg','/assets/gallery/g12.jpeg','/assets/gallery/g13.jpeg','/assets/gallery/g14.jpeg','/assets/gallery/g15.jpeg','/assets/gallery/g16.jpeg','/assets/gallery/g17.jpeg','/assets/gallery/g18.jpeg',
+    '/assets/gallery/g19.jpeg','/assets/gallery/g20.jpeg','/assets/gallery/g21.jpeg','/assets/gallery/g22.jpeg','/assets/gallery/g23.jpeg','/assets/gallery/g24.jpeg','/assets/gallery/g25.jpeg','/assets/gallery/g26.jpeg','/assets/gallery/g27.jpeg'
   ];
   let photoIdx = 0;
   let useA = true;
   photoA.style.backgroundImage = `url('${photos[0]}')`;
   photoB.style.backgroundImage = `url('${photos[1]}')`;
 
-  slide.addEventListener('click', () => { window.location.href = 'events.html'; });
+  slide.addEventListener('click', () => { window.location.href = '/events'; });
 
   // matchMedia (not window.innerWidth) so this always agrees with the
   // CSS breakpoint that caps .fs-gallery to 50vh on mobile. A mismatch
