@@ -330,6 +330,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
+      background: rgba(0,0,0,0.55);
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.3s, visibility 0.3s;
@@ -340,6 +342,10 @@
       padding: 48px 40px;
       max-width: 420px;
       width: 90%;
+      max-height: 88svh;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
       text-align: center;
       color: #ffffff;
       position: relative;
@@ -812,9 +818,13 @@
       }
 
       /* Popup */
-      .people-popup { padding: 36px 20px; width: calc(100vw - 32px); border-radius: 20px; }
-      .people-popup__avatar { width: 64px; height: 64px; font-size: 1.6rem; }
+      .people-popup-overlay { padding: 16px; }
+      .people-popup { padding: 32px 20px; width: 100%; max-width: 100%; max-height: calc(100svh - 32px); border-radius: 20px; }
+      .people-popup__avatar { width: 64px; height: 64px; font-size: 1.6rem; margin-bottom: 16px; }
       .people-popup__name { font-size: 1.5rem; }
+      .people-popup__role { margin-bottom: 18px; }
+      .people-popup__divider { margin-bottom: 18px; }
+      .people-popup__bio { font-size: 0.92rem; line-height: 1.7; }
 
       /* IG profile */
       .ig-profile { padding: 16px; border-radius: 16px; flex-direction: column; align-items: center; text-align: center; }
@@ -926,39 +936,27 @@
       <div class="people-grid-wrap">
         <div class="people-grid">
 
-          <div class="people-card" data-name="Rikshit Patel" data-role="Helpdex Head" data-initial="R" data-bio="Rikshit leads the Helpdex team, coordinating on-ground support so every event runs smoothly from setup to send-off. He's the first point of contact keeping guests, vendors, and the crew in sync on event day.">
+          <div class="people-card" data-name="Rikshit Patel" data-role="Helpdesk Head" data-initial="R" data-bio="Rikshit leads our guest relations and Helpdesk team, ensuring every attendee enjoys a seamless experience from start to finish. From managing RSVPs and travel coordination to answering real-time event queries, he is dedicated to delivering warm hospitality and smooth execution.">
             <div class="people-avatar">R</div>
             <p class="people-name">Rikshit Patel</p>
-            <p class="people-role">Helpdex Head</p>
+            <p class="people-role">Helpdesk Head</p>
           </div>
 
-          <div class="people-card" data-name="Bhumika Bhatt" data-role="Helpdex Supervisor" data-initial="B" data-bio="Bhumika supervises the Helpdex crew on-site, making sure guest assistance and event coordination stay seamless throughout every function. Her attention to detail keeps the little things from becoming big problems.">
+          <div class="people-card" data-name="Bhumika Bhatt" data-role="Guest Relations" data-initial="B" data-bio="Bhumika plays a key role on our guest relations team, ensuring every attendee receives prompt assistance and a warm welcome. Dedicated and detail-oriented, she supports day-to-day helpdesk operations, guest inquiries, and hospitality logistics to keep the event running smoothly.">
             <div class="people-avatar">B</div>
             <p class="people-name">Bhumika Bhatt</p>
-            <p class="people-role">Helpdex Supervisor</p>
+            <p class="people-role">Guest Relations</p>
           </div>
 
-          <div class="people-card" data-name="Vinit Gupta" data-role="Logistics" data-initial="V" data-bio="Vinit handles the logistics that hold every event together — transport, setup, timing, and the behind-the-scenes coordination that guests never see but always benefit from.">
+          <div class="people-card" data-name="Vinit Gupta" data-role="Logistics Head" data-initial="V" data-bio="Vinit leads logistics operations, ensuring all movement behind the scenes is seamless and efficient. From managing guest transportation and arrival schedules to overseeing venue logistics, he works to ensure everything runs precisely on time.">
             <div class="people-avatar">V</div>
             <p class="people-name">Vinit Gupta</p>
-            <p class="people-role">Logistics</p>
+            <p class="people-role">Logistics Head</p>
           </div>
 
         </div>
       </div>
     </section>
-
-    <!-- PEOPLE POPUP -->
-    <div class="people-popup-overlay" id="peoplePopup">
-      <div class="people-popup">
-        <button class="people-popup__close" id="peoplePopupClose">×</button>
-        <div class="people-popup__avatar" id="popupAvatar"></div>
-        <h3 class="people-popup__name" id="popupPeopleName"></h3>
-        <p class="people-popup__role" id="popupPeopleRole"></p>
-        <div class="people-popup__divider"></div>
-        <p class="people-popup__bio" id="popupPeopleBio"></p>
-      </div>
-    </div>
 
     <!-- CTA -->
     <div class="team-cta">
@@ -1002,6 +1000,19 @@
 
     <p class="footer-min__copyright">&copy; 2026 Utsah Events. All rights reserved. · <a href="privacy.html">Privacy Policy</a> · <a href="terms.html">Terms &amp; Conditions</a></p>
   </footer>
+
+  <!-- PEOPLE POPUP — kept outside <main> so its fixed overlay is not trapped
+       inside the page's z-index:2 stacking context (the footer would cover it). -->
+  <div class="people-popup-overlay" id="peoplePopup">
+    <div class="people-popup">
+      <button class="people-popup__close" id="peoplePopupClose">×</button>
+      <div class="people-popup__avatar" id="popupAvatar"></div>
+      <h3 class="people-popup__name" id="popupPeopleName"></h3>
+      <p class="people-popup__role" id="popupPeopleRole"></p>
+      <div class="people-popup__divider"></div>
+      <p class="people-popup__bio" id="popupPeopleBio"></p>
+    </div>
+  </div>
 
   <!-- LIGHTBOX -->
   <div class="team-lightbox" id="teamLightbox">
