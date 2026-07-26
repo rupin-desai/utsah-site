@@ -1,5 +1,9 @@
 import './globals.css';
 import type { ReactNode } from 'react';
+import { Figtree, Literata } from 'next/font/google';
+
+const figtree = Figtree({ subsets: ['latin'], variable: '--font-figtree', display: 'swap' });
+const literata = Literata({ subsets: ['latin'], variable: '--font-literata', display: 'swap' });
 
 export const metadata = {
   metadataBase: undefined,
@@ -17,5 +21,5 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
-  return <html lang="en" className="js"><body>{children}</body></html>;
+  return <html lang="en" className={`${figtree.variable} ${literata.variable} js`}><body>{children}</body></html>;
 }
