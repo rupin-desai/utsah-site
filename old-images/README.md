@@ -18,6 +18,11 @@ references anything in this folder, so these files are not shipped to visitors.
 | `gallery/wedding/` | 27 (`pw1`–`pw27`) | `public/assets/events/wedding/` |
 | `gallery/corporate/` | 45 (`pc1`–`pc45`) | `public/assets/events/corporate/` |
 | `gallery/live/` | 19 (`pl1`–`pl19`) | `public/assets/events/live/` |
+| `unused-gallery-small/` | 14 (`1-small`–`13-small`, `website-pictures-small`) | `public/assets/gallery/` |
+
+`unused-gallery-small/` was already dead weight before this change — those files
+sat in `public/assets/gallery/` but nothing in the codebase referenced them. They
+were moved here so that folder holds exactly the 27 photos in use.
 
 Only the `p`-prefixed files were archived. The other images in
 `public/assets/events/*` (`w*`, `uw*`, `ww*`, `c*`, `l*`, `cover*`) are still in
