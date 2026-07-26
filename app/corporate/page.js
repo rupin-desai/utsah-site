@@ -1,5 +1,4 @@
-import data from '@/content/corporate.json';
-import LegacyPage from '@/components/LegacyPage';
+import EventGalleryPage from '@/components/EventGalleryPage';
 
 export const metadata = {
   title: "Corporate Events — Utsah Events",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <EventGalleryPage title="Corporate events" description="Experiences that move brands and bring people together." cover="/assets/events/corporate/cover.jpeg" images={['/assets/events/corporate/c1.jpeg', '/assets/events/corporate/c2.jpeg', '/assets/events/corporate/c3.jpeg', '/assets/events/corporate/c4.jpeg', '/assets/events/corporate/c5.jpeg', '/assets/events/corporate/c6.jpeg']} />;
 }

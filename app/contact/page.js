@@ -1,5 +1,4 @@
-import data from '@/content/contact.json';
-import LegacyPage from '@/components/LegacyPage';
+import ContactPage from '@/components/ContactPage';
 
 export const metadata = {
   title: "Contact Us — Utsah Events | Bardoli, Gujarat",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <ContactPage />;
 }

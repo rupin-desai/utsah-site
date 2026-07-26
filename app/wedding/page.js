@@ -1,5 +1,4 @@
-import data from '@/content/wedding.json';
-import LegacyPage from '@/components/LegacyPage';
+import EventGalleryPage from '@/components/EventGalleryPage';
 
 export const metadata = {
   title: "Wedding — Utsah Events",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <EventGalleryPage title="Weddings" description="Every wedding is a world of its own. We make it feel effortless." cover="/assets/events/wedding/cover.jpeg" images={['/assets/events/wedding/uw1.jpeg', '/assets/events/wedding/uw2.jpeg', '/assets/events/wedding/uw3.jpeg', '/assets/events/wedding/uw4.jpeg', '/assets/events/wedding/uw5.jpeg', '/assets/events/wedding/uw6.jpeg']} />;
 }

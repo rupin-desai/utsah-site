@@ -1,5 +1,4 @@
-import data from '@/content/home.json';
-import LegacyPage from '@/components/LegacyPage';
+import HomePage from '@/components/HomePage';
 
 export const metadata = {
   title: "Utsah Events — Full-Service Event Planning | Bardoli, Gujarat",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <HomePage />;
 }

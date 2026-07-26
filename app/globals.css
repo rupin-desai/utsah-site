@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0b;
+  --color-paper: #f5f1e8;
+  --color-gold: #c9a84c;
+  --color-gold-light: #e4cb84;
+  --font-display: Georgia, 'Times New Roman', serif;
+  --font-body: Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  * { @apply border-stone-200; }
+  html { @apply scroll-smooth bg-ink; }
+  body { @apply bg-paper font-body text-stone-900 antialiased; }
+  a { @apply outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink; }
+}
+
+@utility page-shell { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
+@utility eyebrow { @apply text-xs font-bold uppercase tracking-[0.24em] text-gold; }
+@utility display { @apply font-display; }

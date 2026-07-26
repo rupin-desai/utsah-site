@@ -1,5 +1,4 @@
-import data from '@/content/terms.json';
-import LegacyPage from '@/components/LegacyPage';
+import LegalPage from '@/components/LegalPage';
 
 export const metadata = {
   title: "Terms & Conditions — Utsah Events",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <LegalPage title="Terms & conditions" sections={[["Our services", "Utsah Events provides planning, coordination and production services as agreed for each event."], ["Bookings and payments", "Bookings are confirmed according to the proposal and payment schedule shared with you."], ["Cancellations and changes", "Changes or cancellations may affect costs and availability. Please let us know as early as possible."], ["Client responsibilities", "Clients must provide accurate event requirements and timely approvals for a smooth delivery."], ["Liability", "Our liability is limited to the extent permitted by applicable law and the agreed service terms."]]} />;
 }

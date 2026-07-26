@@ -1,5 +1,4 @@
-import data from '@/content/team.json';
-import LegacyPage from '@/components/LegacyPage';
+import TeamPage from '@/components/TeamPage';
 
 export const metadata = {
   title: "Our Teams — Utsah Events | Bardoli, Gujarat",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <TeamPage />;
 }

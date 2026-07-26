@@ -1,5 +1,4 @@
-import data from '@/content/memories.json';
-import LegacyPage from '@/components/LegacyPage';
+import MemoriesPage from '@/components/MemoriesPage';
 
 export const metadata = {
   title: "Memories — Utsah Events",
@@ -7,5 +6,5 @@ export const metadata = {
 };
 
 export default function Page() {
-  return <LegacyPage data={data} />;
+  return <MemoriesPage />;
 }
