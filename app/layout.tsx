@@ -1,4 +1,5 @@
 import './globals.css';
+import type { ReactNode } from 'react';
 
 export const metadata = {
   metadataBase: undefined,
@@ -15,7 +16,7 @@ export const viewport = {
   themeColor: [{ media: '(min-width: 431px)', color: '#0a0a0a' }],
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en" className="js">
       <body>{children}</body>

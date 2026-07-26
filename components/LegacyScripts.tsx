@@ -2,12 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
+type LegacyScript = { src?: string; code?: string };
+
 /**
  * Re-runs the original page's <script> tags, in source order, once the markup
  * is in the DOM. Scripts injected via innerHTML never execute, so they are
  * lifted out at conversion time and replayed here instead.
  */
-export default function LegacyScripts({ scripts }) {
+export default function LegacyScripts({ scripts }: { scripts: LegacyScript[] }) {
   const ran = useRef(false);
 
   useEffect(() => {
@@ -30,7 +32,7 @@ export default function LegacyScripts({ scripts }) {
           document.body.appendChild(el);
           await loaded;
         } else {
-          el.textContent = item.code;
+          el.textContent = item.code ?? '';
           document.body.appendChild(el);
         }
       }

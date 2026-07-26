@@ -1,11 +1,14 @@
 import LegacyScripts from './LegacyScripts';
 
+type LegacyScript = { src?: string; code?: string };
+type LegacyPageProps = { data: { headExtra: string; html: string; scripts: LegacyScript[] } };
+
 /**
  * Renders one converted page: the original <head> links/styles followed by the
  * original body markup, verbatim. `display: contents` keeps the wrapper out of
  * the layout so the markup behaves exactly as it did as a direct child of body.
  */
-export default function LegacyPage({ data }) {
+export default function LegacyPage({ data }: LegacyPageProps) {
   return (
     <>
       <div

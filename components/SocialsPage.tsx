@@ -1,0 +1,44 @@
+import Link from "next/link";
+import StandardPage from "./StandardPage";
+const channels = [
+  [
+    "Instagram",
+    "See celebrations as they happen.",
+    "https://www.instagram.com/utsahevents/",
+  ],
+  [
+    "YouTube",
+    "Watch the stories behind our events.",
+    "https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw",
+  ],
+  ["WhatsApp", "Message our team directly.", "https://wa.me/918200395197"],
+];
+export default function SocialsPage() {
+  return (
+    <StandardPage
+      eyebrow="Keep in touch"
+      title="We’re social"
+      description="Follow our latest work, behind-the-scenes moments and stories from the Utsah family."
+      image="/assets/slide4.jpeg"
+    >
+      <div className="grid gap-5 md:grid-cols-3">
+        {channels.map(([name, copy, href]) => (
+          <Link
+            key={name}
+            href={href}
+            target="_blank"
+            rel="noreferrer"
+            className="bg-ink p-8 text-white transition hover:bg-stone-800"
+          >
+            <p className="eyebrow">Utsah online</p>
+            <h2 className="display mt-3 text-3xl">{name}</h2>
+            <p className="mt-5 leading-7 text-stone-300">{copy}</p>
+            <span className="mt-8 block text-xs font-bold uppercase tracking-[.18em] text-gold-light">
+              Follow us
+            </span>
+          </Link>
+        ))}
+      </div>
+    </StandardPage>
+  );
+}
