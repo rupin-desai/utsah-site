@@ -66,7 +66,7 @@ export default function SiteHeader() {
           className="pointer-events-auto transition-shadow duration-300"
           width="100%"
           height="auto"
-          borderRadius={24}
+          borderRadius={14}
           borderWidth={0.04}
           backgroundOpacity={0.1}
           displace={0.5}
@@ -75,7 +75,7 @@ export default function SiteHeader() {
             aria-hidden
             className={`pointer-events-none absolute inset-0 bg-black/45 transition-opacity duration-500 ${tinted ? 'opacity-100' : 'opacity-0'}`}
           />
-          <nav className="relative flex w-full items-center justify-between px-3 py-1 sm:px-4" aria-label="Main navigation">
+          <nav className="relative flex w-full items-center justify-between px-4 py-2.5 sm:px-5 sm:py-1.5" aria-label="Main navigation">
             <div className={`${navGroup} justify-end`}>
               {left.map((item) => (
                 <Link key={item.href} href={item.href} className="transition hover:text-gold-light">

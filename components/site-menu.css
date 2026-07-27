@@ -11,7 +11,7 @@
    the bar's own px-3. flex-end because while closed the logo is hidden and
    space-between would strand the lone toggle at the start of the row. */
 .site-menu .staggered-menu-header {
-  padding: 30px 32px;
+  padding: 34px 36px;
   justify-content: flex-end;
 }
 
