@@ -2,10 +2,10 @@
    Here it only supplies the mobile toggle + panel; the glass bar draws the rest. */
 
 /* Above the header's z-50, else the glass bar paints over the toggle. svh so the
-   panel matches the visible viewport under mobile browser chrome. */
+   panel tracks the viewport as mobile browser chrome collapses. */
 .site-menu.fixed-wrapper {
   z-index: 60;
-  height: 100svh;
+  height: 100dvh;
 }
 
 /* Height, not top padding: the row centres its contents, so 88px = twice the
