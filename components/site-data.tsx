@@ -6,6 +6,12 @@ export const navigation = [
   { href: "/contact", label: "Contact" },
 ];
 
+export const socials = [
+  { label: "Instagram", link: "https://www.instagram.com/utsahevents/" },
+  { label: "YouTube", link: "https://www.youtube.com/channel/UCCXbVgkD-0XRmWPm9OQuwHw" },
+  { label: "WhatsApp", link: "https://api.whatsapp.com/send/?phone=918200395197" },
+];
+
 export const eventTypes = [
   {
     href: "/wedding",

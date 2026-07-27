@@ -1,0 +1,92 @@
+/* Overrides for the registry StaggeredMenu, which ships as a standalone header.
+   Here it only supplies the mobile toggle + panel; the glass bar draws the rest. */
+
+/* Above the header's z-50, else the glass bar paints over the toggle. */
+.site-menu.fixed-wrapper {
+  z-index: 60;
+}
+
+/* 30px top puts the toggle on the same centre line as the wordmark inside the
+   bar (header pt-4 + half the 44px bar); 32px sides match page-shell px-5 plus
+   the bar's own px-3. flex-end because while closed the logo is hidden and
+   space-between would strand the lone toggle at the start of the row. */
+.site-menu .staggered-menu-header {
+  padding: 30px 32px;
+  justify-content: flex-end;
+}
+
+.site-menu .sm-icon {
+  width: 22px;
+  height: 16px;
+  flex-basis: 22px;
+}
+
+/* The bar draws the wordmark while closed; once the panel covers the bar the
+   menu has to draw its own. StaggeredMenu.css inverts it to ink below 1024px. */
+.site-menu .sm-logo {
+  display: none;
+}
+
+.site-menu[data-open] .sm-logo {
+  display: flex;
+}
+
+.site-menu .sm-logo-img {
+  height: 46px;
+}
+
+.site-menu[data-open] .staggered-menu-header {
+  justify-content: space-between;
+}
+
+.site-menu .sm-panel-list {
+  gap: 1.4rem;
+}
+
+.site-menu .sm-panel-item {
+  font-family: var(--font-nephilm), serif;
+  font-size: 3.15rem;
+  letter-spacing: -1px;
+  text-transform: none;
+  padding-right: 0.42em;
+}
+
+/* Stock rule parks the number 2.8em in from the right, which lands it on top of
+   the label. Pin it to the padding gutter instead, raised like a superscript. */
+.site-menu .sm-panel-list[data-numbering] .sm-panel-item::after {
+  right: 0;
+  top: 0.05em;
+  font-size: 16px;
+}
+
+.site-menu .staggered-menu-panel {
+  padding-top: 9.5em;
+}
+
+/* StaggeredMenu.css inverts the mark below 1024px; ours is already the colour
+   we want. */
+.site-menu[data-open] .sm-logo-img {
+  filter: none;
+}
+
+.site-menu .sm-socials-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.site-menu .sm-socials-list {
+  gap: 1.9rem;
+}
+
+.site-menu .sm-socials-link {
+  display: inline-flex;
+  align-items: center;
+  color: #0a0a0a;
+}
+
+.site-menu .sm-socials-link svg {
+  width: 34px;
+  height: 34px;
+}
