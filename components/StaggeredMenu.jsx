@@ -97,7 +97,8 @@ export const StaggeredMenu = ({
       gsap.set(socialTitle, { opacity: 0 });
     }
     if (socialLinks.length) {
-      gsap.set(socialLinks, { y: 25, opacity: 0 });
+      // y only: fading these leaves the CSS hover-dim fighting an inline opacity.
+      gsap.set(socialLinks, { y: 25 });
     }
 
     const tl = gsap.timeline({ paused: true });
@@ -161,13 +162,9 @@ export const StaggeredMenu = ({
           socialLinks,
           {
             y: 0,
-            opacity: 1,
             duration: 0.55,
             ease: 'power3.out',
-            stagger: { each: 0.08, from: 'start' },
-            onComplete: () => {
-              gsap.set(socialLinks, { clearProps: 'opacity' });
-            }
+            stagger: { each: 0.08, from: 'start' }
           },
           socialsStart + 0.04
         );
@@ -221,7 +218,7 @@ export const StaggeredMenu = ({
         const socialTitle = panel.querySelector('.sm-socials-title');
         const socialLinks = Array.from(panel.querySelectorAll('.sm-socials-link'));
         if (socialTitle) gsap.set(socialTitle, { opacity: 0 });
-        if (socialLinks.length) gsap.set(socialLinks, { y: 25, opacity: 0 });
+        if (socialLinks.length) gsap.set(socialLinks, { y: 25 });
         busyRef.current = false;
       }
     });
@@ -296,6 +293,19 @@ export const StaggeredMenu = ({
       animateColor(false);
     }
   }, [playClose, animateIcon, animateColor, onMenuClose]);
+
+  // Scroll lock. The panel covers the viewport, so anything moving behind it is
+  // just the page being scrolled by touches meant for the menu.
+  React.useEffect(() => {
+    if (!open) return;
+    const { overflow, touchAction } = document.body.style;
+    document.body.style.overflow = 'hidden';
+    document.body.style.touchAction = 'none';
+    return () => {
+      document.body.style.overflow = overflow;
+      document.body.style.touchAction = touchAction;
+    };
+  }, [open]);
 
   React.useEffect(() => {
     if (!closeOnClickAway || !open) return;

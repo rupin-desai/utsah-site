@@ -1,11 +1,24 @@
 /* Overrides for the registry StaggeredMenu, which ships as a standalone header.
    Here it only supplies the mobile toggle + panel; the glass bar draws the rest. */
 
-/* Above the header's z-50, else the glass bar paints over the toggle. svh so the
+/* Above the header's z-50, else the glass bar paints over the toggle. dvh so the
    panel tracks the viewport as mobile browser chrome collapses. */
 .site-menu.fixed-wrapper {
   z-index: 60;
   height: 100dvh;
+}
+
+/* While open the wrapper swallows everything aimed at the page underneath; the
+   stock rule leaves it click-through so the bar behind stayed live. */
+.site-menu[data-open] {
+  pointer-events: auto;
+}
+
+/* Panel keeps its own scroll, but a flick that reaches its end must not hand the
+   momentum back to the page. */
+.site-menu .staggered-menu-panel {
+  overscroll-behavior: contain;
+  touch-action: pan-y;
 }
 
 /* Height, not top padding: the row centres its contents, so 88px = twice the
