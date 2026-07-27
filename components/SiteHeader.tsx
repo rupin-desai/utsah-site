@@ -50,7 +50,7 @@ export default function SiteHeader() {
             </div>
             <Link href="/" aria-label="Utsah Events home" className="mx-auto shrink-0 md:mx-10 lg:mx-14">
               <Image
-                src="/assets/utsah-wordmark.png"
+                src="/assets/utsah-wordmark.svg"
                 alt="Utsah Events"
                 width={386}
                 height={170}

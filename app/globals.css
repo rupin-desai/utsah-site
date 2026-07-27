@@ -67,6 +67,49 @@
   a { @apply outline-none focus-visible:ring-2 focus-visible:ring-gold focus-visible:ring-offset-2 focus-visible:ring-offset-ink; }
 }
 
+/* Write-on intro. Pure CSS: the mask strokes carry their own delay/duration as
+   inline style, so one rule drives all 47 of them. */
+#intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: var(--color-paper);
+  clip-path: inset(0 0 0 0);
+  /* delay must sit just past WRITE_END in components/intro/strokes.ts (2532ms) */
+  animation: intro-out 700ms cubic-bezier(0.65, 0, 0.35, 1) 2800ms forwards;
+}
+#intro-mask path { animation: intro-write cubic-bezier(0.33, 0, 0.25, 1) forwards; }
+
+@keyframes intro-write { to { stroke-dashoffset: 0; } }
+/* Curtain: the overlay's bottom edge sweeps up, uncovering the site from the
+   bottom. visibility (not just clip) so it stops being interactive and
+   focusable even if JS never runs — without it, no-JS users get a dead layer. */
+@keyframes intro-out {
+  to { clip-path: inset(0 0 100% 0); visibility: hidden; }
+}
+
+html[data-intro='done'] #intro { display: none; }
+/* No scroll lock on purpose: data-intro="run" is server-rendered, so a lock
+   keyed to it would never release if JS never runs. The overlay covers the
+   viewport anyway. */
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  /* No writing: show the finished wordmark, hold it long enough to read, then go.
+     Needs !important to survive the blanket rule above. */
+  #intro-mask path { animation: none !important; stroke-dashoffset: 0 !important; }
+  #intro {
+    animation: intro-out 150ms ease 600ms forwards !important;
+  }
+  html { scroll-behavior: auto; }
+}
+
 @utility page-shell { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
 @utility eyebrow { @apply text-xs font-bold uppercase tracking-[0.24em] text-gold; }
 @utility display { @apply font-display; }
