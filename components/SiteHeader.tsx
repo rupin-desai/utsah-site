@@ -2,11 +2,12 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { MenuIcon } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
-import LiquidGlass from './LiquidGlass';
+import GlassSurface from './GlassSurface';
 import { navigation } from './site-data';
 
 // Split either side of the centred wordmark; equal flex on both groups keeps it centred.
@@ -17,30 +18,40 @@ const navGroup =
   'hidden flex-1 items-center gap-8 text-base font-light tracking-wide [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] md:flex lg:gap-10';
 
 export default function SiteHeader() {
-  // Past the hero the bar floats over light sections, so it has to carry its own
-  // contrast for the white nav text: less transmission, a touch of frost.
-  const [floating, setFloating] = useState(false);
+  // Every route opens with a dark hero (`main > section`), and the white nav
+  // text only needs help once the bar has floated off it onto a light section.
+  const pathname = usePathname();
+  const [tinted, setTinted] = useState(false);
 
   useEffect(() => {
-    const onScroll = () => setFloating(window.scrollY > 24);
-    onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
-  }, []);
+    const hero = document.querySelector('main > section');
+    if (!hero) return;
+    // Shrink the root by the bar's height so it flips the moment the hero
+    // stops sitting behind the bar, not when it leaves the viewport.
+    const observer = new IntersectionObserver(([entry]) => setTinted(!entry.isIntersecting), {
+      rootMargin: '-96px 0px 0px 0px',
+    });
+    observer.observe(hero);
+    return () => observer.disconnect();
+  }, [pathname]);
 
   return (
     <header className="pointer-events-none sticky top-0 z-50 -mb-24 h-24 text-white">
       <div className="page-shell pt-4 sm:pt-5">
-        <LiquidGlass
-          className="pointer-events-auto rounded-full transition-shadow duration-300"
-          scale={0.15}
-          ior={2}
-          thickness={1}
-          roughness={floating ? 0.12 : 0}
-          transmission={floating ? 0.35 : 1}
-          chromaticAberration={0}
+        <GlassSurface
+          className="pointer-events-auto transition-shadow duration-300"
+          width="100%"
+          height="auto"
+          borderRadius={24}
+          borderWidth={0.04}
+          backgroundOpacity={0.1}
+          displace={0.5}
         >
-          <nav className="relative flex items-center justify-between px-4 py-2 sm:px-5" aria-label="Main navigation">
+          <div
+            aria-hidden
+            className={`pointer-events-none absolute inset-0 bg-black/45 transition-opacity duration-500 ${tinted ? 'opacity-100' : 'opacity-0'}`}
+          />
+          <nav className="relative flex w-full items-center justify-between px-3 py-1 sm:px-4" aria-label="Main navigation">
             <div className={`${navGroup} justify-end`}>
               {left.map((item) => (
                 <Link key={item.href} href={item.href} className="transition hover:text-gold-light">
@@ -92,7 +103,7 @@ export default function SiteHeader() {
               </SheetContent>
             </Sheet>
           </nav>
-        </LiquidGlass>
+        </GlassSurface>
       </div>
     </header>
   );
