@@ -49,7 +49,7 @@ export default function LiquidGlass({
 
   return (
     <div
-      className={`relative isolate overflow-hidden border border-white/25 shadow-[0_10px_30px_rgba(0,0,0,0.28),inset_0_1px_0_rgba(255,255,255,0.42),inset_0_-1px_0_rgba(255,255,255,0.12)] ${className}`}
+      className={`relative isolate overflow-hidden ${className}`}
     >
       <svg aria-hidden className="pointer-events-none absolute size-0">
         <filter id={filterId} x="0" y="0" width="100%" height="100%" colorInterpolationFilters="sRGB">
