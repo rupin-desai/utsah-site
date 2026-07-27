@@ -336,16 +336,6 @@ export const StaggeredMenu = ({
         })()}
       </div>
       <header className="staggered-menu-header" aria-label="Main navigation header">
-        <div className="sm-logo" aria-label="Logo">
-          <img
-            src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
-            alt="Logo"
-            className="sm-logo-img"
-            draggable={false}
-            width={110}
-            height={24}
-          />
-        </div>
         <button
           ref={toggleBtnRef}
           className="sm-toggle"
@@ -364,6 +354,18 @@ export const StaggeredMenu = ({
 
       <aside id="staggered-menu-panel" ref={panelRef} className="staggered-menu-panel" aria-hidden={!open}>
         <div className="sm-panel-inner">
+          {/* Inside the panel, not the header: it should ride in on the same
+              slide as the links rather than pop over the bar. */}
+          <div className="sm-logo" aria-label="Logo">
+            <img
+              src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+              alt="Logo"
+              className="sm-logo-img"
+              draggable={false}
+              width={110}
+              height={24}
+            />
+          </div>
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
               items.map((it, idx) => (
