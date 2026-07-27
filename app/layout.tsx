@@ -1,6 +1,7 @@
 import './globals.css';
 import type { ReactNode } from 'react';
-import { Figtree, Literata } from 'next/font/google';
+import { Figtree } from 'next/font/google';
+import localFont from 'next/font/local';
 import SiteHeader from '@/components/SiteHeader';
 import IntroOverlay from '@/components/intro/IntroOverlay';
 
@@ -14,7 +15,15 @@ addEventListener('click',end,{once:true});
 setTimeout(end,matchMedia('(prefers-reduced-motion: reduce)').matches?800:3600)})();`;
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-figtree', display: 'swap' });
-const literata = Literata({ subsets: ['latin'], variable: '--font-literata', display: 'swap' });
+// Display serif. Self-hosted, so it is not a Google Fonts request.
+const nephilm = localFont({
+  src: [
+    { path: './fonts/Nephilm.otf', weight: '400', style: 'normal' },
+    { path: './fonts/Nephilm-Italic.otf', weight: '400', style: 'italic' },
+  ],
+  variable: '--font-nephilm',
+  display: 'swap',
+});
 
 export const metadata = {
   metadataBase: undefined,
@@ -34,5 +43,5 @@ export const viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   // suppressHydrationWarning covers the case where hydration lands after the
   // script has already flipped data-intro to "done" (slow device, dev mode).
-  return <html lang="en" data-intro="run" suppressHydrationWarning className={`${figtree.variable} ${literata.variable} js`}><body><script dangerouslySetInnerHTML={{ __html: INTRO_BOOT }} /><IntroOverlay /><SiteHeader />{children}</body></html>;
+  return <html lang="en" data-intro="run" suppressHydrationWarning className={`${figtree.variable} ${nephilm.variable} js`}><body><script dangerouslySetInnerHTML={{ __html: INTRO_BOOT }} /><IntroOverlay /><SiteHeader />{children}</body></html>;
 }
