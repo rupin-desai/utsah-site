@@ -15,7 +15,13 @@ const left = navigation.slice(0, half);
 const right = navigation.slice(half);
 const navGroup =
   'hidden flex-1 items-center gap-8 text-base font-light tracking-wide [text-shadow:0_1px_6px_rgba(0,0,0,0.45)] md:flex lg:gap-10';
-const menuItems = navigation.map((item) => ({ label: item.label, link: item.href, ariaLabel: item.label }));
+// Home leads the mobile list; the bar's wordmark is the only route to it on
+// desktop, and inside the open panel that wordmark is not a link.
+const menuItems = [{ href: '/', label: 'Home' }, ...navigation].map((item) => ({
+  label: item.label,
+  link: item.href,
+  ariaLabel: item.label,
+}));
 // lucide-react v1 dropped brand marks, so these are the same three glyphs the
 // footer uses, inlined.
 const socialIcons: Record<string, ReactNode> = {

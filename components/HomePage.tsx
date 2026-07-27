@@ -3,6 +3,7 @@ import Link from 'next/link';
 import SiteFooter from './SiteFooter';
 import SectionHeading from './SectionHeading';
 import { DISTANCE, Reveal, RevealGroup, RevealItem, RevealLink, SplitText } from '@/components/motion/reveal';
+import CountUp from '@/components/CountUp';
 import { eventTypes, reviews, stats } from './site-data';
 
 const gallery = ['/assets/gallery/g27.jpeg', '/assets/gallery/g12.jpeg', '/assets/gallery/g19.jpeg', '/assets/gallery/g15.jpeg'];
@@ -25,7 +26,9 @@ export default function HomePage() {
     <section id="about" className="bg-paper py-20 sm:py-28"><div className="page-shell">
       {/* RevealItem carries the cell classes verbatim so the gap-px hairline
           trick still works — no extra wrapper in the grid. */}
-      <RevealGroup className="grid gap-px bg-stone-300 sm:grid-cols-4">{stats.map(([value, label]) => <RevealItem key={label} className="bg-paper px-5 py-7 text-center" distance={DISTANCE.small}><p className="display text-4xl text-gold">{value}</p><p className="mt-2 text-xs font-bold uppercase tracking-[.14em] text-stone-600">{label}</p></RevealItem>)}</RevealGroup>
+      {/* "50k+" -> counts 0..50, then "k+" as static text. Keeping the parse
+          here leaves the copy in site-data as one readable string. */}
+      <RevealGroup className="grid gap-px bg-stone-300 sm:grid-cols-4">{stats.map(([value, label]) => { const [, digits = '0', suffix = ''] = /^(\d+)(.*)$/.exec(value) ?? []; return <RevealItem key={label} className="bg-paper px-5 py-7 text-center" distance={DISTANCE.small}><p className="display text-[56px] leading-none text-gold"><CountUp to={Number(digits)} duration={1.2} />{suffix}</p><p className="mt-2 text-xs font-bold uppercase tracking-[.14em] text-stone-600">{label}</p></RevealItem>; })}</RevealGroup>
       <div className="mt-20 grid items-center gap-12 lg:grid-cols-[.85fr_1.15fr]"><SectionHeading eyebrow="Who we are" title="Celebrations with soul" /><div className="max-w-2xl text-lg leading-8 text-stone-700">
         <Reveal as="p" delay={0.1}>UTSAH is a comprehensive planning and coordination service for customised events and weddings. We design, plan and manage every project from first idea to final farewell.</Reveal>
         <RevealGroup className="mt-8 flex flex-wrap gap-3" delay={0.25}><RevealLink href="/events" className="border border-stone-400 px-5 py-3 text-sm font-semibold hover:border-gold hover:text-gold" distance={DISTANCE.small}>Premium event experiences</RevealLink><RevealLink href="/about" className="border border-stone-400 px-5 py-3 text-sm font-semibold hover:border-gold hover:text-gold" distance={DISTANCE.small}>Meet our team</RevealLink></RevealGroup>

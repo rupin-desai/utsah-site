@@ -1,4 +1,5 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
@@ -366,7 +367,7 @@ export const StaggeredMenu = ({
         <div className="sm-panel-inner">
           {/* Inside the panel, not the header: it should ride in on the same
               slide as the links rather than pop over the bar. */}
-          <div className="sm-logo" aria-label="Logo">
+          <Link href="/" className="sm-logo" aria-label="Home" onClick={closeMenu}>
             <img
               src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
               alt="Logo"
@@ -375,14 +376,22 @@ export const StaggeredMenu = ({
               width={110}
               height={24}
             />
-          </div>
+          </Link>
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a className="sm-panel-item" href={it.link} aria-label={it.ariaLabel} data-index={idx + 1}>
+                  {/* next/link, so the panel navigates client-side; closeMenu
+                      because a soft navigation leaves this panel mounted. */}
+                  <Link
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
+                    data-index={idx + 1}
+                    onClick={closeMenu}
+                  >
                     <span className="sm-panel-itemLabel">{it.label}</span>
-                  </a>
+                  </Link>
                 </li>
               ))
             ) : (
