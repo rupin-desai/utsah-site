@@ -13,6 +13,9 @@
   --font-body: var(--font-figtree), Arial, sans-serif;
   --font-heading: var(--font-nephilm), Georgia, serif;
   --font-sans: var(--font-figtree), Arial, sans-serif;
+  /* Expo-out. The house curve; mirrors EASE_OUT in components/motion/reveal.tsx
+     so CSS-side transitions and Motion-driven reveals share one feel. */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
@@ -94,6 +97,23 @@ html[data-intro='done'] #intro { display: none; }
 /* No scroll lock on purpose: data-intro="run" is server-rendered, so a lock
    keyed to it would never release if JS never runs. The overlay covers the
    viewport anyway. */
+
+/* Motion server-renders its `initial` variant as an inline style, so every
+   reveal ships as opacity:0. If nothing animates it back, the page reads blank.
+   Two ways that happens, both covered here — !important beats a non-important
+   inline style:
+     (scripting: none)  scripting disabled outright
+     [data-motion=off]  the bundle never executed. MotionProvider stamps
+                        data-motion="on" once mounted; the boot script in
+                        layout.tsx flips it to "off" if that has not happened
+                        within 5s. */
+@media (scripting: none) {
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+}
+html[data-motion='off'] [data-reveal] {
+  opacity: 1 !important;
+  transform: none !important;
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

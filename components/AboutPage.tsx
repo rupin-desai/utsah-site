@@ -1,6 +1,7 @@
 import Image from "next/image";
 import StandardPage from "./StandardPage";
 import SectionHeading from "./SectionHeading";
+import { DISTANCE, Reveal, RevealGroup, RevealItem } from "@/components/motion/reveal";
 
 const people = [
   ["Utsav Desai", "Founder", "/assets/founder/utsav.jpeg"],
@@ -18,28 +19,29 @@ export default function AboutPage() {
       <div className="grid gap-12 lg:grid-cols-[.9fr_1.1fr]">
         <SectionHeading eyebrow="Utsah" title="Built around care" />
         <div className="text-lg leading-8 text-stone-700">
-          <p>
+          <Reveal as="p" delay={0.1}>
             We believe celebrations should feel deeply personal. Our team brings
             calm coordination, creative direction and meticulous delivery to
             every occasion.
-          </p>
-          <div className="mt-10 grid gap-5 sm:grid-cols-3">
+          </Reveal>
+          <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-3" delay={0.25}>
             {["Precision", "Passion", "Personalisation"].map((value) => (
-              <div
+              <RevealItem
                 key={value}
                 className="border-t-2 border-gold pt-4 text-sm font-bold uppercase tracking-[.12em]"
+                distance={DISTANCE.small}
               >
                 {value}
-              </div>
+              </RevealItem>
             ))}
-          </div>
+          </RevealGroup>
         </div>
       </div>
       <div className="mt-20">
         <SectionHeading eyebrow="Our people" title="Faces behind the magic" />
-        <div className="mt-10 grid gap-5 sm:grid-cols-3">
+        <RevealGroup className="mt-10 grid gap-5 sm:grid-cols-3">
           {people.map(([name, role, image]) => (
-            <article key={name}>
+            <RevealItem as="article" key={name}>
               <div className="relative aspect-[4/5]">
                 <Image
                   src={image}
@@ -51,9 +53,9 @@ export default function AboutPage() {
               </div>
               <h3 className="display mt-4 text-2xl">{name}</h3>
               <p className="mt-1 text-sm text-stone-600">{role}</p>
-            </article>
+            </RevealItem>
           ))}
-        </div>
+        </RevealGroup>
       </div>
     </StandardPage>
   );

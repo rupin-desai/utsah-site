@@ -1,6 +1,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import StandardPage from "./StandardPage";
+import { DISTANCE, Reveal, RevealGroup, RevealItem, SplitText } from "@/components/motion/reveal";
+
 const memories = [
   ["Yesha & Mitesh", "/assets/memories/yesha-mitesh/1.jpeg"],
   ["Shubha & Kunal", "/assets/memories/shubha-kunal/1.jpeg"],
@@ -16,9 +18,9 @@ export default function MemoriesPage() {
       description="A collection of celebrations held close."
       image="/assets/hero/hero-4.jpg"
     >
-      <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+      <RevealGroup className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
         {memories.map(([name, image]) => (
-          <article key={name}>
+          <RevealItem as="article" key={name}>
             <div className="relative aspect-[4/3]">
               <Image
                 src={image}
@@ -29,20 +31,26 @@ export default function MemoriesPage() {
               />
             </div>
             <h2 className="display mt-4 text-2xl">{name}</h2>
-          </article>
+          </RevealItem>
         ))}
-      </div>
-      <div className="mt-16 bg-ink p-10 text-center text-white">
+      </RevealGroup>
+      <Reveal className="mt-16 bg-ink p-10 text-center text-white">
         <p className="display text-3xl">
-          Want your celebration here<span className="text-gold">?</span>
+          <SplitText
+            text="Want your celebration here"
+            accent={<span className="text-gold">?</span>}
+            delay={0.1}
+          />
         </p>
-        <Link
-          href="/contact"
-          className="mt-6 inline-block text-sm font-bold uppercase tracking-[.16em] text-gold-light"
-        >
-          Start planning
-        </Link>
-      </div>
+        <Reveal className="mt-6" delay={0.4} distance={DISTANCE.small}>
+          <Link
+            href="/contact"
+            className="inline-block text-sm font-bold uppercase tracking-[.16em] text-gold-light"
+          >
+            Start planning
+          </Link>
+        </Reveal>
+      </Reveal>
     </StandardPage>
   );
 }

@@ -43,9 +43,10 @@ export default function LiquidGlass({
   const fringe = chromaticAberration * bend;
 
   const map = displacementMap(edgeX, edgeY);
-  const backdrop = [`url(#${filterId})`, frost > 0 && `blur(${frost}px)`, 'saturate(1.3)']
-    .filter(Boolean)
-    .join(' ');
+  // blur() is emitted even at 0px on purpose: a filter list can only interpolate
+  // against another list of the same functions in the same order, so dropping it
+  // when frost is 0 is what makes roughness changes jump instead of ease.
+  const backdrop = `url(#${filterId}) blur(${frost}px) saturate(1.3)`;
 
   return (
     <div
@@ -71,9 +72,19 @@ export default function LiquidGlass({
       </svg>
 
       {/* Inset by the rim so displacement sampled from outside the surface stays hidden under the border. */}
+      {/* Frost and tint are driven by props that flip on scroll, so both carry a
+          transition — without one the surface snaps between states. `ease`
+          rather than the house expo-out: this is a material change on persistent
+          chrome that can flip back and forth, not an entrance. */}
       <div
         className="pointer-events-none absolute inset-0.75 rounded-[inherit]"
-        style={{ backdropFilter: backdrop, WebkitBackdropFilter: backdrop } as CSSProperties}
+        style={
+          {
+            backdropFilter: backdrop,
+            WebkitBackdropFilter: backdrop,
+            transition: 'backdrop-filter 250ms ease, -webkit-backdrop-filter 250ms ease',
+          } as CSSProperties
+        }
       />
       <div
         className="pointer-events-none absolute inset-0 rounded-[inherit]"
@@ -81,6 +92,7 @@ export default function LiquidGlass({
           background:
             `linear-gradient(180deg, rgba(255,255,255,0.10), rgba(11,11,11,0.18)), ` +
             `rgba(11,11,11,${(tint * 1.5).toFixed(3)})`,
+          transition: 'background-color 250ms ease',
         }}
       />
       <div className="pointer-events-none absolute inset-0 rounded-[inherit] bg-[linear-gradient(165deg,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.03)_24%,transparent_50%),radial-gradient(120%_200%_at_50%_-70%,rgba(255,255,255,0.14),transparent_60%)]" />

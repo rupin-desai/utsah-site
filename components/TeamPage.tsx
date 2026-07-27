@@ -1,5 +1,7 @@
 import Image from "next/image";
 import StandardPage from "./StandardPage";
+import { RevealGroup, RevealItem } from "@/components/motion/reveal";
+
 const team = [
   ["Utsav Desai", "Founder", "/assets/team/utsav-new.jpg"],
   ["Dhwani Shah Desai", "Co-founder", "/assets/team/dhwani.jpg"],
@@ -14,9 +16,9 @@ export default function TeamPage() {
       description="A close-knit group of planners, producers and creatives, ready for every detail."
       image="/assets/hero/hero-5.jpg"
     >
-      <div className="grid gap-5 sm:grid-cols-2">
+      <RevealGroup className="grid gap-5 sm:grid-cols-2">
         {team.map(([name, role, image]) => (
-          <article key={name} className="grid bg-white sm:grid-cols-2">
+          <RevealItem as="article" key={name} className="grid bg-white sm:grid-cols-2">
             <div className="relative min-h-72">
               <Image
                 src={image}
@@ -30,9 +32,9 @@ export default function TeamPage() {
               <h2 className="display text-3xl">{name}</h2>
               <p className="mt-2 text-sm text-stone-600">{role}</p>
             </div>
-          </article>
+          </RevealItem>
         ))}
-      </div>
+      </RevealGroup>
     </StandardPage>
   );
 }

@@ -1,5 +1,6 @@
-import Link from "next/link";
 import StandardPage from "./StandardPage";
+import { RevealGroup, RevealLink } from "@/components/motion/reveal";
+
 const channels = [
   [
     "Instagram",
@@ -21,9 +22,9 @@ export default function SocialsPage() {
       description="Follow our latest work, behind-the-scenes moments and stories from the Utsah family."
       image="/assets/slide4.jpeg"
     >
-      <div className="grid gap-5 md:grid-cols-3">
+      <RevealGroup className="grid gap-5 md:grid-cols-3">
         {channels.map(([name, copy, href]) => (
-          <Link
+          <RevealLink
             key={name}
             href={href}
             target="_blank"
@@ -36,9 +37,9 @@ export default function SocialsPage() {
             <span className="mt-8 block text-xs font-bold uppercase tracking-[.18em] text-gold-light">
               Follow us
             </span>
-          </Link>
+          </RevealLink>
         ))}
-      </div>
+      </RevealGroup>
     </StandardPage>
   );
 }
