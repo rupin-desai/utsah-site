@@ -1,17 +1,21 @@
 /* Overrides for the registry StaggeredMenu, which ships as a standalone header.
    Here it only supplies the mobile toggle + panel; the glass bar draws the rest. */
 
-/* Above the header's z-50, else the glass bar paints over the toggle. */
+/* Above the header's z-50, else the glass bar paints over the toggle. svh so the
+   panel matches the visible viewport under mobile browser chrome. */
 .site-menu.fixed-wrapper {
   z-index: 60;
+  height: 100svh;
 }
 
-/* 30px top puts the toggle on the same centre line as the wordmark inside the
-   bar (header pt-4 + half the 44px bar); 32px sides match page-shell px-5 plus
-   the bar's own px-3. flex-end because while closed the logo is hidden and
-   space-between would strand the lone toggle at the start of the row. */
+/* Height, not top padding: the row centres its contents, so 88px = twice the
+   bar's centre line (header pt-4 = 16px, plus half a 56px bar) puts the toggle
+   on that line no matter what the glass inside the bar renders as. 36px sides
+   match page-shell px-5 plus the bar's own px-4. flex-end because the logo now
+   lives in the panel, leaving the toggle alone in a space-between row. */
 .site-menu .staggered-menu-header {
-  padding: 34px 36px;
+  height: 88px;
+  padding: 0 36px;
   justify-content: flex-end;
 }
 
