@@ -113,7 +113,7 @@ export default function SiteHeader() {
         items={menuItems}
         socialItems={socialItems}
         logoUrl="/assets/utsah-wordmark.svg"
-        colors={['#2b2b2b', '#0a0a0a']}
+        colors={['#8a1421', '#c9a84c']}
         accentColor="#c9a84c"
         menuButtonColor="#fff"
         openMenuButtonColor="#0a0a0a"
