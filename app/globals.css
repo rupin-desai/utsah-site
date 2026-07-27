@@ -78,7 +78,8 @@
   z-index: 100;
   display: grid;
   place-items: center;
-  background: var(--color-paper);
+  /* Brighter than --color-paper: the cream reads dull full-bleed. */
+  background: #fff;
   clip-path: inset(0 0 0 0);
   /* delay must sit just past WRITE_END in components/intro/strokes.ts (2532ms) */
   animation: intro-out 700ms cubic-bezier(0.65, 0, 0.35, 1) 2800ms forwards;
