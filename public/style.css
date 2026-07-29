@@ -11,6 +11,20 @@ img:not([src]), img[src=""] {
   opacity: 0;
 }
 
+@font-face {
+  font-family: 'Lunea Sans';
+  src: url('/fonts/LuneaSans.woff2') format('woff2'),
+       url('/fonts/LuneaSans.otf') format('truetype');
+  font-display: swap;
+}
+
+/* Force Lunea Sans site-wide. !important beats inline style attributes and any
+   leftover hardcoded family in the legacy markup. Non-Latin text (Gujarati,
+   Hindi) and emoji fall through to sans-serif per-character automatically. */
+*, *::before, *::after {
+  font-family: 'Lunea Sans', sans-serif !important;
+}
+
 :root {
   --bg: transparent;
   --white: #FFFFFF;
@@ -23,9 +37,9 @@ img:not([src]), img[src=""] {
   --text-dark-dim: #524045;
   --card-bg: rgba(255,255,255,0.03);
   --card-border: rgba(255,255,255,0.08);
-  --heading: 'Cormorant Garamond', serif;
-  --body: 'DM Sans', sans-serif;
-  --logo: 'Times New Roman', Times, serif;
+  --heading: 'Lunea Sans', serif;
+  --body: 'Lunea Sans', sans-serif;
+  --logo: 'Lunea Sans', Times, serif;
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
 }
@@ -1369,7 +1383,7 @@ img { max-width: 100%; display: block; }
   background-image: linear-gradient(135deg, rgba(131,58,180,0.78), rgba(253,29,29,0.78), rgba(252,176,69,0.78));
 }
 .hero-headline-main {
-  font-family: 'Cinzel', serif;
+  font-family: var(--heading);
   font-size: clamp(2rem, 5.5vw, 4.5rem);
   font-weight: 500;
   letter-spacing: -0.5px;
