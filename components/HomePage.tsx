@@ -4,9 +4,8 @@ import SiteFooter from './SiteFooter';
 import SectionHeading from './SectionHeading';
 import { DISTANCE, Reveal, RevealGroup, RevealItem, RevealLink, SplitText } from '@/components/motion/reveal';
 import CountUp from '@/components/CountUp';
+import ParallaxGallery from '@/components/ParallaxGallery';
 import { eventTypes, reviews, stats } from './site-data';
-
-const gallery = ['/assets/gallery/g27.jpeg', '/assets/gallery/g12.jpeg', '/assets/gallery/g19.jpeg', '/assets/gallery/g15.jpeg'];
 
 export default function HomePage() {
   return <main>
@@ -41,10 +40,12 @@ export default function HomePage() {
       <RevealGroup className="mt-12 grid gap-5 lg:grid-cols-3">{eventTypes.map((event) => <RevealLink key={event.href} href={event.href} className="group relative min-h-105 overflow-hidden bg-stone-900"><Image src={event.image} alt="" fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover opacity-65 transition duration-700 group-hover:scale-105 group-hover:opacity-45" /><div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/15 to-transparent" /><div className="absolute inset-x-0 bottom-0 p-7"><h3 className="display text-3xl">{event.title}</h3><p className="mt-3 max-w-sm text-sm leading-6 text-stone-200">{event.text}</p><span className="mt-5 inline-block text-xs font-bold uppercase tracking-[.2em] text-gold-light">Explore</span></div></RevealLink>)}</RevealGroup>
     </div></section>
 
-    <section className="bg-paper py-20 sm:py-28"><div className="page-shell"><SectionHeading eyebrow="Selected work" title="Memory, made visible" centered />
-      <RevealGroup className="mt-12 grid grid-cols-2 gap-3 sm:grid-cols-4">{gallery.map((src, index) => <RevealItem key={src} className={index === 0 ? 'relative col-span-2 row-span-2 min-h-72' : 'relative min-h-40'}><Image src={src} alt="Utsah event celebration" fill sizes="(max-width: 640px) 50vw, 25vw" className="object-cover" /></RevealItem>)}</RevealGroup>
-      <Reveal className="mt-10 text-center" distance={DISTANCE.small}><Link href="/memories" className="inline-flex border-b border-stone-900 pb-2 text-sm font-bold uppercase tracking-[.18em]">View all memories</Link></Reveal>
-    </div></section>
+    {/* The gallery is deliberately outside page-shell: it runs edge to edge, and
+        its own overflow-hidden frame is what crops the drifting columns. */}
+    <section className="bg-paper py-20 sm:py-28"><div className="page-shell"><SectionHeading eyebrow="Selected work" title="Memory, made visible" centered /></div>
+      <div className="mt-12"><ParallaxGallery /></div>
+      <div className="page-shell"><Reveal className="mt-12 text-center" distance={DISTANCE.small}><Link href="/memories" className="inline-flex border-b border-stone-900 pb-2 text-sm font-bold uppercase tracking-[.18em]">View all memories</Link></Reveal></div>
+    </section>
 
     <section className="bg-stone-100 py-20 sm:py-28"><div className="page-shell"><SectionHeading eyebrow="Google reviews" title="What clients say" centered />
       <RevealGroup className="mt-12 grid gap-5 md:grid-cols-3">{reviews.map(([name, quote]) => <RevealItem as="figure" key={name} className="border border-stone-200 bg-white p-7"><div className="text-gold">★★★★★</div><blockquote className="mt-5 leading-7 text-stone-700">“{quote}”</blockquote><figcaption className="mt-6 text-sm font-bold">{name}</figcaption></RevealItem>)}</RevealGroup>
