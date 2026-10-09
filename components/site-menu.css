@@ -32,6 +32,23 @@
   justify-content: flex-end;
 }
 
+/* Hide-on-scroll (SiteHeader sets data-nav-hidden): the toggle rides out with
+   the glass bar, same curves, but never while the menu is open. `translate`,
+   not transform, so it can't collide with GSAP on the toggle's insides. */
+.site-menu .staggered-menu-header {
+  transition: translate 500ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+[data-nav-hidden] .site-menu:not([data-open]) .staggered-menu-header {
+  translate: 0 -100%;
+  transition: translate 300ms cubic-bezier(0.4, 0, 1, 1);
+}
+[data-nav-hidden] .site-menu:not([data-open]):focus-within .staggered-menu-header {
+  translate: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-menu .staggered-menu-header { transition: none; }
+}
+
 .site-menu .sm-icon {
   width: 22px;
   height: 16px;

@@ -3,7 +3,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useEffect, useState, type ReactNode } from 'react';
+import { useMotionValueEvent, useScroll } from 'motion/react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import GlassSurface from './GlassSurface';
 import StaggeredMenu from './StaggeredMenu';
 import './site-menu.css';
@@ -47,11 +48,47 @@ const socialIcons: Record<string, ReactNode> = {
 };
 const socialItems = socials.map((social) => ({ ...social, icon: socialIcons[social.label] }));
 
+// Hide-on-scroll. Within REVEAL_ZONE of the top the bar always shows; elsewhere
+// it needs TURN px of travel in one direction before it flips, so Lenis's
+// sub-pixel smoothing and trackpad jitter can't make it flicker.
+const REVEAL_ZONE = 120;
+const TURN = 24;
+
+function useHideOnScroll(resetKey: string) {
+  const { scrollY } = useScroll();
+  const [hidden, setHidden] = useState(false);
+  const last = useRef(0);
+  const travel = useRef(0);
+
+  useMotionValueEvent(scrollY, 'change', (y) => {
+    const dy = y - last.current;
+    last.current = y;
+    if (y < REVEAL_ZONE) {
+      travel.current = 0;
+      setHidden(false);
+      return;
+    }
+    // Keep accumulating while the direction holds; start over when it turns.
+    travel.current = Math.sign(dy) === Math.sign(travel.current) ? travel.current + dy : dy;
+    if (travel.current > TURN) setHidden(true);
+    else if (travel.current < -TURN) setHidden(false);
+  });
+
+  // A new page starts with the bar in view.
+  useEffect(() => {
+    travel.current = 0;
+    setHidden(false);
+  }, [resetKey]);
+
+  return hidden;
+}
+
 export default function SiteHeader() {
   // Every route opens with a dark hero (`main > section`), and the white nav
   // text only needs help once the bar has floated off it onto a light section.
   const pathname = usePathname();
   const [tinted, setTinted] = useState(false);
+  const hidden = useHideOnScroll(pathname);
 
   useEffect(() => {
     const hero = document.querySelector('main > section');
@@ -66,8 +103,19 @@ export default function SiteHeader() {
   }, [pathname]);
 
   return (
-    <header className="pointer-events-none sticky top-0 z-50 -mb-24 h-24 text-white">
-      <div className="page-shell pt-4 sm:pt-5">
+    // Only the bar and the mobile toggle slide, never the header itself: a
+    // transform here would become the containing block for the menu's fixed
+    // panel. data-nav-hidden drives the toggle (site-menu.css). Leaves fast on
+    // an ease-in, returns slower on an ease-out; keyboard focus always shows it.
+    <header
+      data-nav-hidden={hidden || undefined}
+      className="group/nav pointer-events-none sticky top-0 z-50 -mb-24 h-24 text-white"
+    >
+      <div
+        className={`page-shell pt-4 transition-[translate] motion-reduce:transition-none sm:pt-5 group-focus-within/nav:translate-y-0 ${
+          hidden ? '-translate-y-full duration-300 ease-in' : 'duration-500 ease-out-expo'
+        }`}
+      >
         <GlassSurface
           className="pointer-events-auto transition-shadow duration-300"
           width="100%"
