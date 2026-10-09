@@ -260,3 +260,16 @@ main[data-canvas] [data-tone] {
 @utility display-md { @apply font-display text-[clamp(1.85rem,4.4vw,4rem)] leading-[1.12]; }
 /* One vertical rhythm for every un-pinned section. */
 @utility section-y { @apply py-24 sm:py-32; }
+
+/* CurtainButton (components/CurtainButton.tsx). The fill rests clipped away
+   at the left; on hover its right edge sweeps across to cover the button; on
+   leaving its left edge sweeps on to the right and it is gone. Back at rest it
+   snaps, unanimated, to clipped-at-the-left, ready for the next hover. */
+.curtain-fill { clip-path: inset(0 100% 0 0); }
+.curtain[data-curtain='in'] > .curtain-fill,
+.curtain[data-curtain='out'] > .curtain-fill {
+  transition: clip-path 600ms cubic-bezier(0.76, 0, 0.24, 1);
+}
+.curtain[data-curtain='in'] > .curtain-fill { clip-path: inset(0 0 0 0); }
+.curtain[data-curtain='out'] > .curtain-fill { clip-path: inset(0 0 0 100%); }
+.curtain:focus-visible { outline: 2px solid var(--color-gold); outline-offset: 3px; }

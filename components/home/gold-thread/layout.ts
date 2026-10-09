@@ -13,7 +13,7 @@
  * to how much of it is drawn.
  */
 
-import { add, arcLength, curve, deg, ellipse, ink, mul, resample, rot, sub, unit, type Ink, type Pen, type Pt } from './geometry';
+import { add, arcLength, curve, deg, ellipse, ink, mul, resample, rot, spline, sub, unit, type Ink, type Pen, type Pt } from './geometry';
 import { MOTIFS, crossings, type Motif, type MotifName } from './motifs';
 
 /** Motifs are fixed drawings: build each once, not on every resize. */
@@ -61,6 +61,12 @@ export type ThreadRoute = {
   after: RoutePoint[];
   /** The thread starts here: a free, tapered end instead of a hand-off. */
   begins?: boolean;
+  /**
+   * Draw the runs as a C2 spline (geometry.ts `spline`): curvature flows
+   * through every waypoint, so long sweeps read silk-smooth. The motif itself
+   * is untouched.
+   */
+  silk?: boolean;
 };
 
 const isLoop = (p: RoutePoint): p is Loop => !Array.isArray(p);
@@ -139,6 +145,7 @@ export function buildSegment(route: ThreadRoute, w: number, h: number, compact: 
   const pen = penFor(compact);
   const leafPen: Pen = { ...pen, max: pen.max * 0.8 };
   const motif = route.motif ? motifOf(route.motif.name) : null;
+  const run = route.silk ? spline : curve;
 
   const handOffStart = !route.begins && firstY(route.before) === 0;
   const handOffEnd = route.after.length > 0 && lastY(route.after) === 1;
@@ -161,16 +168,16 @@ export function buildSegment(route: ThreadRoute, w: number, h: number, compact: 
     const c = px(route.motif.at);
     toPx = (p: Pt) => add(c, mul(sub(p, [VIEW / 2, VIEW / 2]), k));
     const spine = motif.spine.map(toPx);
-    const into = curve([...before, spine[0]], handOffStart ? DOWN : undefined, motif.entryDir);
+    const into = run([...before, spine[0]], handOffStart ? DOWN : undefined, motif.entryDir);
     sA = arcLength(into);
     main = [...into, ...spine.slice(1)];
     sB = arcLength(main);
     if (after.length && motif.exitDir) {
-      const out = curve([spine[spine.length - 1], ...after], motif.exitDir, handOffEnd ? DOWN : undefined);
+      const out = run([spine[spine.length - 1], ...after], motif.exitDir, handOffEnd ? DOWN : undefined);
       main = [...main, ...out.slice(1)];
     }
   } else {
-    main = curve([...before, ...after], handOffStart ? DOWN : undefined, handOffEnd ? DOWN : undefined);
+    main = run([...before, ...after], handOffStart ? DOWN : undefined, handOffEnd ? DOWN : undefined);
   }
   const L = arcLength(main);
 

@@ -26,7 +26,7 @@ const CENTRE = { y: 21, x: 35.5 };
 const OPEN_END = 0.62;
 /**
  * From here the full-bleed frame dissolves into the canvas from the bottom up,
- * so the gallery that follows starts on the same paper instead of under a
+ * so the gallery that follows starts on the same ground instead of under a
  * hard photo edge.
  */
 const DISSOLVE = 0.8;
@@ -54,7 +54,8 @@ export type CollageMedia =
 
 export type CollageZoomProps = {
   index?: string;
-  eyebrow: string;
+  /** Chapter mark above the title; optional (the home page runs without). */
+  eyebrow?: string;
   title: string;
   media: CollageMedia;
 };
@@ -96,7 +97,7 @@ export default function CollageZoom({ index, eyebrow, title, media }: CollageZoo
       trackRef={track}
       isStatic={isStatic}
       label={title}
-      tone="paper"
+      tone="ink"
       className="relative h-[280svh]"
     >
       <div data-stage className="sticky top-0 h-svh overflow-hidden">
@@ -142,10 +143,12 @@ export default function CollageZoom({ index, eyebrow, title, media }: CollageZoo
           className="page-shell absolute inset-x-0 top-28 text-white sm:top-32"
           style={{ opacity: copyOpacity, y: copyY }}
         >
-          <p className={`${EYEBROW} [text-shadow:0_1px_24px_rgba(0,0,0,.35)]`}>
-            <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
-          </p>
-          <h2 className="display-lg mt-5 max-w-3xl text-balance [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
+          {eyebrow ? (
+            <p className={`${EYEBROW} mb-5 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]`}>
+              <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
+            </p>
+          ) : null}
+          <h2 className="display-lg max-w-3xl text-balance [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
             {title}
           </h2>
         </m.div>

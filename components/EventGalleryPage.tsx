@@ -1,5 +1,5 @@
 import Image from 'next/image';
-import Link from 'next/link';
+import CurtainButton from './CurtainButton';
 import PageHero from './PageHero';
 import SiteFooter from './SiteFooter';
 import { DISTANCE, Reveal, RevealItem, SplitText } from '@/components/motion/reveal';
@@ -14,7 +14,7 @@ export default function EventGalleryPage({ title, description, cover, images }: 
     <Reveal className="mt-16 bg-ink px-6 py-12 text-center text-white sm:px-12">
       <p className="eyebrow">Plan with us</p>
       <h2 className="display mt-3 text-4xl"><SplitText text="Make your occasion unforgettable" delay={0.1} /></h2>
-      <Reveal className="mt-7" delay={0.4} distance={DISTANCE.small}><Link href="/contact" className="inline-block border border-gold px-5 py-3 text-sm font-bold uppercase tracking-[.16em] text-gold-light">Talk to our team</Link></Reveal>
+      <Reveal className="mt-7" delay={0.4} distance={DISTANCE.small}><CurtainButton href="/contact" caps className="border-gold text-gold-light">Talk to our team</CurtainButton></Reveal>
     </Reveal>
   </div></section><SiteFooter /></main>;
 }

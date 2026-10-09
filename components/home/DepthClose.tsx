@@ -7,7 +7,7 @@
  * as the section rises into view and are at rest once it fills the screen.
  */
 
-import Link from 'next/link';
+import CurtainButton from '@/components/CurtainButton';
 import { useScroll } from 'motion/react';
 import { useRef } from 'react';
 import DepthStage from '@/components/motion/DepthStage';
@@ -18,7 +18,8 @@ import ThreadSegment, { type ThreadSegmentProps } from '@/components/home/gold-t
 
 export type DepthCloseProps = {
   index?: string;
-  eyebrow: string;
+  /** Chapter mark above the call to action; optional (the home page runs without). */
+  eyebrow?: string;
   band: string[];
   cta: { href: string; label: string };
   /** The gold thread's finale (components/home/gold-thread). */
@@ -59,13 +60,15 @@ export default function DepthClose({ index, eyebrow, band, cta, thread }: DepthC
             {/* margin 0: this copy sits in the last 15% of the screen, below the
                 default trigger line, and would stay hidden while the close
                 fills the viewport. */}
-            <Reveal as="p" className={EYEBROW} distance={DISTANCE.small} margin="0px">
-              <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
-            </Reveal>
-            <Reveal className="mt-8" delay={0.15} distance={DISTANCE.small} margin="0px">
-              <Link href={cta.href} className="inline-block bg-gold px-6 py-4 text-sm font-bold uppercase tracking-[.18em] text-ink [text-shadow:none] transition-colors duration-300 hover:bg-gold-light">
+            {eyebrow ? (
+              <Reveal as="p" className={`${EYEBROW} mb-8`} distance={DISTANCE.small} margin="0px">
+                <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
+              </Reveal>
+            ) : null}
+            <Reveal delay={eyebrow ? 0.15 : 0} distance={DISTANCE.small} margin="0px">
+              <CurtainButton href={cta.href} variant="solid" caps>
                 {cta.label}
-              </Link>
+              </CurtainButton>
             </Reveal>
           </div>
         }

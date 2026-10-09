@@ -22,12 +22,14 @@ export const THREAD = {
   manifesto: {
     desktop: {
       begins: true,
+      silk: true,
       before: [[0.06, 0.09], [0.22, 0.145], [0.38, 0.115], { loop: [0.55, 0.1], r: 44, squash: 0.6, tilt: -20 }, [0.74, 0.16], [0.94, 0.38]],
       motif: { name: 'rose', at: [0.85, 0.77], size: 350 },
       after: [[0.42, 0.95], [0.2, 1]],
     },
     compact: {
       begins: true,
+      silk: true,
       before: [[0.08, 0.05], [0.5, 0.075]],
       motif: { name: 'rose', at: [0.78, 0.2], size: 150 },
       after: [[0.9, 0.5], [0.86, 0.84], [0.42, 0.93], [0.22, 1]],
@@ -37,11 +39,13 @@ export const THREAD = {
   /** 02, pinned: a laurel at the left of the figure, then across beneath it with a loop. */
   stats: {
     desktop: {
+      silk: true,
       before: [[0.2, 0]],
       motif: { name: 'laurel', at: [0.17, 0.5], size: 330 },
       after: [[0.4, 0.83], { loop: [0.6, 0.85], r: 38, squash: 0.6, tilt: -14 }, [0.8, 0.9], [0.84, 1]],
     },
     compact: {
+      silk: true,
       before: [[0.22, 0], [0.1, 0.4]],
       motif: { name: 'laurel', at: [0.16, 0.78], size: 150 },
       after: [[0.6, 0.95], [0.84, 1]],

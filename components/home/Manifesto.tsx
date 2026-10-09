@@ -9,7 +9,7 @@
  * reads as a soft front moving through the sentence rather than a cursor.
  */
 
-import Link from 'next/link';
+import CurtainButton from '@/components/CurtainButton';
 import { m, useScroll, useTransform, type MotionValue } from 'motion/react';
 import { useMemo, useRef } from 'react';
 import { cn } from '@/lib/utils';
@@ -32,7 +32,8 @@ const SLIDE_OVER = '-mt-[100svh]';
 export type ManifestoProps = {
   id?: string;
   index?: string;
-  eyebrow: string;
+  /** Chapter mark above the copy; optional (the home page runs without). */
+  eyebrow?: string;
   /** `*word*` renders as the gold italic accent. */
   copy: string;
   links: { href: string; label: string }[];
@@ -88,10 +89,12 @@ export default function Manifesto({ id, index, eyebrow, copy, links, overlap = f
         {thread ? <ThreadSegment {...thread} progress={threadProgress} /> : null}
         {/* relative: keeps the copy painting above the thread. */}
         <div className="page-shell relative">
-          <p className={EYEBROW}>
-            <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
-          </p>
-          <p className="display-md mt-8 max-w-5xl text-balance">
+          {eyebrow ? (
+            <p className={cn(EYEBROW, 'mb-8')}>
+              <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
+            </p>
+          ) : null}
+          <p className="display-md max-w-5xl text-balance">
             <span className="sr-only">{words.map((w) => w.text).join(' ')}</span>
             <span aria-hidden="true">
               {words.map((word, i) => (
@@ -105,13 +108,9 @@ export default function Manifesto({ id, index, eyebrow, copy, links, overlap = f
             style={{ opacity: linksOpacity, y: linksY, pointerEvents: linksEvents }}
           >
             {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="border border-tone/25 px-5 py-3 text-sm font-semibold transition-colors duration-300 hover:border-gold hover:text-gold-light"
-              >
+              <CurtainButton key={link.href} href={link.href}>
                 {link.label}
-              </Link>
+              </CurtainButton>
             ))}
           </m.div>
         </div>
