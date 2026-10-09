@@ -15,6 +15,7 @@ import { cubicBezier, m, useMotionValueEvent, useScroll, useTransform, type Moti
 import { useEffect, useRef } from 'react';
 import { PinTrack, useScrub, useStaticMotion } from '@/components/motion/scroll';
 import { EYEBROW, EyebrowLabel } from '@/components/Eyebrow';
+import ThreadSegment, { type ThreadSegmentProps } from '@/components/home/gold-thread/ThreadSegment';
 
 /** The house expo-out, as an easing function for the count. */
 const expoOut = cubicBezier(0.16, 1, 0.3, 1);
@@ -30,12 +31,17 @@ export type StatsSequenceProps = {
   eyebrow: string;
   /** `["50k+", "Happy guests"]` — digits count, the rest is a static suffix. */
   stats: string[][];
+  /** This section's stretch of the gold thread (components/home/gold-thread). */
+  thread?: Omit<ThreadSegmentProps, 'progress'>;
 };
 
-export default function StatsSequence({ index, eyebrow, stats }: StatsSequenceProps) {
+export default function StatsSequence({ index, eyebrow, stats, thread }: StatsSequenceProps) {
   const track = useRef<HTMLElement>(null);
   const isStatic = useStaticMotion();
   const { scrollYProgress } = useScroll({ target: track, offset: ['start start', 'end end'] });
+  // Same pen line as every other segment: draws from the moment the stage's top
+  // edge crosses 65% down the screen until the pin lets go.
+  const { scrollYProgress: threadProgress } = useScroll({ target: track, offset: ['start 65%', 'end end'] });
   const glowX = useTransform(scrollYProgress, [0, 1], ['-18vw', '18vw']);
   const glowScale = useTransform(scrollYProgress, [0, 0.5, 1], [0.85, 1.15, 0.9]);
   const rail = useTransform(scrollYProgress, [0, 1], [0, 1]);
@@ -72,7 +78,10 @@ export default function StatsSequence({ index, eyebrow, stats }: StatsSequencePr
           <m.div data-scrub className="absolute inset-0 w-px origin-top bg-gold" style={{ scaleY: rail }} />
         </div>
 
-        <div data-stack className="page-shell grid">
+        {thread ? <ThreadSegment {...thread} progress={threadProgress} /> : null}
+
+        {/* relative: keeps the figures painting above the thread. */}
+        <div data-stack className="page-shell relative grid">
           {stats.map(([value, label], i) => (
             <Stat
               key={label}

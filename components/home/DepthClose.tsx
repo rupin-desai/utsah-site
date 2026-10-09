@@ -14,15 +14,25 @@ import DepthStage from '@/components/motion/DepthStage';
 import { DISTANCE, Reveal } from '@/components/motion/reveal';
 import { Marquee } from '@/components/motion/scroll';
 import { EYEBROW, EyebrowLabel } from '@/components/Eyebrow';
+import ThreadSegment, { type ThreadSegmentProps } from '@/components/home/gold-thread/ThreadSegment';
 
 export type DepthCloseProps = {
   index?: string;
   eyebrow: string;
   band: string[];
   cta: { href: string; label: string };
+  /** The gold thread's finale (components/home/gold-thread). */
+  thread?: Omit<ThreadSegmentProps, 'progress' | 'range'>;
 };
 
-export default function DepthClose({ index, eyebrow, band, cta }: DepthCloseProps) {
+/**
+ * Where the thread starts drawing in this section's progress: the previous
+ * segment finishes as this section's top crosses the pen line, 65% down the
+ * screen, which is 0.35 of the way from 'start end' to 'end end'.
+ */
+const THREAD_FROM = 0.35;
+
+export default function DepthClose({ index, eyebrow, band, cta, thread }: DepthCloseProps) {
   const section = useRef<HTMLElement>(null);
   // 0 as the section's top meets the bottom of the screen, 1 once it fills it.
   const { scrollYProgress } = useScroll({ target: section, offset: ['start end', 'end end'] });
@@ -63,6 +73,9 @@ export default function DepthClose({ index, eyebrow, band, cta }: DepthCloseProp
       {/* The photo's top edge melts into the canvas, as the hero's foot does
           into the manifesto — no hard line where the reviews end. */}
       <div className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-tone-bg to-transparent" />
+      {/* Above the gradient, so the line arrives unbroken; the rings finish as
+          the close fills the screen. */}
+      {thread ? <ThreadSegment {...thread} progress={scrollYProgress} range={[THREAD_FROM, 1]} /> : null}
     </section>
   );
 }

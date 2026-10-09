@@ -15,6 +15,7 @@ import { useMemo, useRef } from 'react';
 import { cn } from '@/lib/utils';
 import { PinTrack, useScrub, useStaticMotion } from '@/components/motion/scroll';
 import { EYEBROW, EyebrowLabel } from '@/components/Eyebrow';
+import ThreadSegment, { type ThreadSegmentProps } from '@/components/home/gold-thread/ThreadSegment';
 
 /** Words whose window may overlap the current one. */
 const OVERLAP = 3;
@@ -37,12 +38,18 @@ export type ManifestoProps = {
   links: { href: string; label: string }[];
   /** Slide up over the previous section's pinned stage (see SLIDE_OVER). */
   overlap?: boolean;
+  /** This section's stretch of the gold thread (components/home/gold-thread). */
+  thread?: Omit<ThreadSegmentProps, 'progress'>;
 };
 
-export default function Manifesto({ id, index, eyebrow, copy, links, overlap = false }: ManifestoProps) {
+export default function Manifesto({ id, index, eyebrow, copy, links, overlap = false, thread }: ManifestoProps) {
   const track = useRef<HTMLElement>(null);
   const isStatic = useStaticMotion();
   const { scrollYProgress } = useScroll({ target: track, offset: ['start start', 'end end'] });
+  // The thread starts drawing as the sheet's edge crosses the pen line (65% down
+  // the screen) and finishes as the pin lets go — where the next segment's
+  // track is just arriving.
+  const { scrollYProgress: threadProgress } = useScroll({ target: track, offset: ['start 65%', 'end end'] });
 
   // `*...*` may span several words, so the accent is a run, not a per-word test.
   const words = useMemo(() => {
@@ -78,7 +85,9 @@ export default function Manifesto({ id, index, eyebrow, copy, links, overlap = f
           overlap && 'bg-tone-bg shadow-[0_-40px_80px_-20px_rgba(0,0,0,.65)]',
         )}
       >
-        <div className="page-shell">
+        {thread ? <ThreadSegment {...thread} progress={threadProgress} /> : null}
+        {/* relative: keeps the copy painting above the thread. */}
+        <div className="page-shell relative">
           <p className={EYEBROW}>
             <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
           </p>
