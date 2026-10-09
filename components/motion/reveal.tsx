@@ -46,6 +46,7 @@ import {
   type ComponentProps,
   type ReactNode,
 } from 'react';
+import { CURTAIN_AT } from '@/components/intro/timeline';
 import { cn } from '@/lib/utils';
 
 /* ------------------------------------------------------------------ tokens */
@@ -72,11 +73,11 @@ export const DISTANCE = { rise: 28, small: 14 } as const;
 const VIEWPORT = { once: true, amount: 'some', margin: '0px 0px -15% 0px' } as const;
 
 /**
- * Must match `#intro` in app/globals.css: the curtain begins its 700ms sweep at
- * 2800ms, or at 600ms under the reduced-motion override. Exported so a drift
- * between the two is greppable.
+ * When the intro curtain begins to lift: straight from the generated timeline
+ * (components/intro/timeline.ts), or 600ms under the reduced-motion override in
+ * app/globals.css, where the overlay just fades.
  */
-export const INTRO_UNCOVER_MS = 2800;
+export const INTRO_UNCOVER_MS = CURTAIN_AT;
 export const INTRO_UNCOVER_MS_REDUCED = 600;
 
 /* -------------------------------------------------------------- transitions */
@@ -458,6 +459,42 @@ const WORD_VARIANTS: Variants = {
   hidden: { opacity: 0, transform: 'translate3d(0px, 130%, 0px)' },
   visible: { opacity: 1, transform: 'translate3d(0px, 0%, 0px)' },
 };
+
+export type RiseWordProps = {
+  children: ReactNode;
+  /** Plays when this turns true; the caller owns the trigger. */
+  show: boolean;
+  /** Absolute delay in seconds — the caller does the stagger. */
+  delay?: number;
+  duration?: number;
+};
+
+/**
+ * SplitText's unit on its own: one word rising out of its own mask. For type
+ * laid out elsewhere (Marquee), where the words can't be one SplitText. Under
+ * reduced motion every word just fades in, together.
+ */
+export function RiseWord({ children, show, delay = 0, duration = DURATION.word }: RiseWordProps) {
+  const reduce = !!useReducedMotion();
+  return (
+    <span className={MASK}>
+      <m.span
+        data-reveal
+        className="inline-block"
+        variants={WORD_VARIANTS}
+        initial="hidden"
+        animate={show ? 'visible' : 'hidden'}
+        transition={
+          reduce
+            ? REDUCED
+            : { transform: { duration, ease: EASE_OUT_SOFT, delay }, opacity: { duration: 0.3, delay } }
+        }
+      >
+        {children}
+      </m.span>
+    </span>
+  );
+}
 
 export type SplitTextProps = TriggerProps & {
   /**

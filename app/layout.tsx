@@ -6,13 +6,15 @@ import { Figtree } from 'next/font/google';
 import localFont from 'next/font/local';
 import SiteHeader from '@/components/SiteHeader';
 import IntroOverlay from '@/components/intro/IntroOverlay';
+import { INTRO_TOTAL } from '@/components/intro/timeline';
 import { MotionProvider } from '@/components/motion/reveal';
 import SmoothScroll from '@/components/motion/SmoothScroll';
 
 // Plays on every full page load, so <html data-intro="run"> is rendered on the
 // server and this script only ever flips it to "done". Setting "run" from here
 // instead would be a hydration mismatch: React 19 diffs <html>'s attributes and
-// refuses to patch them. Teardown only — the write itself is pure CSS.
+// refuses to patch them. Teardown only — the write itself is pure CSS, and the
+// timer is just past the curtain's end (INTRO_TOTAL, from the generated timeline).
 //
 // The second timer is the reveal failsafe: MotionProvider stamps
 // data-motion="on" as soon as it mounts, so if that has not happened within 5s
@@ -20,7 +22,7 @@ import SmoothScroll from '@/components/motion/SmoothScroll';
 const INTRO_BOOT = `(function(){var d=document.documentElement;
 var end=function(){d.dataset.intro='done'};
 addEventListener('click',end,{once:true});
-setTimeout(end,matchMedia('(prefers-reduced-motion: reduce)').matches?800:3600);
+setTimeout(end,matchMedia('(prefers-reduced-motion: reduce)').matches?800:${INTRO_TOTAL + 100});
 setTimeout(function(){if(d.dataset.motion!=='on')d.dataset.motion='off'},5000)})();`;
 
 const figtree = Figtree({ subsets: ['latin'], variable: '--font-figtree', display: 'swap' });

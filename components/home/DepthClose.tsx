@@ -41,7 +41,7 @@ export default function DepthClose({ index, eyebrow, band, cta }: DepthCloseProp
           // The band is the section's heading; the hidden copy inside Marquee
           // is what screen readers announce.
           <h2>
-            <Marquee items={band} loop={22} reverse className="display text-[clamp(2.75rem,8.5vw,8rem)] leading-[0.92] italic text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]" />
+            <Marquee items={band} loop={22} reverse className="font-sans text-[clamp(2.75rem,8.5vw,8rem)] font-light leading-[0.95] tracking-[-0.03em] text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]" />
           </h2>
         }
         front={

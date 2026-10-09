@@ -49,8 +49,10 @@ export default function DepthHero({ band }: DepthHeroProps) {
           // head-and-torso centroid sits at 46.4% across, left of the image
           // centre because her veil trails right. Height puts her crown about
           // a fifth down the screen with the frame's bottom off-screen through
-          // her climb.
-          subject={{ width: 893, height: 963, centerX: 0.464, raw: true, className: 'h-[90svh] sm:h-[97svh]' }}
+          // her climb. The translate nudges her right of centre to balance
+          // the caption in the bottom-left corner; it is the `translate`
+          // property, so it stacks on DepthStage's centring transform.
+          subject={{ width: 893, height: 963, centerX: 0.464, raw: true, className: 'h-[90svh] translate-x-[2.5vw] sm:h-[97svh]' }}
           priority
           progress={scrollYProgress}
           entranceReady={introReady}
@@ -59,24 +61,28 @@ export default function DepthHero({ band }: DepthHeroProps) {
           // her face and veil pass in front of the band.
           middleClassName="top-[36%] sm:top-[34%]"
           middle={
-            <Reveal delay={0.9} distance={DISTANCE.small} afterIntro>
-              <Marquee items={band} className="display text-[clamp(2.75rem,8.5vw,8rem)] leading-[0.92] italic text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]" />
-            </Reveal>
+            // Word by word, rising, once the curtain's last (red) layer has
+            // cleared the band and the screen has settled — 1.1s after it
+            // starts to lift.
+            <Marquee
+              items={band}
+              entrance={{ show: introReady, delay: 1.1, stagger: 0.06 }}
+              className="font-sans text-[clamp(2.75rem,8.5vw,8rem)] font-light leading-[0.95] tracking-[-0.03em] text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]"
+            />
           }
           front={
             // Everything here is afterIntro — it sits under the intro curtain
-            // until ~2800ms, so a viewport trigger would play it unseen.
+            // until ~2.9s (CURTAIN_AT), so a viewport trigger would play it unseen.
             // A caption, not a headline: the band and the bride carry the
             // screen, so the copy stays small and tucked into the corner,
             // clear of her. No page-shell: it hugs the screen corner, not the
             // centred content column.
-            <div className="flex h-full flex-col items-start justify-end px-5 pb-8 sm:px-8 sm:pb-12 lg:px-12 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
-              <div className="max-w-sm">
-                <h1 className="display text-[clamp(1.6rem,2.6vw,2.5rem)] leading-[1.08]">
+            <div className="flex h-full flex-col items-start justify-end px-5 pb-5 sm:px-8 sm:pb-7 lg:px-12 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
+              <div className="max-w-xs">
+                <h1 className="display text-[clamp(1.3rem,1.9vw,1.85rem)] leading-[1.08]">
                   <SplitText text={["Let's create magical", 'memories together']} delay={0.12} afterIntro />
                 </h1>
-                <Reveal as="p" className="mt-4 text-[11px] uppercase tracking-[.2em] text-white/80" delay={0.55} afterIntro>Premium event planning · Bardoli, Gujarat</Reveal>
-                <Reveal className="mt-5" delay={0.7} distance={DISTANCE.small} afterIntro><Link href="#about" className="inline-flex border-b border-gold pb-1.5 text-xs font-semibold uppercase tracking-[.18em] text-gold-light">Discover Utsah</Link></Reveal>
+                <Reveal className="mt-3.5" delay={0.55} distance={DISTANCE.small} afterIntro><Link href="#about" className="inline-flex border-b border-gold pb-1.5 text-xs font-semibold uppercase tracking-[.18em] text-gold-light">Discover Utsah</Link></Reveal>
               </div>
             </div>
           }

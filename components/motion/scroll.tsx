@@ -27,6 +27,7 @@ import {
   type MotionValue,
 } from 'motion/react';
 import { Fragment, useEffect, useState, type CSSProperties, type ReactNode, type Ref } from 'react';
+import { RiseWord, STAGGER } from '@/components/motion/reveal';
 import { cn } from '@/lib/utils';
 
 /**
@@ -86,6 +87,12 @@ export type MarqueeProps = {
   loop?: number;
   /** Run left-to-right instead. */
   reverse?: boolean;
+  /**
+   * Word-by-word entrance: each word (and diamond) rises out of its mask once
+   * `show` turns true, staggered left to right across the copies. Off-screen
+   * copies finish long before the drift brings them into view.
+   */
+  entrance?: { show: boolean; delay?: number; stagger?: number };
   className?: string;
 };
 
@@ -97,7 +104,7 @@ export type MarqueeProps = {
  * its width, so the seam is never visible. Inline spans only, so it can sit
  * inside an <h2>.
  */
-export function Marquee({ items, loop = 28, reverse = false, className }: MarqueeProps) {
+export function Marquee({ items, loop = 28, reverse = false, entrance, className }: MarqueeProps) {
   const reduce = useReducedMotion();
   const base = useMotionValue(0);
   const { scrollY } = useScroll();
@@ -116,12 +123,40 @@ export function Marquee({ items, loop = 28, reverse = false, className }: Marque
     base.set(base.get() + perSecond * direction * (1 + Math.abs(s)) * (delta / 1000));
   });
 
-  const run = (
-    <span className="flex shrink-0 items-center">
+  // One running index across every copy, so the stagger reads left to right.
+  let order = 0;
+  const at = () => (entrance?.delay ?? 0) + order++ * (entrance?.stagger ?? STAGGER.word);
+  const diamond = 'inline-block size-[0.14em] rotate-45 bg-gold';
+
+  const run = (copy: number) => (
+    <span key={copy} className="flex shrink-0 items-center">
       {items.map((item) => (
         <Fragment key={item}>
-          <span className="px-[0.35em]">{item}</span>
-          <span className="inline-block size-[0.14em] rotate-45 bg-gold" />
+          {entrance ? (
+            <>
+              <span className="px-[0.35em]">
+                {item.split(/\s+/).map((word, wi) => (
+                  <Fragment key={wi}>
+                    {wi > 0 ? ' ' : null}
+                    <RiseWord show={entrance.show} delay={at()}>{word}</RiseWord>
+                  </Fragment>
+                ))}
+              </span>
+              {/* Fades rather than rises: a mask would clip the rotated corners. */}
+              <m.span
+                data-reveal
+                className={diamond}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: entrance.show ? 1 : 0 }}
+                transition={{ duration: 0.4, delay: at() }}
+              />
+            </>
+          ) : (
+            <>
+              <span className="px-[0.35em]">{item}</span>
+              <span className={diamond} />
+            </>
+          )}
         </Fragment>
       ))}
     </span>
@@ -134,9 +169,7 @@ export function Marquee({ items, loop = 28, reverse = false, className }: Marque
     <span className={cn('block overflow-x-clip whitespace-nowrap', className)}>
       <span className="sr-only">{items.join(', ')}</span>
       <m.span aria-hidden="true" data-scrub className="flex w-max will-change-transform" style={{ x }}>
-        {Array.from({ length: COPIES }, (_, i) => (
-          <Fragment key={i}>{run}</Fragment>
-        ))}
+        {Array.from({ length: COPIES }, (_, i) => run(i))}
       </m.span>
     </span>
   );

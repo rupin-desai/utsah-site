@@ -37,10 +37,11 @@ import {
   useSpring,
   useTransform,
   type MotionValue,
+  type Transition,
   type Variants,
 } from 'motion/react';
 import { useEffect, type ReactNode } from 'react';
-import { EASE_OUT } from '@/components/motion/reveal';
+import { EASE_OUT, EASE_OUT_SOFT } from '@/components/motion/reveal';
 import { useScrub } from '@/components/motion/scroll';
 import { cn } from '@/lib/utils';
 
@@ -79,16 +80,20 @@ const FG_REST = 1.03;
 const SETTLE = { duration: 1.2, ease: EASE_OUT } as const;
 
 /** parallax: each plate rises into place from its own depth. */
-const riseIn = (fromVh: number, fade: boolean, delay = 0): Variants => ({
+const riseIn = (fromVh: number, fade: boolean, delay = 0, settle: Transition = SETTLE): Variants => ({
   hidden: { transform: `translate3d(0px, ${fromVh}vh, 0px)`, ...(fade ? { opacity: 0 } : {}) },
   shown: {
     transform: 'translate3d(0px, 0vh, 0px)',
     ...(fade ? { opacity: 1 } : {}),
-    transition: { ...SETTLE, delay },
+    transition: { ...settle, delay },
   },
 });
 const BG_IN = riseIn(3, false);
-const FG_IN = riseIn(9, true, 0.15);
+// The subject's rise has to be SEEN: started with the curtain, expo-out spends
+// itself while she is still covered. So it waits for the curtain to pass her,
+// travels only a little, on a softer curve, and doesn't fade — she is there as
+// the screen uncovers and just settles up into place.
+const FG_IN = riseIn(6.5, false, 0.55, { duration: 1.8, ease: EASE_OUT_SOFT });
 
 /** grow: the room settles, the subject steps forward — opacity only, no slide. */
 const STAGE_IN: Variants = {
