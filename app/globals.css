@@ -41,6 +41,11 @@
 }
 
 @theme inline {
+  /* Tone-aware pair for the home canvas: `text-tone/70`, `border-tone/15`,
+     `from-tone-bg`. Inline, so utilities read the variable where they are used
+     — resolved at :root it would freeze to one tone. See "One canvas" below. */
+  --color-tone: var(--tone-fg);
+  --color-tone-bg: var(--tone-bg);
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -116,6 +121,48 @@ html[data-motion='off'] [data-reveal] {
   transform: none !important;
 }
 
+/* Scrubbed sections (components/motion/scroll.tsx) at rest. Same two failure
+   modes as above, plus a third: reduced motion, which the components signal by
+   stamping data-static on their track after hydration. A pinned track
+   collapses to a single stage, every scrubbed layer drops to its resting
+   state, and the stats stage unstacks into a plain grid. */
+@media (scripting: none) {
+  [data-scrub] { opacity: 1 !important; transform: none !important; clip-path: none !important; }
+  [data-pin] { height: auto !important; }
+  [data-pin] > .sticky { position: relative; height: auto; min-height: 100svh; }
+  [data-rail] { display: none; }
+  [data-stack] { grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr)); gap: 4rem 2rem; padding-block: 7rem; }
+  [data-stack] > * { grid-area: auto !important; padding-left: 0; }
+  [data-stack] .display-xl { font-size: clamp(4rem, 9vw, 7rem); }
+  [data-dim] { opacity: 0.12 !important; }
+  [data-overlap] { margin-top: 0 !important; }
+}
+:is(html[data-motion='off'], [data-static]) [data-scrub] {
+  opacity: 1 !important;
+  transform: none !important;
+  clip-path: none !important;
+  pointer-events: auto !important;
+}
+:is(html[data-motion='off'] [data-pin], [data-pin][data-static]) { height: auto !important; }
+:is(html[data-motion='off'] [data-pin], [data-pin][data-static]) > .sticky {
+  position: relative;
+  height: auto;
+  min-height: 100svh;
+}
+:is(html[data-motion='off'], [data-static]) [data-rail] { display: none; }
+:is(html[data-motion='off'], [data-static]) [data-stack] {
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 4rem 2rem;
+  padding-block: 7rem;
+}
+:is(html[data-motion='off'], [data-static]) [data-stack] > * { grid-area: auto !important; padding-left: 0; }
+:is(html[data-motion='off'], [data-static]) [data-stack] .display-xl { font-size: clamp(4rem, 9vw, 7rem); }
+/* DepthStage (components/motion/DepthStage.tsx): its dim rests light. */
+:is(html[data-motion='off'], [data-static]) [data-dim] { opacity: 0.12 !important; }
+/* A section that slides up over a pinned one (Manifesto's `overlap`). With the
+   pin collapsed there is nothing to slide over — the margin would hide it. */
+html[data-motion='off'] [data-overlap] { margin-top: 0 !important; }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -131,6 +178,54 @@ html[data-motion='off'] [data-reveal] {
   html { scroll-behavior: auto; }
 }
 
+
+/* One canvas. Home sections declare a tone instead of painting their own
+   background, and <main data-canvas> paints a single surface that eases
+   between ink and paper as each section takes the middle of the screen
+   (components/motion/ToneCanvas.tsx). Registered properties, so the colours
+   themselves interpolate and every `text-tone/*` / `border-tone/*` descendant
+   fades with the ground instead of flipping on its own.
+
+   Without the canvas (no JS, or before hydration) each [data-tone] section
+   paints its own tone, which is exactly the old hard-cut layout. */
+@property --tone-bg { syntax: '<color>'; inherits: true; initial-value: #0b0b0b; }
+@property --tone-fg { syntax: '<color>'; inherits: true; initial-value: #f5f1e8; }
+
+[data-tone='ink'], main[data-canvas='ink'] { --tone-bg: var(--color-ink); --tone-fg: var(--color-paper); }
+[data-tone='paper'], main[data-canvas='paper'] { --tone-bg: var(--color-paper); --tone-fg: var(--color-ink); }
+[data-tone] { background-color: var(--tone-bg); color: var(--tone-fg); }
+
+main[data-canvas] {
+  background-color: var(--tone-bg);
+  color: var(--tone-fg);
+  transition: --tone-bg 900ms cubic-bezier(0.65, 0, 0.35, 1), --tone-fg 900ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+/* Live canvas: sections stop setting their own tone, so they inherit main's. */
+main[data-canvas] [data-tone] {
+  --tone-bg: inherit;
+  --tone-fg: inherit;
+  background-color: transparent;
+}
+
+/* Film grain over the whole page. One fixed layer, so photography and flat
+   fields share a single surface texture. Static — it never repaints on scroll. */
+.grain {
+  position: fixed;
+  inset: -50%;
+  z-index: 40;
+  pointer-events: none;
+  opacity: 0.07;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .5 0 0 0 0 .5 0 0 0 0 .5 0 0 0 1 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  mix-blend-mode: overlay;
+}
+
 @utility page-shell { @apply mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-12; }
 @utility eyebrow { @apply text-xs font-bold uppercase tracking-[0.24em] text-gold; }
 @utility display { @apply font-display; }
+/* The home type scale. Three steps, so every section speaks at one of the
+   same three volumes: full-screen moments, section titles, and statements. */
+@utility display-xl { @apply font-display text-[clamp(4rem,14.5vw,14rem)] leading-[0.92]; }
+@utility display-lg { @apply font-display text-[clamp(2.5rem,5.6vw,5rem)] leading-[1.02] tracking-[-0.01em]; }
+@utility display-md { @apply font-display text-[clamp(1.85rem,4.4vw,4rem)] leading-[1.12]; }
+/* One vertical rhythm for every un-pinned section. */
+@utility section-y { @apply py-24 sm:py-32; }

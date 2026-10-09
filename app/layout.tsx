@@ -1,10 +1,13 @@
 import './globals.css';
+// Lenis's own rules: disables CSS smooth-scroll while it runs (the two fight).
+import 'lenis/dist/lenis.css';
 import type { ReactNode } from 'react';
 import { Figtree } from 'next/font/google';
 import localFont from 'next/font/local';
 import SiteHeader from '@/components/SiteHeader';
 import IntroOverlay from '@/components/intro/IntroOverlay';
 import { MotionProvider } from '@/components/motion/reveal';
+import SmoothScroll from '@/components/motion/SmoothScroll';
 
 // Plays on every full page load, so <html data-intro="run"> is rendered on the
 // server and this script only ever flips it to "done". Setting "run" from here
@@ -49,5 +52,5 @@ export const viewport = {
 export default function RootLayout({ children }: { children: ReactNode }) {
   // suppressHydrationWarning covers the case where hydration lands after the
   // script has already flipped data-intro to "done" (slow device, dev mode).
-  return <html lang="en" data-intro="run" suppressHydrationWarning className={`${figtree.variable} ${nephilm.variable} js`}><body><script dangerouslySetInnerHTML={{ __html: INTRO_BOOT }} /><IntroOverlay /><SiteHeader /><MotionProvider>{children}</MotionProvider></body></html>;
+  return <html lang="en" data-intro="run" suppressHydrationWarning className={`${figtree.variable} ${nephilm.variable} js`}><body><script dangerouslySetInnerHTML={{ __html: INTRO_BOOT }} /><SmoothScroll /><IntroOverlay /><SiteHeader /><MotionProvider>{children}</MotionProvider></body></html>;
 }

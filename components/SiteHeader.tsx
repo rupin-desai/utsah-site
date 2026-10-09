@@ -79,7 +79,7 @@ export default function SiteHeader() {
         >
           <div
             aria-hidden
-            className={`pointer-events-none absolute inset-0 bg-black/45 transition-opacity duration-500 ${tinted ? 'opacity-100' : 'opacity-0'}`}
+            className={`pointer-events-none absolute inset-0 bg-ink/75 transition-opacity duration-500 ${tinted ? 'opacity-100' : 'opacity-0'}`}
           />
           <nav className="relative flex w-full items-center justify-between px-4 py-2.5 sm:px-5 sm:py-1.5" aria-label="Main navigation">
             <div className={`${navGroup} justify-end`}>

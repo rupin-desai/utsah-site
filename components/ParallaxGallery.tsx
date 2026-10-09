@@ -17,8 +17,9 @@
  */
 
 import Image from 'next/image';
-import { m, useReducedMotion, useScroll, useTransform, type MotionValue } from 'motion/react';
+import { m, useScroll, useTransform, type MotionValue } from 'motion/react';
 import { useRef } from 'react';
+import { useStaticMotion } from '@/components/motion/scroll';
 
 /** Top-to-bottom within each column. */
 const COLUMNS = [
@@ -44,7 +45,10 @@ const DRIFT = [9, -13, 11, -8];
 
 export default function ParallaxGallery() {
   const frame = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
+  // Not useReducedMotion: read during the first render it makes the client's
+  // column transforms disagree with the server's and breaks hydration.
+  // useStaticMotion only flips after mount.
+  const reduce = useStaticMotion();
 
   // "start end" -> "end start": progress runs 0..1 over the whole time any
   // part of the section is on screen, so the drift never jumps at either edge.
@@ -70,8 +74,8 @@ export default function ParallaxGallery() {
         ))}
       </div>
       {/* Cropped frames fade into the section instead of ending on a hard cut. */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-paper to-transparent" />
-      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-paper to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-tone-bg to-transparent" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-tone-bg to-transparent" />
     </div>
   );
 }
@@ -93,7 +97,7 @@ function Column({ images, progress, drift, className }: ColumnProps) {
       className={`relative flex-1 flex-col gap-3 sm:gap-4 ${className ?? ''}`}
     >
       {images.map((src) => (
-        <div key={src} className="relative flex-1 overflow-hidden bg-stone-200">
+        <div key={src} className="relative flex-1 overflow-hidden rounded-[6px] bg-tone/10">
           <Image
             src={src}
             alt="Utsah event celebration"
