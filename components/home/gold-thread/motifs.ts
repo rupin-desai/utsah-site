@@ -205,7 +205,215 @@ function rings(): Motif {
   };
 }
 
-export const MOTIFS = { rose, laurel, knot, heart, rings };
+/**
+ * A small line-art rose, for clusters on other motifs: spiral heart, inner
+ * petal, a cup with flared lips and the back petal's arch. `s` scales the
+ * 40-unit design; `root` is the spine index it blooms from.
+ */
+function miniRose(c: Pt, s: number, root: number): Ornament[] {
+  const at = (x: number, y: number): Pt => add(c, [x * s, y * s]);
+  const pts = (ps: [number, number][]) => ps.map(([x, y]) => at(x, y));
+  return [
+    { pts: curve(pts([[-17, -6], [-14, 8], [0, 15], [14, 8], [18, -7]]), [0.15, 1], [0.15, -1]), taper: 'both', root },
+    { pts: curve(pts([[-14, -9], [-4, -16], [8, -15], [16, -9]]), [0.8, -0.6], [0.8, 0.6]), taper: 'both', root },
+    { pts: curve(pts([[-8, -10], [-11, -1], [-3, 6], [8, 3]]), [-0.5, 1], [1, -0.3]), taper: 'both', root },
+    { pts: spiral(at(1, -5), 6 * s, 1.2 * s, deg(200), 1.4, 1, 0.8, deg(-12)), taper: 'both', root },
+  ];
+}
+
+/**
+ * Wedding arch: the thread climbs the arch from its left foot, over the
+ * crown, down to the right foot. An inner rail gives it depth; roses and
+ * leaves climb it at the left shoulder and the right foot.
+ */
+function arch(): Motif {
+  const spine = curve(
+    [[40, 198], [38, 112], [54, 50], [100, 20], [146, 50], [162, 112], [160, 198]],
+    [0, -1],
+    [0, 1],
+  );
+  const on = (p: Pt) => rootOn(spine, p);
+  const at = (p: Pt) => spine[on(p)];
+  const rail = curve([[54, 198], [53, 114], [67, 60], [100, 38], [133, 60], [147, 114], [146, 198]], [0, -1], [0, 1]);
+  return {
+    spine,
+    entryDir: [0, -1],
+    exitDir: [0, 1],
+    ornaments: [
+      { pts: rail, taper: 'both', root: on([40, 150]) },
+      // Left shoulder: a rose with leaves fanning off the arch.
+      ...miniRose([48, 60], 1.05, on([44, 80])),
+      { pts: leaf(at([40, 100]), [14, 84], 10, true, 0.12), taper: 'both', root: on([40, 100]) },
+      { pts: leaf(at([62, 38]), [52, 14], 9, true, -0.12), taper: 'both', root: on([62, 38]) },
+      { pts: leaf(at([40, 124]), [20, 136], 8, false, -0.1), taper: 'both', root: on([40, 124]) },
+      // Leaves trailing over the crown.
+      { pts: leaf(at([100, 20]), [120, 4], 7, false, 0.1), taper: 'both', root: on([100, 20]) },
+      { pts: leaf(at([128, 32]), [150, 22], 7, false, -0.1), taper: 'both', root: on([128, 32]) },
+      // Right foot: a second rose, leaves round it.
+      ...miniRose([168, 166], 0.95, on([161, 150])),
+      { pts: leaf(at([161, 140]), [186, 124], 9, true, -0.12), taper: 'both', root: on([161, 140]) },
+      { pts: leaf(at([160, 186]), [186, 196], 8, true, 0.12), taper: 'both', root: on([160, 186]) },
+      ...glint([182, 30], 10),
+    ],
+  };
+}
+
+/** One laurel branch along `arc`, leaves pointing back toward its start (the tip). */
+function laurelLeaves(arc: Pt[], count: number, size0: number, fromF: number, toF: number): Ornament[] {
+  const out: Ornament[] = [];
+  for (let i = 0; i < count; i++) {
+    const f = toF - (i * (toF - fromF)) / (count - 1);
+    const at = Math.round((arc.length - 1) * f);
+    const p = arc[at];
+    const back = unit(sub(arc[Math.max(0, at - 4)], arc[Math.min(arc.length - 1, at + 4)]));
+    const size = size0 - i * 2.4;
+    const side = i % 2 ? 1 : -1;
+    out.push({ pts: leaf(p, add(p, mul(rot(back, side * deg(42)), size)), size * 0.3, true, side * 0.1), taper: 'both', root: at });
+  }
+  return out;
+}
+
+/**
+ * Laurel wreath: the thread is the left branch, from its tip at the top round
+ * to the foot; the mirrored right branch blooms alongside; a small bow ties
+ * them at the foot.
+ */
+function wreath(): Motif {
+  const c: Pt = [100, 104];
+  const r = 76;
+  // Angles on screen (y down): each tip sits 30 deg off the top, and each
+  // branch runs 146 deg round its side to just short of the foot (90 deg).
+  const arcL: Pt[] = [];
+  const arcR: Pt[] = [];
+  for (let i = 0; i <= 220; i++) {
+    const a = deg(240) - (i / 220) * deg(146);
+    arcL.push(add(c, [r * Math.cos(a), r * 0.96 * Math.sin(a)]));
+    const b = deg(300) + (i / 220) * deg(146);
+    arcR.push(add(c, [r * Math.cos(b), r * 0.96 * Math.sin(b)]));
+  }
+  const spine = arcL;
+  const foot: Pt = [c[0], c[1] + r * 0.96];
+  // Both branches run tip to foot at the same pace, so a right leaf blooms with
+  // its left twin: same index.
+  const leavesL = laurelLeaves(spine, 8, 30, 0.08, 0.86);
+  const leavesR = laurelLeaves(arcR, 8, 30, 0.08, 0.86);
+  const bow: Ornament[] = [
+    { pts: ellipse(add(foot, [-12, -1]), 12, 6, deg(-18), 0, 2 * Math.PI, 80), taper: 'end' },
+    { pts: ellipse(add(foot, [12, -1]), 12, 6, deg(18), Math.PI, 2 * Math.PI, 80), taper: 'end' },
+    { pts: curve([add(foot, [-2, 3]), add(foot, [-8, 14]), add(foot, [-14, 24])], [-0.3, 1], [-0.6, 0.8]), taper: 'both' },
+    { pts: curve([add(foot, [2, 3]), add(foot, [8, 14]), add(foot, [14, 24])], [0.3, 1], [0.6, 0.8]), taper: 'both' },
+  ];
+  return {
+    spine,
+    entryDir: unit(sub(spine[1], spine[0])),
+    // The left branch reaches the foot travelling right: carry on that way.
+    exitDir: unit(sub(spine[spine.length - 1], spine[spine.length - 2])),
+    ornaments: [
+      { pts: arcR, taper: 'both', root: 0 },
+      ...[...leavesL, ...leavesR].sort((a, b) => (a.root ?? 0) - (b.root ?? 0)),
+      ...bow,
+      ...glint([100, 10], 9),
+    ],
+  };
+}
+
+/**
+ * Vintage microphone: the thread is the cord, arriving from the left, looping
+ * once and meeting the stand's foot. Then the stand, the yoke, the capsule
+ * with its grille, two music notes and a glint.
+ */
+function microphone(): Motif {
+  const spine = curve(
+    [[0, 176], [26, 184], [52, 172], [58, 150], [44, 140], [32, 152], [42, 172], [72, 186], [100, 186]],
+    [1, 0.2],
+    [1, 0],
+  );
+  const end = spine.length - 1;
+  const cx = 104;
+  const note = (x: number, y: number, s: number): Ornament[] => [
+    { pts: ellipse([x, y], 5 * s, 3.4 * s, deg(-24), 0, 2 * Math.PI, 60), taper: 'end' },
+    { pts: [[x + 4.6 * s, y - 1.5 * s], [x + 4.6 * s, y - 26 * s]], taper: 'end' },
+    { pts: curve([[x + 4.6 * s, y - 26 * s], [x + 12 * s, y - 20 * s], [x + 13 * s, y - 11 * s]], [1, 0.4], [0, 1]), taper: 'end' },
+  ];
+  return {
+    spine,
+    entryDir: [1, 0.2],
+    exitDir: [1, 0],
+    ornaments: [
+      // Foot, pole, and the yoke that cradles the capsule.
+      { pts: ellipse([cx, 188], 26, 6, 0, Math.PI, 2 * Math.PI + Math.PI, 120), taper: 'end', root: end },
+      { pts: [[cx, 186], [cx, 128]], taper: 'end', root: end },
+      { pts: curve([[cx - 28, 92], [cx - 22, 120], [cx, 128], [cx + 22, 120], [cx + 28, 92]], [0.1, 1], [0.1, -1]), taper: 'both', root: end },
+      // The capsule and its grille.
+      { pts: ellipse([cx, 72], 21, 36, 0, -Math.PI / 2, 2 * Math.PI, 200), taper: 'end', root: end },
+      ...[52, 64, 76, 88].map((y): Ornament => {
+        const half = 21 * Math.sqrt(Math.max(0, 1 - ((y - 72) / 36) ** 2)) - 3;
+        return { pts: curve([[cx - half, y], [cx, y + 2.5], [cx + half, y]], [1, 0.12], [1, -0.12]), taper: 'both', root: end };
+      }),
+      ...note(156, 70, 1),
+      ...note(178, 44, 0.75),
+      ...glint([150, 24], 10),
+    ],
+  };
+}
+
+/**
+ * A horizontal flourish divider, wedding-invitation style ("—∞—"). The spine
+ * is one stroke designed left to right (an entry loop, a wave through the
+ * centre, a spiral at rest) and then mirrored, so the thread, arriving from the
+ * top right, enters at the right-hand loop and comes to rest in the left-hand
+ * spiral. An infinity knot is threaded on it at the centre, drawn as the pen
+ * passes, the line running straight through its crossing. Wide and shallow:
+ * it spans the 200-unit box, about 30 units tall.
+ */
+function divider(): Motif {
+  const c: Pt = [100, 100];
+  const a = 22;
+  const knotPts: Pt[] = [];
+  // Lemniscate from its crossing (t = pi/2) once round back to the crossing.
+  for (let i = 0; i <= 320; i++) {
+    const t = Math.PI / 2 + (i / 320) * 2 * Math.PI;
+    const d = 1 + Math.sin(t) ** 2;
+    knotPts.push(add(c, [(a * Math.cos(t)) / d, (a * Math.sin(t) * Math.cos(t)) / d]));
+  }
+  const tail = spiral([186, 98], 11, 1.6, deg(150), 1.6, 1, 0.82, deg(-8));
+  const tailIn = unit(sub(tail[1], tail[0]));
+  // Entry loop, a wave in, straight through the knot's crossing, a wave out.
+  const arms = curve(
+    [[6, 84], [7, 97], [15, 104], [22, 97], [16, 90], [11, 96], [19, 104], [32, 102], [52, 96], [76, 100], c, [124, 100], [146, 104], [166, 99], tail[0]],
+    [0.05, 1],
+    tailIn,
+  );
+  const ltr: Pt[] = [...arms, ...tail.slice(1)];
+
+  const mirror = ([x, y]: Pt): Pt => [200 - x, y];
+  const spine = ltr.map(mirror);
+  const on = (p: Pt) => rootOn(spine, mirror(p));
+  const at = (p: Pt) => spine[on(p)];
+  const leafAt = (p: Pt, tip: Pt, w: number, curl: number): Ornament => ({
+    pts: leaf(at(p), mirror(tip), w, false, curl),
+    taper: 'both',
+    root: on(p),
+  });
+  return {
+    spine,
+    entryDir: [-0.05, 1],
+    ornaments: [
+      // The knot, threaded on at the centre as the pen passes.
+      { pts: knotPts.map(mirror), taper: 'both', root: on(c) },
+      // Leaves sprouting off both arms, alternating up and down.
+      leafAt([46, 97], [38, 85], 3.6, 0.15),
+      leafAt([62, 101], [56, 112], 3.4, -0.15),
+      leafAt([136, 98], [144, 86], 3.6, -0.15),
+      leafAt([154, 102], [161, 113], 3.4, 0.15),
+      // A glint over the knot.
+      ...glint([100, 76], 6),
+      ...glint([113, 83], 3),
+    ],
+  };
+}
+
+export const MOTIFS = { rose, laurel, knot, heart, rings, arch, wreath, microphone, divider };
 export type MotifName = keyof typeof MOTIFS;
 
 /** Crossings of two closed loops, as indices into each (for over-under gaps). */

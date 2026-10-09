@@ -164,7 +164,10 @@ function Ink({ parts, w, h, tone, progress, range, isStatic }: InkProps) {
   return (
     <svg width={w} height={h} viewBox={`0 0 ${w} ${h}`} className="absolute inset-0 overflow-visible">
       <defs>
-        <linearGradient id={`${id}-foil`} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2={w} y2={h}>
+        {/* Left to right only: every segment is full width, so the foil's colour
+            at any x is the same in every section and the line meets itself
+            across a section boundary without a change of colour. */}
+        <linearGradient id={`${id}-foil`} gradientUnits="userSpaceOnUse" x1="0" y1="0" x2={w} y2="0">
           <stop offset="0" stopColor={foil[0]} />
           <stop offset=".5" stopColor={foil[1]} />
           <stop offset="1" stopColor={foil[2]} />

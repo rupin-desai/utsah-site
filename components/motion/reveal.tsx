@@ -385,6 +385,46 @@ export function RevealItem({
   );
 }
 
+/* --------------------------------------------------------------- RevealClip */
+
+/** Same token structure at both ends, or Motion cannot interpolate the string. */
+const CLIP_VARIANTS: Variants = {
+  hidden: { clipPath: 'inset(100% 0% 0% 0%)' },
+  visible: { clipPath: 'inset(0% 0% 0% 0%)' },
+};
+
+/** The photograph is the heaviest thing on the stage, so it gets the longest travel. */
+export const DURATION_CLIP = 1.1;
+
+export type RevealClipProps = SoloProps & {
+  className?: string;
+  children?: ReactNode;
+  duration?: number;
+};
+
+/**
+ * Child of <RevealGroup>, for a main image: it is uncovered from the bottom edge
+ * upward by a clip-path, so it travels the same way the type rises beside it.
+ * Clip-path only, no opacity or scale — the frame itself never moves, so there is
+ * nothing to settle. The same variant rules as <RevealItem> apply: no delay, no
+ * initial/animate unless `solo`.
+ */
+export function RevealClip({ className, children, duration = DURATION_CLIP, solo = false }: RevealClipProps) {
+  const reduce = !!useReducedMotion();
+
+  return (
+    <m.div
+      data-reveal
+      className={className}
+      variants={CLIP_VARIANTS}
+      transition={reduce ? { clipPath: { duration: 0 } } : { duration, ease: EASE_OUT }}
+      {...soloTrigger(solo)}
+    >
+      {children}
+    </m.div>
+  );
+}
+
 /** Must be module scope — calling m.create() in render remounts the subtree. */
 const MotionLink = m.create(Link);
 

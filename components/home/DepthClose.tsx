@@ -7,11 +7,12 @@
  * as the section rises into view and are at rest once it fills the screen.
  */
 
+import type { ReactNode } from 'react';
 import CurtainButton from '@/components/CurtainButton';
-import { useScroll } from 'motion/react';
+import { useInView, useScroll } from 'motion/react';
 import { useRef } from 'react';
 import DepthStage from '@/components/motion/DepthStage';
-import { DISTANCE, Reveal } from '@/components/motion/reveal';
+import { DISTANCE, Reveal, RevealGroup, RevealItem } from '@/components/motion/reveal';
 import { Marquee } from '@/components/motion/scroll';
 import { EYEBROW, EyebrowLabel } from '@/components/Eyebrow';
 import ThreadSegment, { type ThreadSegmentProps } from '@/components/home/gold-thread/ThreadSegment';
@@ -21,9 +22,12 @@ export type DepthCloseProps = {
   /** Chapter mark above the call to action; optional (the home page runs without). */
   eyebrow?: string;
   band: string[];
-  cta: { href: string; label: string };
+  /** Ways to get in touch, in one centred row just above the footer. */
+  ctas: { href: string; label: string }[];
   /** The gold thread's finale (components/home/gold-thread). */
   thread?: Omit<ThreadSegmentProps, 'progress' | 'range'>;
+  /** Laid over the foot of the scene: the home page's glass footer. */
+  children?: ReactNode;
 };
 
 /**
@@ -33,10 +37,12 @@ export type DepthCloseProps = {
  */
 const THREAD_FROM = 0.35;
 
-export default function DepthClose({ index, eyebrow, band, cta, thread }: DepthCloseProps) {
+export default function DepthClose({ index, eyebrow, band, ctas, thread, children }: DepthCloseProps) {
   const section = useRef<HTMLElement>(null);
   // 0 as the section's top meets the bottom of the screen, 1 once it fills it.
   const { scrollYProgress } = useScroll({ target: section, offset: ['start end', 'end end'] });
+  // The band rises word by word, like the hero's, once the scene is well in view.
+  const bandIn = useInView(section, { once: true, amount: 0.45 });
 
   return (
     <section ref={section} data-tone="ink" className="relative h-svh min-h-[34rem] overflow-hidden text-white">
@@ -44,33 +50,25 @@ export default function DepthClose({ index, eyebrow, band, cta, thread }: DepthC
         bg="/assets/hero/layers/groom-bg.jpg"
         fg="/assets/hero/layers/groom-fg.webp"
         alt="A groom laughing through falling rose petals at his haldi"
-        objectPosition="47% 45%"
+        mode="parallax"
+        objectPosition="50% 50%"
+        // Cut-out trimmed tight to him (1522x1024: a long torso, no transparent
+        // margin), bottom-anchored and sized by height. His torso is long enough
+        // to run off the foot of the screen with the glass footer and the
+        // contact row across it. Sized by the screen, not the section, so the
+        // full-screen section shows the whole room around him: his crown sits
+        // ~13svh from the top. Phones lift him, as
+        // the footer stacks taller.
+        subject={{ width: 1522, height: 1024, centerX: 0.5, raw: true, className: "h-[72svh] -translate-y-[18svh] sm:h-[108svh] sm:-translate-y-[11svh]" }}
         progress={scrollYProgress}
         intensity={0.6}
-        middleClassName="top-[30%] sm:top-[28%]"
+        middleClassName="top-[18%] sm:top-[12%]"
         middle={
           // The band is the section's heading; the hidden copy inside Marquee
           // is what screen readers announce.
           <h2>
-            <Marquee items={band} loop={22} reverse className="font-sans text-[clamp(2.75rem,8.5vw,8rem)] font-light leading-[0.95] tracking-[-0.03em] text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]" />
+            <Marquee items={band} loop={22} reverse entrance={{ show: bandIn, delay: 0.1, stagger: 0.06 }} className="font-sans text-[clamp(2.75rem,8.5vw,8rem)] font-light leading-[0.95] tracking-[-0.03em] text-white/90 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]" />
           </h2>
-        }
-        front={
-          <div className="page-shell flex h-full flex-col justify-end pb-14 sm:pb-20 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
-            {/* margin 0: this copy sits in the last 15% of the screen, below the
-                default trigger line, and would stay hidden while the close
-                fills the viewport. */}
-            {eyebrow ? (
-              <Reveal as="p" className={`${EYEBROW} mb-8`} distance={DISTANCE.small} margin="0px">
-                <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
-              </Reveal>
-            ) : null}
-            <Reveal delay={eyebrow ? 0.15 : 0} distance={DISTANCE.small} margin="0px">
-              <CurtainButton href={cta.href} variant="solid" caps>
-                {cta.label}
-              </CurtainButton>
-            </Reveal>
-          </div>
         }
       />
       {/* The photo's top edge melts into the canvas, as the hero's foot does
@@ -79,6 +77,30 @@ export default function DepthClose({ index, eyebrow, band, cta, thread }: DepthC
       {/* Above the gradient, so the line arrives unbroken; the rings finish as
           the close fills the screen. */}
       {thread ? <ThreadSegment {...thread} progress={scrollYProgress} range={[THREAD_FROM, 1]} /> : null}
+      {/* The way out, stacked from the foot of the scene: the contact row, then
+          the glass footer (children). One column, so the gap between them holds
+          whatever height the footer wraps to. */}
+      <div className="absolute inset-x-0 bottom-0 z-20 flex flex-col items-center gap-5 sm:gap-7">
+        <div className="page-shell flex flex-col items-center [text-shadow:0_1px_24px_rgba(0,0,0,.35)]">
+          {/* margin 0: this sits in the last stretch of the screen, below the
+              default trigger line. */}
+          {eyebrow ? (
+            <Reveal as="p" className={`${EYEBROW} mb-8`} distance={DISTANCE.small} margin="0px">
+              <EyebrowLabel index={index}>{eyebrow}</EyebrowLabel>
+            </Reveal>
+          ) : null}
+          <RevealGroup margin="0px" className="flex flex-wrap justify-center gap-3 sm:gap-5">
+            {ctas.map((c) => (
+              <RevealItem key={c.href} distance={DISTANCE.small}>
+                <CurtainButton href={c.href} caps className="bg-ink min-w-[9.5rem] justify-center sm:min-w-[12rem]">
+                  {c.label}
+                </CurtainButton>
+              </RevealItem>
+            ))}
+          </RevealGroup>
+        </div>
+        {children}
+      </div>
     </section>
   );
 }

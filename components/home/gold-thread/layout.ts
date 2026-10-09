@@ -44,21 +44,36 @@ export type Loop = {
 
 export type RoutePoint = Pt | Loop;
 
+export type MotifSpec = {
+  name: MotifName;
+  /** Centre, as fractions of the box. */
+  at: Pt;
+  /** Rendered size of the motif's 200-unit box, px. */
+  size: number;
+};
+
 export type ThreadRoute = {
   /** From the section's top edge ([x, 0]) toward the motif, as fractions of the box. */
   before: RoutePoint[];
-  motif?: {
-    name: MotifName;
-    /** Centre, as fractions of the box. */
-    at: Pt;
-    /** Rendered size of the motif's 200-unit box, px. */
-    size: number;
-  };
+  motif?: MotifSpec;
   /**
-   * From the motif to the bottom edge ([x, 1]). Ending above the bottom ends
-   * the thread there (behind the cards); empty ends it at the motif.
+   * From the motif onward. Without `then`, it runs to the bottom edge ([x, 1]);
+   * ending above the bottom ends the thread there, and empty ends it at the
+   * motif. With `then`, it is the run to the next motif.
    */
   after: RoutePoint[];
+  /**
+   * More motifs down the same line, in order: each is reached by the run
+   * before it and followed by its own `after`. The last `after` is the tail.
+   */
+  then?: { motif: MotifSpec; after: RoutePoint[] }[];
+  /**
+   * When the first motif starts, as a share of the drawing (0..1). The run
+   * before it is sped up or slowed to fit, and everything after shares the
+   * rest. For a pinned stage: start the motif just after the stage pins, so
+   * it draws while the stage holds still.
+   */
+  motifAt?: number;
   /** The thread starts here: a free, tapered end instead of a hand-off. */
   begins?: boolean;
   /**
@@ -144,62 +159,80 @@ export function buildSegment(route: ThreadRoute, w: number, h: number, compact: 
   const px = ([x, y]: Pt): Pt => [x * w, y * h];
   const pen = penFor(compact);
   const leafPen: Pen = { ...pen, max: pen.max * 0.8 };
-  const motif = route.motif ? motifOf(route.motif.name) : null;
   const run = route.silk ? spline : curve;
 
+  // The legs: motifs in order, and the runs around them. With n motifs there
+  // are n + 1 runs: before, between each pair, and the tail.
+  const specs = route.motif ? [route.motif, ...(route.then ?? []).map((t) => t.motif)] : [];
+  const runs = [route.before, route.after, ...(route.then ?? []).map((t) => t.after)];
+  const tail = specs.length ? runs[specs.length] : route.after;
   const handOffStart = !route.begins && firstY(route.before) === 0;
-  const handOffEnd = route.after.length > 0 && lastY(route.after) === 1;
-  // Where the motif's spine starts and ends, for loops next to it.
-  const motifPx = (p: Pt) => {
-    if (!route.motif) return undefined;
-    const k0 = route.motif.size / VIEW;
-    return add(px(route.motif.at), mul(sub(p, [VIEW / 2, VIEW / 2]), k0));
-  };
-  const before = expand(route.before, px, undefined, motif ? motifPx(motif.spine[0]) : undefined);
-  const after = expand(route.after, px, motif ? motifPx(motif.spine[motif.spine.length - 1]) : undefined);
+  const handOffEnd = tail.length > 0 && lastY(tail) === 1;
 
-  let main: Pt[];
-  let sA = 0;
-  let sB = 0;
-  let k = 1;
-  let toPx = (p: Pt) => p;
-  if (motif && route.motif) {
-    k = route.motif.size / VIEW;
-    const c = px(route.motif.at);
-    toPx = (p: Pt) => add(c, mul(sub(p, [VIEW / 2, VIEW / 2]), k));
-    const spine = motif.spine.map(toPx);
-    const into = run([...before, spine[0]], handOffStart ? DOWN : undefined, motif.entryDir);
-    sA = arcLength(into);
-    main = [...into, ...spine.slice(1)];
-    sB = arcLength(main);
-    if (after.length && motif.exitDir) {
-      const out = run([spine[spine.length - 1], ...after], motif.exitDir, handOffEnd ? DOWN : undefined);
-      main = [...main, ...out.slice(1)];
-    }
+  const placed = specs.map((spec) => {
+    const m = motifOf(spec.name);
+    const k = spec.size / VIEW;
+    const c = px(spec.at);
+    const toPx = (p: Pt) => add(c, mul(sub(p, [VIEW / 2, VIEW / 2]), k));
+    return { spec, m, k, toPx, spine: m.spine.map(toPx) };
+  });
+
+  // One continuous centreline; spans[i] is where motif i sits along it.
+  let main: Pt[] = [];
+  const spans: [number, number][] = [];
+  if (!placed.length) {
+    main = run(
+      [...expand(route.before, px), ...expand(route.after, px)],
+      handOffStart ? DOWN : undefined,
+      handOffEnd ? DOWN : undefined,
+    );
   } else {
-    main = run([...before, ...after], handOffStart ? DOWN : undefined, handOffEnd ? DOWN : undefined);
+    placed.forEach((p, i) => {
+      const prev = i > 0 ? placed[i - 1] : null;
+      const prevEnd = prev ? prev.spine[prev.spine.length - 1] : undefined;
+      const lead = run(
+        [...(prevEnd ? [prevEnd] : []), ...expand(runs[i], px, prevEnd, p.spine[0]), p.spine[0]],
+        prev ? prev.m.exitDir : handOffStart ? DOWN : undefined,
+        p.m.entryDir,
+      );
+      main = main.length ? [...main, ...lead.slice(1)] : lead;
+      const sA = arcLength(main);
+      main = [...main, ...p.spine.slice(1)];
+      spans.push([sA, arcLength(main)]);
+    });
+    const last = placed[placed.length - 1];
+    const end = last.spine[last.spine.length - 1];
+    const tailPts = expand(tail, px, end);
+    if (tailPts.length && last.m.exitDir) {
+      main = [...main, ...run([end, ...tailPts], last.m.exitDir, handOffEnd ? DOWN : undefined).slice(1)];
+    }
   }
   const L = arcLength(main);
 
-  const ornaments = (motif?.ornaments ?? []).map((o) => ({ ...o, pts: o.pts.map(toPx) }));
+  const ornaments = placed.flatMap((p, i) => p.m.ornaments.map((o) => ({ ...o, pts: o.pts.map(p.toPx), motif: i })));
 
   // Rings: each lifts where it passes under the other, so they interlock.
-  let mainGaps: [number, number][] = [];
+  const mainGaps: [number, number][] = [];
   const ornamentGaps: [number, number][][] = [];
-  if (route.motif?.name === 'rings' && ornaments[0]) {
-    const one = resample(main, 1);
-    const hits = crossings(one, ornaments[0].pts).filter(([i]) => i >= sA - 2);
+  placed.forEach((p, i) => {
+    if (p.spec.name !== 'rings') return;
+    const first = ornaments.findIndex((o) => o.motif === i);
+    if (first < 0) return;
+    const [sA, sB] = spans[i];
+    const hits = crossings(resample(main, 1), ornaments[first].pts).filter(([s]) => s >= sA - 2 && s <= sB + 2);
     const half = pen.max * 1.5 + 2.5;
     if (hits.length >= 2) {
-      mainGaps = [[hits[1][0] - half, hits[1][0] + half]];
-      ornamentGaps[0] = [[hits[0][1] - half, hits[0][1] + half]];
+      mainGaps.push([hits[1][0] - half, hits[1][0] + half]);
+      ornamentGaps[first] = [[hits[0][1] - half, hits[0][1] + half]];
     }
-  }
+  });
 
-  // Light on the runs, full pressure through the motif.
+  // Light on the runs, full pressure through each motif.
   const pressure = (s: number) => {
-    if (!motif) return RUN_PRESSURE;
-    const inMotif = Math.min(ramp((s - sA + PRESSURE_RAMP) / PRESSURE_RAMP), ramp((sB + PRESSURE_RAMP - s) / PRESSURE_RAMP));
+    let inMotif = 0;
+    for (const [sA, sB] of spans) {
+      inMotif = Math.max(inMotif, Math.min(ramp((s - sA + PRESSURE_RAMP) / PRESSURE_RAMP), ramp((sB + PRESSURE_RAMP - s) / PRESSURE_RAMP)));
+    }
     return RUN_PRESSURE + (1 - RUN_PRESSURE) * inMotif;
   };
   const mainInk = ink(main, pen, {
@@ -209,11 +242,11 @@ export function buildSegment(route: ThreadRoute, w: number, h: number, compact: 
     pressure,
   });
 
-  // Pen time along the main line.
+  // Pen time along the main line: slower through every motif.
   const T = (s: number) => {
-    if (!motif || s <= sA) return s;
-    if (s <= sB) return sA + (s - sA) * MOTIF_SLOW;
-    return sA + (sB - sA) * MOTIF_SLOW + (s - sB);
+    let t = s;
+    for (const [sA, sB] of spans) t += (MOTIF_SLOW - 1) * Math.min(Math.max(s - sA, 0), sB - sA);
+    return t;
   };
 
   const ornamentInks = ornaments.map((o, i) => {
@@ -225,36 +258,45 @@ export function buildSegment(route: ThreadRoute, w: number, h: number, compact: 
     });
   });
 
-  // Rooted ornaments bloom as the pen passes their root; the rest follow the
-  // spine one after another, overlapping a little.
-  let queue = T(sB);
+  // Rooted ornaments bloom as the pen passes their root; the rest follow their
+  // motif's spine one after another, overlapping a little.
+  const queues = spans.map(([, sB]) => T(sB));
   const ornamentTimes = ornaments.map((o, i): [number, number] => {
     const d = ornamentInks[i].length * ORNAMENT_PACE;
-    if (o.root !== undefined && motif) {
-      const start = T(sA + arcLength(motif.spine.slice(0, o.root + 1)) * k);
+    const p = placed[o.motif];
+    if (o.root !== undefined) {
+      const start = T(spans[o.motif][0] + arcLength(p.m.spine.slice(0, o.root + 1)) * p.k);
       return [start, start + d];
     }
-    const start = queue;
-    queue += d * 0.6;
+    const start = queues[o.motif];
+    queues[o.motif] += d * 0.6;
     return [start, start + d];
   });
 
   const end = Math.max(T(L), ...ornamentTimes.map(([, b]) => b));
+  // Optional time warp: the first motif starts at route.motifAt exactly.
+  const motifStart = spans.length ? T(spans[0][0]) / end : 0;
+  const warp = (u: number) => {
+    const m = route.motifAt;
+    if (m === undefined || motifStart <= 0 || motifStart >= 1) return u;
+    return u <= motifStart ? (u / motifStart) * m : m + ((u - motifStart) / (1 - motifStart)) * (1 - m);
+  };
   const keys = (pairs: [number, number][]) => {
     // Strictly rising times inside [0, 1], as scroll-linked scrubbing requires.
     const out: [number, number][] = [];
     for (const [t, v] of pairs) {
-      const tt = Math.min(1, Math.max(0, t / end));
+      const tt = Math.min(1, Math.max(0, warp(t / end)));
       if (!out.length || tt > out[out.length - 1][0] + 1e-4) out.push([tt, v]);
     }
     return { times: out.map((p) => p[0]), values: out.map((p) => p[1]) };
   };
 
+  const mainKeys: [number, number][] = [[0, 0]];
+  for (const [sA, sB] of spans) mainKeys.push([T(sA), sA / L], [T(sB), sB / L]);
+  mainKeys.push([T(L), 1]);
+
   return [
-    {
-      ...mainInk,
-      ...keys(motif ? [[0, 0], [T(sA), sA / L], [T(sB), sB / L], [T(L), 1]] : [[0, 0], [L, 1]]),
-    },
+    { ...mainInk, ...keys(mainKeys) },
     ...ornamentInks.map((o, i) => ({ ...o, ...keys([[ornamentTimes[i][0], 0], [ornamentTimes[i][1], 1]]) })),
   ];
 }

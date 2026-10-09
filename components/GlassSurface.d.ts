@@ -20,6 +20,7 @@ declare const GlassSurface: (props: {
   xChannel?: 'R' | 'G' | 'B';
   yChannel?: 'R' | 'G' | 'B';
   mixBlendMode?: string;
+  chromatic?: boolean;
   className?: string;
   style?: CSSProperties;
 }) => ReactNode;

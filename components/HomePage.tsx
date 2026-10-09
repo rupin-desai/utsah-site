@@ -1,15 +1,15 @@
-import Image from 'next/image';
-import Link from 'next/link';
+import CurtainButton from './CurtainButton';
 import SiteFooter from './SiteFooter';
 import SectionHeading from './SectionHeading';
-import { DISTANCE, Reveal, RevealGroup, RevealItem, RevealLink } from '@/components/motion/reveal';
-import ParallaxGallery from '@/components/ParallaxGallery';
+import { DISTANCE, Reveal, SplitText } from '@/components/motion/reveal';
 import ToneCanvas from '@/components/motion/ToneCanvas';
 import DepthHero from '@/components/home/DepthHero';
 import DepthClose from '@/components/home/DepthClose';
 import Manifesto from '@/components/home/Manifesto';
 import StatsSequence from '@/components/home/StatsSequence';
 import CollageZoom from '@/components/home/CollageZoom';
+import Chapters from '@/components/home/Chapters';
+import ReviewRing from '@/components/home/ReviewRing';
 import ThreadSegment from '@/components/home/gold-thread/ThreadSegment';
 import { THREAD } from '@/components/home/gold-thread/routes';
 import { eventTypes, reviews, stats } from './site-data';
@@ -40,34 +40,59 @@ export default function HomePage() {
     {/* Pinned: one figure owns the screen at a time, counted up by the scroll. */}
     <StatsSequence label="Utsah in numbers" stats={stats} thread={THREAD.stats} />
 
-    {/* relative isolate, so the thread (-z-10) sits under everything here: it
-        passes behind the opaque cards and ends there, hidden. */}
-    <section data-tone="ink" className="section-y relative isolate"><ThreadSegment {...THREAD.create} className="-z-10" /><div className="page-shell"><SectionHeading title="Moments made personal" />
-      {/* RevealLink, not RevealItem: the anchor *is* the grid item, and a
-          wrapper div would strand min-h-105 and lg:grid-cols-3 on the wrong box. */}
-      <RevealGroup className="mt-14 grid gap-5 lg:grid-cols-3">{eventTypes.map((event) => <RevealLink key={event.href} href={event.href} className="group relative min-h-105 overflow-hidden rounded-[6px] bg-tone/10 text-white"><Image src={event.image} alt="" fill sizes="(max-width: 1024px) 100vw, 33vw" className="object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-[linear-gradient(to_top,rgba(11,11,11,.75),transparent_60%)]" /><div className="absolute inset-x-0 bottom-0 p-7 [text-shadow:0_1px_24px_rgba(0,0,0,.35)]"><h3 className="display text-3xl">{event.title}</h3><p className="mt-3 max-w-sm text-sm leading-6 text-white/85">{event.text}</p><span className="mt-5 inline-block text-xs font-bold uppercase tracking-[.24em] text-gold-light">Explore</span></div></RevealLink>)}</RevealGroup>
-    </div></section>
-
-    {/* Pinned: a wall of frames parts and the centre opens onto the event film,
-        then dissolves into the ground the gallery starts on. It carries the
-        gallery's heading, so the gallery below starts straight in. */}
-    <CollageZoom title="Memory, made visible" media={{ kind: 'video', src: '/assets/hero-video-optimized.mp4', poster: '/assets/hero/hero-1.jpg' }} />
-
-    {/* The gallery is deliberately outside page-shell: it runs edge to edge, and
-        its own overflow-hidden frame is what crops the drifting columns. */}
-    <section data-tone="ink" className="pb-24 sm:pb-32">
-      <ParallaxGallery />
-      <div className="page-shell"><Reveal className="mt-14" distance={DISTANCE.small}><Link href="/memories" className="inline-flex border-b border-tone pb-2 text-sm font-bold uppercase tracking-[.18em] transition-colors duration-300 hover:border-gold hover:text-gold">View all memories</Link></Reveal></div>
+    {/* What we create: the heading, then one pinned chapter per event type
+        (Chapters). Each chapter holds the screen while its stretch of the gold
+        thread draws its motif over it, then scrolls away before the next one
+        comes. The thread passes the heading here and hands on to the first
+        chapter; no overflow clipping above the chapters, or they stop pinning. */}
+    <section data-tone="ink" className="relative">
+      <div className="relative">
+        <ThreadSegment {...THREAD.create} className="z-10" />
+        <div className="page-shell flex h-[18svh] flex-col justify-end pb-[3svh]"><SectionHeading title="Moments made personal" /></div>
+      </div>
+      <Chapters chapters={eventTypes} />
     </section>
 
-    {/* Hairline columns rather than boxed cards — the same editorial rule the
-        stats and manifesto use, so nothing here reads as a different site. */}
-    <section data-tone="ink" className="section-y relative isolate"><ThreadSegment {...THREAD.reviews} className="-z-10" /><div className="page-shell"><SectionHeading title="What clients say" />
-      <RevealGroup className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">{reviews.map(([name, quote]) => <RevealItem as="figure" key={name} className="border-t border-tone/20 pt-7"><div className="text-sm tracking-[.2em] text-gold">★★★★★</div><blockquote className="display mt-5 text-2xl leading-snug">“{quote}”</blockquote><figcaption className="mt-6 text-xs font-bold uppercase tracking-[.24em] text-tone/60">{name}</figcaption></RevealItem>)}</RevealGroup>
-    </div></section>
+    {/* Interlude: a breath before the grid. The thread comes down out of the
+        last chapter and draws a horizontal flourish divider across the page,
+        with just enough room either side for a pause before the collage. */}
+    <section data-tone="ink" aria-hidden="true" className="relative h-[46svh]">
+      <ThreadSegment {...THREAD.interlude} />
+    </section>
+
+    {/* Pinned: a wall of frames parts and the centre opens onto the event film,
+        then dissolves into the ground below. A link on to the full memories
+        page follows it. */}
+    <CollageZoom title="Memory, made visible" media={{ kind: 'video', src: '/assets/hero-video-optimized.mp4', poster: '/assets/hero/hero-1.jpg' }} />
+
+    {/* The way on to the full archive. It rises out of the collage's dissolve:
+        pulled up over the solid ground at the foot of the collage's last
+        screen (z-10 keeps it above the stage), so there is no empty screen
+        between the film and this. */}
+    <section data-tone="ink" className="relative z-10 -mt-[22svh] pb-6 sm:pb-10">
+      {/* Heading and copy on the left; the button on the right edge of the
+          page shell, centred vertically on that block. Stacked on phones. */}
+      <div className="page-shell flex flex-col items-start gap-9 md:flex-row md:items-center md:justify-between md:gap-12">
+        <div className="max-w-3xl">
+          <h2 className="display-md"><SplitText text="Every celebration, kept" /></h2>
+          <Reveal as="p" delay={0.2} distance={DISTANCE.small} className="mt-5 max-w-xl text-base leading-7 text-tone/70">
+            Weddings, corporate evenings and live nights, frame by frame. Browse the moments we have made with the people who trusted us with them.
+          </Reveal>
+        </div>
+        <Reveal delay={0.35} distance={DISTANCE.small} className="shrink-0">
+          <CurtainButton href="/memories" caps>View all memories</CurtainButton>
+        </Reveal>
+      </div>
+    </section>
+
+    {/* Reviews on a turning drum that surges with the scroll (GSAP). */}
+    <ReviewRing label="What clients say" reviews={reviews} />
 
     {/* The opener's depth trick once more — the close
         shares the footer's ink, so the last screen is one surface. */}
-    <DepthClose band={["Let's create lasting memories", "Let's talk"]} cta={{ href: '/contact', label: 'Contact Utsah' }} thread={THREAD.close} />
-    <SiteFooter /></ToneCanvas>;
+    <DepthClose band={["Let's create lasting memories", "Let's talk"]} ctas={[{ href: 'tel:+918200395197', label: 'Call us' }, { href: 'mailto:sales@utsahevents.com', label: 'Email us' }, { href: 'https://wa.me/918200395197', label: 'WhatsApp us' }]}>
+      {/* The footer is the foot of the closing scene, glass over the photo. */}
+      <SiteFooter overlay />
+    </DepthClose>
+    </ToneCanvas>;
 }

@@ -2,8 +2,8 @@
 
 /**
  * Pinned stats. One number owns the screen at a time; scroll counts it up,
- * holds it, then hands over to the next. A hairline rail on the left keeps
- * score. No backdrop of its own: it sits on the page's one black ground.
+ * holds it, then hands over to the next. No backdrop of its own: it sits on
+ * the page's one black ground.
  *
  * Every stat lives in the same grid cell, so the stage is always exactly one
  * stat tall. Hand-overs are sequential, never a crossfade — two numerals this
@@ -11,7 +11,7 @@
  * percent before the next one arrives.
  */
 
-import { cubicBezier, m, useMotionValueEvent, useScroll, useTransform, type MotionValue } from 'motion/react';
+import { cubicBezier, m, useMotionValueEvent, useScroll, type MotionValue } from 'motion/react';
 import { useEffect, useRef } from 'react';
 import { PinTrack, useScrub, useStaticMotion } from '@/components/motion/scroll';
 import { EYEBROW, EyebrowLabel } from '@/components/Eyebrow';
@@ -47,7 +47,6 @@ export default function StatsSequence({ index, eyebrow, label = eyebrow, stats, 
   // Same pen line as every other segment: draws from the moment the stage's top
   // edge crosses 65% down the screen until the pin lets go.
   const { scrollYProgress: threadProgress } = useScroll({ target: track, offset: ['start 65%', 'end end'] });
-  const rail = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <PinTrack
@@ -69,12 +68,6 @@ export default function StatsSequence({ index, eyebrow, label = eyebrow, stats, 
             </p>
           </div>
         ) : null}
-
-        {/* Score rail: a hairline that fills as the sequence plays. */}
-        <div aria-hidden="true" data-rail className="absolute left-5 top-1/2 h-40 -translate-y-1/2 sm:left-8 lg:left-12">
-          <div className="h-full w-px bg-tone/15" />
-          <m.div data-scrub className="absolute inset-0 w-px origin-top bg-gold" style={{ scaleY: rail }} />
-        </div>
 
         {thread ? <ThreadSegment {...thread} progress={threadProgress} /> : null}
 

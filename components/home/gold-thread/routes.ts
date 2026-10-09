@@ -53,46 +53,111 @@ export const THREAD = {
   },
 
   /** 03: an infinity knot beside the heading, then a long sweep left behind the cards, where it ends. */
+  /**
+   * 03, the heading: the line arrives from the stats, passes the heading and
+   * hands on to the first chapter. The chapters' own segments are below
+   * (CHAPTER_THREAD).
+   */
   create: {
-    desktop: {
-      before: [[0.84, 0], [0.75, 0.09]],
-      motif: { name: 'knot', at: [0.82, 0.18], size: 270 },
-      after: [[0.66, 0.3], [0.4, 0.42], [0.2, 0.55]],
-    },
-    compact: {
-      before: [[0.84, 0]],
-      motif: { name: 'knot', at: [0.78, 0.04], size: 120 },
-      after: [[0.5, 0.14], [0.3, 0.3]],
-    },
+    // Straight down: the box is short, so any waypoint here becomes a wiggle.
+    // The stats line turns into it and the first chapter's curves out of it.
+    desktop: { before: [[0.84, 0]], after: [[0.84, 1]] },
+    compact: { before: [[0.84, 0]], after: [[0.84, 1]] },
   },
 
-  /** 05: begins again above the heading, a loop, into a heart; down the margin and back across beneath the reviews. */
-  reviews: {
+  /**
+   * Between the chapters and the collage grid: a short 46svh interlude. The
+   * thread drops in from the Live chapter and draws a horizontal divider
+   * ("—∞—", motifs.ts) right to left, centred in the box, coming to rest in
+   * its spiral.
+   */
+  interlude: {
     desktop: {
-      begins: true,
-      before: [[0.06, 0.05], [0.3, 0.085], { loop: [0.47, 0.08], r: 38, squash: 0.6, tilt: -16 }, [0.62, 0.17]],
-      motif: { name: 'heart', at: [0.8, 0.22], size: 260 },
-      after: [[0.94, 0.42], [0.965, 0.72], [0.66, 0.94], [0.32, 1]],
-    },
-    compact: {
-      begins: true,
-      before: [[0.08, 0.02], [0.45, 0.035]],
-      motif: { name: 'heart', at: [0.8, 0.06], size: 120 },
-      after: [[0.97, 0.2], [0.97, 0.88], [0.55, 0.97], [0.32, 1]],
-    },
-  },
-
-  /** 06: the finale, through the top gradient into two rings, above the band. */
-  close: {
-    desktop: {
-      before: [[0.32, 0], [0.5, 0.12]],
-      motif: { name: 'rings', at: [0.8, 0.15], size: 330 },
+      silk: true,
+      // One fall from the hand-off into the divider's entry loop: no waypoint to wobble on.
+      before: [[0.9, 0]],
+      motif: { name: 'divider', at: [0.5, 0.48], size: 1100 },
       after: [],
     },
     compact: {
-      before: [[0.32, 0], [0.5, 0.07]],
-      motif: { name: 'rings', at: [0.78, 0.15], size: 150 },
+      silk: true,
+      before: [[0.9, 0]],
+      motif: { name: 'divider', at: [0.5, 0.48], size: 340 },
       after: [],
     },
   },
 } satisfies Record<string, Thread>;
+
+/**
+ * "What we create" chapters (components/home/Chapters.tsx), keyed by the event
+ * type's href. Each chapter is a pinned, full-screen stage, and its segment
+ * lives in it: it enters at the top where the one before left off, draws its
+ * motif in place over the upper story column while the chapter holds the
+ * screen, and leaves at the bottom where the next picks up. The last one
+ * tapers away before the collage.
+ *
+ * Desktop stage at 1440x900: the story column spans x 0.59-0.91, its copy
+ * stacked up from the foot to about y 0.45, so each motif sits above it at
+ * about (0.76, 0.28). Compact (under 1200, phones included) keeps the motif
+ * small in the top-right corner.
+ */
+/**
+ * Chapters pin once their stage's top reaches the top of the screen: 65svh
+ * into a progress that runs 65 + DWELL (170) svh (Chapters.tsx), so at 0.28.
+ * Each motif starts just after, and draws while its chapter holds still.
+ */
+const MOTIF_AT = 0.32;
+
+export const CHAPTER_THREAD: Record<string, Thread> = {
+  /** Weddings: down the left of the arch and a J-hook up into its left foot; out of the right foot, a loop, on down. */
+  '/wedding': {
+    desktop: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.84, 0], [0.8, 0.06], [0.69, 0.14], [0.655, 0.33], [0.675, 0.445]],
+      motif: { name: 'arch', at: [0.76, 0.28], size: 250 },
+      after: [[0.83, 0.52], { loop: [0.86, 0.62], r: 34, squash: 0.6, tilt: -16 }, [0.9, 0.8], [0.88, 1]],
+    },
+    compact: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.84, 0], [0.76, 0.08], [0.7, 0.2], [0.72, 0.285]],
+      motif: { name: 'arch', at: [0.82, 0.2], size: 110 },
+      after: [[0.9, 0.34], [0.95, 0.7], [0.88, 1]],
+    },
+  },
+  /** Corporate: a loop, onto the wreath's left tip; from its foot, out and on down. */
+  '/corporate': {
+    desktop: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.88, 0], [0.89, 0.06], { loop: [0.86, 0.11], r: 30, squash: 0.6, tilt: -16 }, [0.8, 0.15]],
+      motif: { name: 'wreath', at: [0.76, 0.29], size: 260 },
+      after: [[0.88, 0.45], [0.92, 0.7], [0.86, 1]],
+    },
+    compact: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.88, 0], [0.9, 0.07], [0.86, 0.12]],
+      motif: { name: 'wreath', at: [0.82, 0.2], size: 110 },
+      after: [[0.94, 0.32], [0.96, 0.7], [0.86, 1]],
+    },
+  },
+  /** Live: swings across and comes in from the left as the microphone's cord; then on down to the interlude's divider. */
+  '/live': {
+    desktop: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.86, 0], [0.9, 0.1], [0.84, 0.2], [0.68, 0.28], [0.62, 0.36]],
+      motif: { name: 'microphone', at: [0.76, 0.28], size: 260 },
+      after: [[0.9, 0.44], [0.95, 0.75], [0.9, 1]],
+    },
+    compact: {
+      silk: true,
+      motifAt: MOTIF_AT,
+      before: [[0.86, 0], [0.92, 0.08], [0.8, 0.15], [0.66, 0.2]],
+      motif: { name: 'microphone', at: [0.82, 0.2], size: 110 },
+      after: [[0.93, 0.3], [0.95, 0.7], [0.9, 1]],
+    },
+  },
+};
